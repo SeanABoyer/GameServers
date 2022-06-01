@@ -93,7 +93,7 @@ resource "aws_instance" "server" {
   key_name = aws_key_pair.ssh_key.key_name
   vpc_security_group_ids = [aws_security_group.security_group.id]
 
-  user_data= "${data.template_cloudinit_config.user_data}"
+  user_data= "${data.template_cloudinit_config.user_data.rendered}"
   root_block_device {
     volume_size = var.root_block_size
   }
