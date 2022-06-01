@@ -1,19 +1,7 @@
-terraform {
-    required_version = ">=1.1.3"
-}
 locals  {
     gameInstanceName = "${var.game_name}-${random_uuid.server_name.result}"
 }
 resource "random_uuid" "server_name" {
-}
-provider "aws" {
-    region = var.region
-    default_tags {
-        tags = {
-            Name = local.gameInstanceName
-            Game = var.game_name
-        }
-    }
 }
 
 #START# IAM Role
