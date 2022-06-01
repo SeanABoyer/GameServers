@@ -1,13 +1,13 @@
 terraform {
     required_version = ">=1.1.3"
-}
-locals  {
-    gameInstanceName = "${var.game_name}-${random_uuid.server_name.result}"
-}
-resource "random_uuid" "server_name" {
+    required_providers {
+      aws = {
+        source  = "hashicorp/aws"
+        version = "~> 3.0"
+      }
+    }
 }
 provider "aws" {
-    region = var.region
     default_tags {
         tags = {
             Name = local.gameInstanceName
@@ -16,11 +16,17 @@ provider "aws" {
     }
 }
 
+locals  {
+    gameInstanceName = "${var.game_name}-${random_uuid.server_name.result}"
+}
+resource "random_uuid" "server_name" {
+}
+
 #START# IAM Role
 data "aws_iam_policy" "AmazonSSMFullAccess"{
   name = "AmazonSSMFullAccess"
 }
-resource "aws_iam_role" "mcServerRole" {
+resource "aws_iam_role" "serverRole" {
   name = local.gameInstanceName
   managed_policy_arns =[
     data.aws_iam_policy.AmazonSSMFullAccess.arn
@@ -41,9 +47,9 @@ resource "aws_iam_role" "mcServerRole" {
       }
     )
 }
-resource "aws_iam_instance_profile" "mcServerInstanceProfile" {
+resource "aws_iam_instance_profile" "serverInstanceProfile" {
   name = local.gameInstanceName
-  role = aws_iam_role.mcServerRole.name
+  role = aws_iam_role.serverRole.name
 }
 #END# IAM Role
 
@@ -60,18 +66,34 @@ resource "aws_key_pair" "ssh_key" {
   key_name = "ssh_${local.gameInstanceName}"
   public_key = var.public_ssh_key
 }
+
+data "template_cloudinit_config" "user_data" {
+  gzip = true
+  base64_encode = true
+  part {
+    filename = "SSMAgentDebian.sh"
+    content_type = "text/x-shellscript"
+    content = "${file("${path.module}/deploySSMAgent.sh")}"
+  }
+  part {
+    filename = "applicationInstallScript.sh"
+    content_type = "text/x-shellscript"
+    content = var.application_install_script
+  }
+}
+
 resource "aws_instance" "server" {
   ami           = data.aws_ami.debian.id
   availability_zone = var.availability_zone
   instance_type = var.instance_type
-  iam_instance_profile = aws_iam_instance_profile.mcServerInstanceProfile.name
+  iam_instance_profile = aws_iam_instance_profile.serverInstanceProfile.name
   private_ip = var.private_ip
 
   subnet_id = aws_subnet.subnet.id
   key_name = aws_key_pair.ssh_key.key_name
   vpc_security_group_ids = [aws_security_group.security_group.id]
 
-  user_data= "${file("deploySSMAgent.sh")}"
+  user_data= "${data.template_cloudinit_config.user_data.rendered}"
   root_block_device {
     volume_size = var.root_block_size
   }
@@ -88,6 +110,23 @@ resource "aws_internet_gateway" "gw" {
 resource "aws_security_group" "security_group" {
   vpc_id = aws_vpc.vpc.id
 }
+
+resource "aws_security_group_rule" "OUT_HTTPS"{
+  type              = "egress"
+  from_port         = 443
+  to_port           = 443
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.security_group.id
+}
+resource "aws_security_group_rule" "OUT_HTTP"{
+  type              = "egress"
+  from_port         = 80
+  to_port           = 80
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.security_group.id
+}
 resource "aws_route" "route_ign_to_vpc" {
   route_table_id = aws_vpc.vpc.main_route_table_id
   destination_cidr_block = "0.0.0.0/0"
@@ -102,7 +141,7 @@ resource "aws_subnet" "subnet" {
   depends_on = [aws_internet_gateway.gw]
 }
 resource "aws_eip" "eip" {
-  instance = aws_instance.mc_server.id
+  instance = aws_instance.server.id
   vpc = true
   associate_with_private_ip = aws_instance.server.private_ip
   depends_on                = [aws_internet_gateway.gw]

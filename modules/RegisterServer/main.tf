@@ -6,7 +6,7 @@ resource aws_route53_record  "mcDNSRecord" {
   name = "${var.dnsPrefix}.${var.dnsZone}"
   type = "A"
   ttl = "300"
-  records = [var.publicIP]
+  records = [var.public_ip]
 }
 
 data "aws_dynamodb_table" "DBtable" {
@@ -18,7 +18,7 @@ resource "aws_dynamodb_table_item" "dynamodbEntry" {
 
   item = jsonencode(
     {
-      "ec2ID":{"S":"${aws_instance.mc_server.id}"},
+      "ec2ID":{"S":"${var.ec2_instance_id}"},
       "dnsName":{"S":"${aws_route53_record.mcDNSRecord.name}"},
       "startCommand":{"S":"cd ~ && ./${var.lgsmCommand} start"},
       "stopCommand":{"S":"cd ~ && ./${var.lgsmCommand} stop"},
