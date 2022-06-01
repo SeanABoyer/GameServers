@@ -20,7 +20,7 @@ provider "aws" {
 data "aws_iam_policy" "AmazonSSMFullAccess"{
   name = "AmazonSSMFullAccess"
 }
-resource "aws_iam_role" "mcServerRole" {
+resource "aws_iam_role" "serverRole" {
   name = local.gameInstanceName
   managed_policy_arns =[
     data.aws_iam_policy.AmazonSSMFullAccess.arn
@@ -41,9 +41,9 @@ resource "aws_iam_role" "mcServerRole" {
       }
     )
 }
-resource "aws_iam_instance_profile" "mcServerInstanceProfile" {
+resource "aws_iam_instance_profile" "serverInstanceProfile" {
   name = local.gameInstanceName
-  role = aws_iam_role.mcServerRole.name
+  role = aws_iam_role.serverRole.name
 }
 #END# IAM Role
 
@@ -64,7 +64,7 @@ resource "aws_instance" "server" {
   ami           = data.aws_ami.debian.id
   availability_zone = var.availability_zone
   instance_type = var.instance_type
-  iam_instance_profile = aws_iam_instance_profile.mcServerInstanceProfile.name
+  iam_instance_profile = aws_iam_instance_profile.serverInstanceProfile.name
   private_ip = var.private_ip
 
   subnet_id = aws_subnet.subnet.id
@@ -102,7 +102,7 @@ resource "aws_subnet" "subnet" {
   depends_on = [aws_internet_gateway.gw]
 }
 resource "aws_eip" "eip" {
-  instance = aws_instance.mc_server.id
+  instance = aws_instance.server.id
   vpc = true
   associate_with_private_ip = aws_instance.server.private_ip
   depends_on                = [aws_internet_gateway.gw]
