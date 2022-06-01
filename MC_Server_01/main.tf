@@ -15,13 +15,13 @@ module "server"{
 #     depends_on = [module.server]
 # }
 
-# module "application_registration" {
-#     source = "../modules/RegisterServer"
-#     dnsPrefix = "mc"
-#     dnsZone = var.dnsZone
-#     public_ip = module.server.public_ip
-#     tableName = var.tableName
-#     lgsmCommand = "mcserver"
-#     ec2_instance_id = module.server.ec2_instance_id
-#     depends_on = [module.server]
-# }
+module "application_registration" {
+    source = "../modules/RegisterServer"
+    dnsPrefix = "mc"
+    dnsZone = var.dnsZone
+    public_ip = module.server.public_ip
+    tableName = var.tableName
+    lgsmCommand = "mcserver"
+    ec2_instance_id = module.server.ec2_instance_id
+    depends_on = [module.server]
+}
