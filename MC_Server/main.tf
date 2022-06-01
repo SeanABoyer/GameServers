@@ -1,5 +1,6 @@
 resource "random_password" "password" {
-  length           = 16
+  length = 16
+  special = false
 }
 data "template_file" "application_file" {
     template = "${file("../modules/GameInstallScripts/minecraft.sh")}"
