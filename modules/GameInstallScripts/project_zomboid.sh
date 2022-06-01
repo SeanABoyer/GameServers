@@ -29,7 +29,7 @@ echo steam steam/license note "" | sudo debconf-set-selections
 finishLog "Agreeing to Steam Questions"
 
 startLog "Installing Packages"
-sudo apt-get install bc binutils jq lib32gcc-s1 lib32stdc++6 libsdl2-2.0-0:i386 netcat openjdk-11-jre rng-tools steamcmd tmux unzip -y
+sudo apt-get install bsdmainutils bzip2 bc binutils jq lib32gcc-s1 lib32stdc++6 libsdl2-2.0-0:i386 netcat openjdk-11-jre rng-tools steamcmd tmux unzip -y
 finishLog "Installing Packages"
 
 startLog "Creating User and Changing User"
