@@ -23,5 +23,6 @@ module "application_registration" {
     publicIP = module.server.public_ip
     tableName = var.tableName
     lgsmCommand = "mcserver"
+    ec2_instance_id = module.server.ec2_instance_id
     depends_on = [module.server]
 }
