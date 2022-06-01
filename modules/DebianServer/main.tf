@@ -1,3 +1,22 @@
+terraform {
+    required_version = ">=1.1.3"
+    required_providers {
+      aws = {
+        source  = "hashicorp/aws"
+        version = "~> 3.0"
+      }
+    }
+}
+provider "aws" {
+    region = var.region
+    default_tags {
+        tags = {
+            Name = local.gameInstanceName
+            Game = var.game_name
+        }
+    }
+}
+
 locals  {
     gameInstanceName = "${var.game_name}-${random_uuid.server_name.result}"
 }
