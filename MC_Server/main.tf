@@ -8,12 +8,12 @@ module "server"{
     ssh_username = var.ssh_username
     root_block_size = 32
 }
-# module "application"{
-#     source = "../modules/MinecraftAppConfig"
-#     security_group_id = module.server.security_group_id
-#     cidr_block = module.server.cidr_block
-#     depends_on = [module.server]
-# }
+module "application"{
+    source = "../modules/MinecraftAppConfig"
+    security_group_id = module.server.security_group_id
+    cidr_block = module.server.cidr_block
+    depends_on = [module.server]
+}
 
 module "application_registration" {
     source = "../modules/RegisterServer"
