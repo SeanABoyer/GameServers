@@ -1,3 +1,4 @@
+#!/bin/bash
 mkdir /tmp/ssm
 cd /tmp/ssm
 #x86_64 instances
