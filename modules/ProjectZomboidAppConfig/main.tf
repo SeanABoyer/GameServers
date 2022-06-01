@@ -13,7 +13,7 @@ resource "aws_security_group_rule" "ProjectZomboid_UDP_8766"{
   type              = "ingress"
   from_port         = 8766
   to_port           = 8766
-  protocol          = "tcp"
+  protocol          = "udp"
   cidr_blocks       = ["0.0.0.0/0"]
   security_group_id = var.security_group_id
 }
