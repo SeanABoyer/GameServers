@@ -12,6 +12,8 @@ finishLog () {
 }
 
 startLog "Updating System"
+sudo apt-get update -y
+sudo apt-get upgrade -y
 sudo apt-get install software-properties-common -y
 sudo apt-add-repository contrib
 sudo apt-add-repository non-free
