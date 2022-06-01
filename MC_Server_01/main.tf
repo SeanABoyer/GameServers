@@ -13,6 +13,7 @@ module "application"{
     source = "../modules/MinecraftAppConfig"
     security_group_id = module.server.security_group_id
     cidr_block = module.server.cidr_block
+    depends_on = [server]
 }
 
 module "application_registration" {
@@ -22,4 +23,5 @@ module "application_registration" {
     publicIP = module.server.publicIP
     tableName = var.tableName
     lgsmCommand = "mcserver"
+    depends_on = [server]
 }
