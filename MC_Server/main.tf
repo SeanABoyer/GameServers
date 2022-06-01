@@ -1,6 +1,10 @@
+resource "random_password" "password" {
+  length           = 16
+}
+
 module "server"{
     source = "../modules/DebianServer"
-
+    application_install_script = templatefile("../modules/GameInstallScripts/minecraft.sh",{password = random_password.password })
     game_name = "mc"
     availability_zone = var.availability_zone
     instance_type = "t2.medium"
@@ -8,6 +12,10 @@ module "server"{
     ssh_username = var.ssh_username
     root_block_size = 32
 }
+module "appScript"{
+
+}
+
 module "application"{
     source = "../modules/MinecraftAppConfig"
     security_group_id = module.server.security_group_id
