@@ -24,8 +24,8 @@ finishLog "Updating System"
 
 
 startLog "Agreeing to Steam Questions"
-echo 'steam steam/question select "I AGREE" | sudo debconf-set-selections'
-echo 'steam steam/license note "" | sudo debconf-set-selections'
+echo steam steam/question select "I AGREE" | sudo debconf-set-selections
+echo steam steam/license note "" | sudo debconf-set-selections
 finishLog "Agreeing to Steam Questions"
 
 startLog "Installing Packages"
