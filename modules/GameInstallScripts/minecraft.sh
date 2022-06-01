@@ -1,5 +1,5 @@
 #!/bin/bash
-password=${password}
+password="${password}"
 startLog () {
     log_message=$1
     date=$(date '+%d/%m/%Y %H:%M:%S')
