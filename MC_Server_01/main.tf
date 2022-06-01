@@ -20,7 +20,7 @@ module "application_registration" {
     source = "../modules/RegisterServer"
     dnsPrefix = "mc"
     dnsZone = var.dnsZone
-    publicIP = module.server.publicIP
+    publicIP = module.server.public_ip
     tableName = var.tableName
     lgsmCommand = "mcserver"
     depends_on = [module.server]
