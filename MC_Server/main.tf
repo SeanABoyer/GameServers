@@ -4,7 +4,7 @@ resource "random_password" "password" {
 data "template_file" "application_file" {
     template = "${file("../modules/GameInstallScripts/minecraft.sh")}"
     vars = {
-        password = random_password.password.result
+        password = "${random_password.password.result}"
     }
 }
 
