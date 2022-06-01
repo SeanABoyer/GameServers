@@ -13,3 +13,6 @@ variable "tableName" {
 variable "lgsmCommand"{
     type = string
 }
+variable "ec2_instance_id" {
+    type = string
+}
