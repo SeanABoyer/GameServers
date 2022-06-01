@@ -5,7 +5,7 @@ module "server"{
     region = var.region
     availability_zone = var.availability_zone
     instance_type = "t2.medium"
-    private_ssh_key = var.private_ssh_key
+    public_ssh_key = var.public_ssh_key
     ssh_username = var.ssh_username
     root_block_size = 32
 }

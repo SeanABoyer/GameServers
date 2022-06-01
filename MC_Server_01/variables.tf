@@ -4,7 +4,7 @@ variable "region"{
 variable "availability_zone"{
     type = string
 }
-variable "private_ssh_key"{
+variable "public_ssh_key" {
     type = string
 }
 variable "ssh_username"{

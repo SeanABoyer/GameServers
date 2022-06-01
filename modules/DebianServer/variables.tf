@@ -19,7 +19,7 @@ variable "instance_type" {
     type = string
     default = "t2.medium"
 }
-variable "private_ssh_key" {
+variable "public_ssh_key" {
     type = string
 }
 variable "ssh_username" {
