@@ -2,7 +2,6 @@ module "server"{
     source = "../modules/DebianServer"
 
     game_name = "mc"
-    region = var.region
     availability_zone = var.availability_zone
     instance_type = "t2.medium"
     public_ssh_key = var.public_ssh_key
