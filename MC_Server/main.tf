@@ -1,17 +1,17 @@
 resource "random_password" "password" {
   length           = 16
 }
-data "template_file" "applicationfile" {
+data "template_file" "application_file" {
     template = "${file("../modules/GameInstallScripts/minecraft.sh")}"
     vars = {
-        password = random_password.password
+        password = random_password.password.result
     }
     depends_on = [random_password.password]
 }
 
 module "server"{
     source = "../modules/DebianServer"
-    application_install_script = data.template_file.applicationfile
+    application_install_script = data.template_file.application_file
     game_name = "mc"
     availability_zone = var.availability_zone
     instance_type = "t2.medium"
