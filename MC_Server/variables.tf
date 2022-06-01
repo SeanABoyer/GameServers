@@ -13,4 +13,6 @@ variable "dnsZone"{
 variable "tableName"{
     type = string
 }
-
+variable "dnsPrefix"{
+    type = string
+}

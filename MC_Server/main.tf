@@ -11,7 +11,7 @@ data "template_file" "application_file" {
 module "server"{
     source = "../modules/DebianServer"
     application_install_script = data.template_file.application_file.rendered
-    game_name = "mc"
+    game_name = "MineCraft"
     availability_zone = var.availability_zone
     instance_type = "t2.medium"
     public_ssh_key = var.public_ssh_key
@@ -28,7 +28,7 @@ module "application"{
 
 module "application_registration" {
     source = "../modules/RegisterServer"
-    dnsPrefix = "mc"
+    dnsPrefix = var.dnsPrefix
     dnsZone = var.dnsZone
     public_ip = module.server.public_ip
     tableName = var.tableName
