@@ -1,7 +1,7 @@
 data aws_route53_zone "DNSZone"{
   name = var.dnsZone
 }
-resource aws_route53_record  "mcDNSRecord" {
+resource aws_route53_record  "DNSRecord" {
   zone_id = data.aws_route53_zone.DNSZone.zone_id
   name = "${var.dnsPrefix}.${var.dnsZone}"
   type = "A"
@@ -19,7 +19,7 @@ resource "aws_dynamodb_table_item" "dynamodbEntry" {
   item = jsonencode(
     {
       "ec2ID":{"S":"${var.ec2_instance_id}"},
-      "dnsName":{"S":"${aws_route53_record.mcDNSRecord.name}"},
+      "dnsName":{"S":"${aws_route53_record.DNSRecord.name}"},
       "startCommand":{"S":"cd ~ && ./${var.lgsmCommand} start"},
       "stopCommand":{"S":"cd ~ && ./${var.lgsmCommand} stop"},
     }
