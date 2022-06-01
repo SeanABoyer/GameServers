@@ -4,7 +4,7 @@ variable "dnsPrefix" {
 variable "dnsZone" {
     type = string
 }
-variable "publicIP"{
+variable "public_ip"{
     type = string
 }
 variable "tableName" {

@@ -6,7 +6,7 @@ resource aws_route53_record  "mcDNSRecord" {
   name = "${var.dnsPrefix}.${var.dnsZone}"
   type = "A"
   ttl = "300"
-  records = [var.publicIP]
+  records = [var.public_ip]
 }
 
 data "aws_dynamodb_table" "DBtable" {
