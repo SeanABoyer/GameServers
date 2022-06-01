@@ -12,9 +12,6 @@ module "server"{
     ssh_username = var.ssh_username
     root_block_size = 32
 }
-module "appScript"{
-
-}
 
 module "application"{
     source = "../modules/MinecraftAppConfig"
