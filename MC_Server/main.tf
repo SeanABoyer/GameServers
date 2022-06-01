@@ -6,12 +6,11 @@ data "template_file" "application_file" {
     vars = {
         password = random_password.password.result
     }
-    depends_on = [random_password.password]
 }
 
 module "server"{
     source = "../modules/DebianServer"
-    application_install_script = data.template_file.application_file
+    application_install_script = data.template_file.application_file.rendered
     game_name = "mc"
     availability_zone = var.availability_zone
     instance_type = "t2.medium"
