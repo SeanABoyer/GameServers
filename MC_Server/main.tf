@@ -6,6 +6,7 @@ data "template_file" "applicationfile" {
     vars = {
         password = random_password.password
     }
+    depends_on = [random_password.password]
 }
 
 module "server"{
