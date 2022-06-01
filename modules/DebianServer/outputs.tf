@@ -1,5 +1,5 @@
 output "public_ip" {
-    value = aws_eip.eip.address
+    value = aws_eip.eip.public_ip
 }
 output "cidr_block" {
     value = aws_vpc.vpc.cidr_block
