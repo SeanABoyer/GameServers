@@ -33,7 +33,7 @@ module "application_registration" {
     dnsPrefix = var.dnsPrefix
     dnsZone = var.dnsZone
     public_ip = module.server.public_ip
-    tableName = var.tableName
+    #tableName = var.tableName
     lgsmCommand = "sevtechserver"
     ec2_instance_id = module.server.ec2_instance_id
     depends_on = [module.server]

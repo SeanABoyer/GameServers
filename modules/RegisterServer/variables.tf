@@ -9,6 +9,7 @@ variable "public_ip"{
 }
 variable "tableName" {
     type = string
+    default = ""
 }
 variable "lgsmCommand"{
     type = string

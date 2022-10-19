@@ -41,3 +41,18 @@ finishLog "Config server"
 # startLog "Start server"
 # sudo -H -u mcserver bash -c "cd ~ && ./mcserver start"
 # finishLog "Start server"
+
+startLog "Downloading SevTech"
+wget https://www.curseforge.com/minecraft/modpacks/sevtech-ages/download/3570046 -o sevtech-server.zip
+unzip sevtech-server.zip sevtech-server
+
+finishLog "Downloading SevTech"
+
+startLog "Installing SevTech"
+cd sevtech-server
+sh Install.sh
+finishLog "Installing SevTech"
+
+startLog "Starting SevTech"
+sh ServerStart.sh
+finishLog "Starting SevTech"
