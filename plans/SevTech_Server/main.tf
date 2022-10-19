@@ -34,7 +34,7 @@ module "application_registration" {
     dnsZone = var.dnsZone
     public_ip = module.server.public_ip
     #tableName = var.tableName
-    lgsmCommand = "sevtechserver"
-    ec2_instance_id = module.server.ec2_instance_id
+    # lgsmCommand = "sevtechserver"
+    # ec2_instance_id = module.server.ec2_instance_id
     depends_on = [module.server]
 }
