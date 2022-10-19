@@ -21,6 +21,10 @@ finishLog "Updating System"
 # sudo apt-get install curl wget file tar bzip2 gzip unzip bsdmainutils python3 util-linux ca-certificates binutils bc jq tmux netcat openjdk-17-jre lib32gcc-s1 lib32stdc++6 libsdl2-2.0-0:i386 -y
 # finishLog "Installing Packages"
 
+startLog "Installing Packages"
+sudo apt-get install unzip 
+finishLog "Installing Packages"
+
 startLog "Creating User and Changing User"
 sudo useradd mcserver -p $password -m
 sudo chown -R mcserver:mcserver /home/mcserver
@@ -43,16 +47,18 @@ finishLog "Creating User and Changing User"
 # finishLog "Start server"
 
 startLog "Downloading SevTech"
-sudo -H -u mcserver bash -c "mkdir -p /home/mcserver/sevtech"
-sudo -H -u mcserver bash -c "wget https://mediafilez.forgecdn.net/files/3570/46/SevTech_Ages_Server_3.2.3.zip -O sevtech-server.zip"
-
+sudo -H -u mcserver bash -c "cd ~ && wget https://mediafilez.forgecdn.net/files/3570/46/SevTech_Ages_Server_3.2.3.zip -O sevtech-server.zip"
 finishLog "Downloading SevTech"
 
 startLog "Installing SevTech"
-sudo -H -u mcserver bash -c "unzip sevtech-server.zip"
-sudo -H -u mcserver bash -c "sh Install.sh"
+sudo -H -u mcserver bash -c "cd ~ && unzip sevtech-server.zip"
+sudo -H -u mcserver bash -c "cd ~ && sh Install.sh"
 finishLog "Installing SevTech"
 
+startLog "Config SevTech"
+
+finishLog "Config SevTech"
+
 startLog "Starting SevTech"
-sudo -H -u mcserver bash -c "sh ServerStart.sh"
+sudo -H -u mcserver bash -c "cd ~ && sh ServerStart.sh"
 finishLog "Starting SevTech"

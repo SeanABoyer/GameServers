@@ -11,11 +11,11 @@ data "template_file" "application_file" {
 }
 
 module "server"{
-    source = "../../modules/DebianServer"
+    source = "../../modules/DebianServerBuster"
     application_install_script = data.template_file.application_file.rendered
-    game_name = "MineCraft"
+    game_name = "SevTechMineCraft"
     availability_zone = var.availability_zone
-    instance_type = "t2.medium"
+    instance_type = "t3.large"
     public_ssh_key = var.public_ssh_key
     ssh_username = var.ssh_username
     root_block_size = 32

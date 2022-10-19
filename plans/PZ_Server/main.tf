@@ -10,7 +10,7 @@ data "template_file" "application_file" {
 }
 
 module "server"{
-    source = "../../modules/DebianServer"
+    source = "../../modules/DebianServerBullseye"
     application_install_script = data.template_file.application_file.rendered
     game_name = "Project_Zomboid"
     availability_zone = var.availability_zone

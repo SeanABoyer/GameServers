@@ -60,7 +60,7 @@ data "aws_ami" "debian" {
     name   = "name"
     values = ["debian-11-*"]
   }
-  owners = ["136693071363"] #Debian Buster [https://wiki.debian.org/Cloud/AmazonEC2Image/Buster]
+  owners = ["136693071363"] #Debian Bullseye [https://wiki.debian.org/Cloud/AmazonEC2Image/Bullseye]
 }
 resource "aws_key_pair" "ssh_key" {
   key_name = "ssh_${local.gameInstanceName}"
