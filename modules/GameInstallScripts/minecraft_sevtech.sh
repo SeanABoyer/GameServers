@@ -46,6 +46,8 @@ finishLog "Creating User and Changing User"
 # sudo -H -u mcserver bash -c "cd ~ && ./mcserver start"
 # finishLog "Start server"
 
+
+
 startLog "Downloading SevTech"
 sudo -H -u mcserver bash -c "cd ~ && wget https://mediafilez.forgecdn.net/files/3570/46/SevTech_Ages_Server_3.2.3.zip -O sevtech-server.zip"
 finishLog "Downloading SevTech"

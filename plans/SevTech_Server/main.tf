@@ -11,9 +11,9 @@ data "template_file" "application_file" {
 }
 
 module "server"{
-    source = "../../modules/DebianServerBuster"
+    source = "../../modules/DebianServerBullseye"
     application_install_script = data.template_file.application_file.rendered
-    game_name = "SevTechMineCraft"
+    game_name = "MineCraft"
     availability_zone = var.availability_zone
     instance_type = "t3.large"
     public_ssh_key = var.public_ssh_key
