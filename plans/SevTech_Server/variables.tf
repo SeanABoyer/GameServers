@@ -10,9 +10,9 @@ variable "ssh_username"{
 variable "dnsZone"{
     type = string    
 }
-variable "tableName"{
-    type = string
-}
+# variable "tableName"{
+#     type = string
+# }
 variable "dnsPrefix"{
     type = string
 }
