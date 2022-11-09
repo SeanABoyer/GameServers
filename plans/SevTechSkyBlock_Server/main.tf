@@ -4,7 +4,7 @@ resource "random_password" "password" {
 }
 
 data "template_file" "application_file" {
-    template = "${file("../../modules/GameInstallScripts/minecraft_sevtech.sh")}"
+    template = "${file("../../modules/GameInstallScripts/minecraft_sevtechskyblock.sh")}"
     vars = {
         password = "${random_password.password.result}"
     }
@@ -33,8 +33,5 @@ module "application_registration" {
     dnsPrefix = var.dnsPrefix
     dnsZone = var.dnsZone
     public_ip = module.server.public_ip
-    #tableName = var.tableName
-    # lgsmCommand = "sevtechserver"
-    # ec2_instance_id = module.server.ec2_instance_id
     depends_on = [module.server]
 }
