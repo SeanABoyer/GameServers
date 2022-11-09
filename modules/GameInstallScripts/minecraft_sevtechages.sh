@@ -26,13 +26,8 @@ sudo useradd mcserver -p $password -m
 sudo chown -R mcserver:mcserver /home/mcserver
 finishLog "Creating User and Changing User"
 
-# wget https://github.com/adoptium/temurin8-binaries/releases/download/jdk8u345-b01/OpenJDK8U-jre_x64_linux_hotspot_8u345b01.tar.gz -O OpenJDK8.tar.gz
-# tar xf OpenJDK8.tar.gz
-# echo "export PATH=$PATH:/home/mcserver/java/jdk8u345-b01-jre/bin" >> /etc/profile
-# source /etc/profile
-
 startLog "Downloading SevTech"
-sudo -H -u mcserver bash -c "cd ~ && wget https://mediafilez.forgecdn.net/files/3570/46/SevTech_Ages_Server_3.2.3.zip -O sevtech-server.zip"
+sudo -H -u mcserver bash -c "cd ~ && wget https://mediafilez.forgecdn.net/files/3583/116/SevTech_Sky_Server_3.2.3.zip -O sevtech-server.zip"
 finishLog "Downloading SevTech"
 
 startLog "Installing Java 8"
