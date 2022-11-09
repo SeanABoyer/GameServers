@@ -1,10 +1,5 @@
 variable "game_name" {
     type = string
-
-    validation {
-        condition = contains(["Project_Zomboid","MineCraft"],var.game_name)
-        error_message = "Invalid gameName provided."
-    }
 }
 
 variable "availability_zone" {
