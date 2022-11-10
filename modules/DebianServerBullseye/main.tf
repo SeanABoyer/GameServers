@@ -100,6 +100,7 @@ resource "aws_instance" "server" {
 }
 
 resource "aws_security_group" "ec2_sg" {
+  name = "${local.gameInstanceName}-ec2-sg"
   vpc_id = aws_vpc.vpc.id
 }
 
@@ -123,6 +124,7 @@ resource "aws_efs_mount_target" "efs_mount_target" {
 }
 
 resource "aws_security_group" "efs_sg" {
+  name = "${local.gameInstanceName}-efs-sg"
   vpc_id = aws_vpc.vpc.id
 }
 
