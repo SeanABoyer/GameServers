@@ -40,8 +40,8 @@ source /etc/profile
 finishLog "Installing Java 8"
 
 startLog "Installing SevTech"
-sudo -H -u mcserver bash -c "cd ~ && unzip sevtech-server.zip"
-sudo -H -u mcserver bash -c "source /etc/profile && cd ~ && sh Install.sh"
+sudo -H -u mcserver bash -c "cd /home/mcserver && unzip sevtech-server.zip"
+sudo -H -u mcserver bash -c "source /etc/profile && cd /home/mcserver && sh Install.sh"
 finishLog "Installing SevTech"
 
 startLog "Config SevTech"
@@ -50,6 +50,24 @@ sudo -H -u mcserver bash -c "cd ~ && sed -i 's/MAX_RAM=\"4096M\"/MAX_RAM=\"6656M
 sudo -H -u mcserver bash -c "cd ~ && sed -i 's/MIN_RAM=\"1024M\"/MIN_RAM=\"4096M\"/g' /home/mcserver/settings.sh"
 finishLog "Config SevTech"
 
+startLog "Create Service"
+touch /etc/systemd/system/mcserver.service
+echo "[Unit]" >>/etc/systemd/system/mcserver.service
+echo "Description=MCServer" >>/etc/systemd/system/mcserver.service
+echo "[Service]" >>/etc/systemd/system/mcserver.service
+echo "Environment=PATH=$PATH:/home/mcserver/java/jdk8u345-b01-jre/bin" >>/etc/systemd/system/mcserver.service
+echo "User=mcserver" >>/etc/systemd/system/mcserver.service
+echo "WorkingDirectory=/home/mcserver" >> /etc/systemd/system/mcserver.service
+echo "ExecStart=\"/home/mcserver/ServerStart.sh\"" >>/etc/systemd/system/mcserver.service
+echo "Restart=always" >>/etc/systemd/system/mcserver.service
+echo "[Install]" >>/etc/systemd/system/mcserver.service
+echo "WantedBy=multi-user.target" >>/etc/systemd/system/mcserver.service
+
+systemctl daemon-reload
+systemctl enable mcserver
+finishLog "Create Service"
+
+
 startLog "Starting SevTech"
-sudo -H -u mcserver bash -c "source /etc/profile && cd ~ && sh ServerStart.sh &>/home/mcserver/serverLogs.log &"
+systemctl start mcserver
 finishLog "Starting SevTech"
