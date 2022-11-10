@@ -106,34 +106,35 @@ resource "aws_security_group" "ec2_sg" {
 #END# Instance
 
 #START# EFS
-resource "aws_efs_file_system" "efs" {}
-resource "aws_efs_mount_target" "efs_mount_target" {
-  file_system_id = aws_efs_file_system.efs.id
-  subnet_id      = aws_subnet.subnet.id
-  security_groups = [aws_security_group.efs_sg.id]
-}
+#TODO: SETUP EFS
+# resource "aws_efs_file_system" "efs" {}
+# resource "aws_efs_mount_target" "efs_mount_target" {
+#   file_system_id = aws_efs_file_system.efs.id
+#   subnet_id      = aws_subnet.subnet.id
+#   security_groups = [aws_security_group.efs_sg.id]
+# }
 
-resource "aws_security_group" "efs_sg" {
-  name = "${local.gameInstanceName}-efs-sg"
-  vpc_id = aws_vpc.vpc.id
-}
+# resource "aws_security_group" "efs_sg" {
+#   name = "${local.gameInstanceName}-efs-sg"
+#   vpc_id = aws_vpc.vpc.id
+# }
 
-resource "aws_security_group_rule" "efs_inbound_2049"{
-  type              = "ingress"
-  from_port         = 2049
-  to_port           = 2049
-  protocol          = "-1"
-  source_security_group_id = aws_security_group.ec2_sg.id
-  security_group_id = aws_security_group.efs_sg.id
-}
-resource "aws_security_group_rule" "efs_outbound_2049"{
-  type              = "egress"
-  from_port         = 2049
-  to_port           = 2049
-  protocol          = "-1"
-  source_security_group_id = aws_security_group.ec2_sg.id
-  security_group_id = aws_security_group.efs_sg.id
-}
+# resource "aws_security_group_rule" "efs_inbound_2049"{
+#   type              = "ingress"
+#   from_port         = 2049
+#   to_port           = 2049
+#   protocol          = "-1"
+#   source_security_group_id = aws_security_group.ec2_sg.id
+#   security_group_id = aws_security_group.efs_sg.id
+# }
+# resource "aws_security_group_rule" "efs_outbound_2049"{
+#   type              = "egress"
+#   from_port         = 2049
+#   to_port           = 2049
+#   protocol          = "-1"
+#   source_security_group_id = aws_security_group.ec2_sg.id
+#   security_group_id = aws_security_group.efs_sg.id
+# }
 #END# EFS
 
 #START# Networking
