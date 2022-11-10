@@ -97,6 +97,7 @@ resource "aws_instance" "server" {
   root_block_device {
     volume_size = var.root_block_size
   }
+  tags = merge(local.tags, {name = "Schedule", value = "sevtech-server"})
 }
 
 resource "aws_security_group" "ec2_sg" {
