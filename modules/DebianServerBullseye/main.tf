@@ -103,16 +103,6 @@ resource "aws_security_group" "ec2_sg" {
   name = "${local.gameInstanceName}-ec2-sg"
   vpc_id = aws_vpc.vpc.id
 }
-
-resource "aws_security_group_rule" "allow_25565_outbound"{
-  type              = "egress"
-  from_port         = 25565
-  to_port           = 25565
-  protocol          = "TCP"
-  cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = aws_security_group.ec2_sg.id
-}
-
 #END# Instance
 
 #START# EFS
@@ -128,22 +118,22 @@ resource "aws_security_group" "efs_sg" {
   vpc_id = aws_vpc.vpc.id
 }
 
-# resource "aws_security_group_rule" "efs_inbound_2049"{
-#   type              = "ingress"
-#   from_port         = 2049
-#   to_port           = 2049
-#   protocol          = "-1"
-#   source_security_group_id = aws_security_group.ec2_sg.id
-#   security_group_id = aws_security_group.efs_sg.id
-# }
-# resource "aws_security_group_rule" "efs_outbound_2049"{
-#   type              = "egress"
-#   from_port         = 2049
-#   to_port           = 2049
-#   protocol          = "-1"
-#   source_security_group_id = aws_security_group.ec2_sg.id
-#   security_group_id = aws_security_group.efs_sg.id
-# }
+resource "aws_security_group_rule" "efs_inbound_2049"{
+  type              = "ingress"
+  from_port         = 2049
+  to_port           = 2049
+  protocol          = "-1"
+  source_security_group_id = aws_security_group.ec2_sg.id
+  security_group_id = aws_security_group.efs_sg.id
+}
+resource "aws_security_group_rule" "efs_outbound_2049"{
+  type              = "egress"
+  from_port         = 2049
+  to_port           = 2049
+  protocol          = "-1"
+  source_security_group_id = aws_security_group.ec2_sg.id
+  security_group_id = aws_security_group.efs_sg.id
+}
 #END# EFS
 
 #START# Networking
