@@ -41,6 +41,8 @@ finishLog "Installing Java 8"
 
 startLog "Installing SevTech"
 sudo -H -u mcserver bash -c "cd /home/mcserver && unzip sevtech-server.zip"
+sudo -H -u mcserver bash -c "cd ~ && chmod +x ServerStart.sh"
+sudo -H -u mcserver bash -c "cd ~ && chmod +x Install.sh"
 sudo -H -u mcserver bash -c "source /etc/profile && cd /home/mcserver && sh Install.sh"
 finishLog "Installing SevTech"
 
@@ -55,7 +57,7 @@ touch /etc/systemd/system/mcserver.service
 echo "[Unit]" >>/etc/systemd/system/mcserver.service
 echo "Description=MCServer" >>/etc/systemd/system/mcserver.service
 echo "[Service]" >>/etc/systemd/system/mcserver.service
-echo "Environment=PATH=$PATH:/home/mcserver/java/jdk8u345-b01-jre/bin" >>/etc/systemd/system/mcserver.service
+echo "Environment=PATH=/home/mcserver/java/jdk8u345-b01-jre/bin" >>/etc/systemd/system/mcserver.service
 echo "User=mcserver" >>/etc/systemd/system/mcserver.service
 echo "WorkingDirectory=/home/mcserver" >> /etc/systemd/system/mcserver.service
 echo "ExecStart=\"/home/mcserver/ServerStart.sh\"" >>/etc/systemd/system/mcserver.service
