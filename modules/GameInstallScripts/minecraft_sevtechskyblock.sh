@@ -13,20 +13,23 @@ finishLog () {
     echo "[$date][Completed] $log_message"
 }
 
+startLog "Updating System"
+yum install amazon-efs-utils -y
+# sudo dpkg --add-architecture i386
+# sudo apt-get update -y
+# sudo apt-get upgrade -y
+finishLog "Updating System"
+
 startLog "Mounting EFS"
 mkdir -p "/mnt/$gamename"
 mount -t efs -o tls,iam "$filesystem_id" "/mnt/$gamename"
 finishLog "Mounting EFS"
 
-startLog "Updating System"
-sudo dpkg --add-architecture i386
-sudo apt-get update -y
-sudo apt-get upgrade -y
-finishLog "Updating System"
 
-startLog "Installing Packages"
-sudo apt-get install unzip 
-finishLog "Installing Packages"
+
+# startLog "Installing Packages"
+# sudo apt-get install unzip 
+# finishLog "Installing Packages"
 
 startLog "Creating User and Changing User"
 sudo useradd mcserver -p $password -m
@@ -54,6 +57,8 @@ sudo -H -u mcserver bash -c "source /etc/profile && cd /home/mcserver && sh Inst
 finishLog "Installing SevTech"
 
 startLog "Config SevTech"
+#For whatever reason without the sleep the auto accepting of the EULA fails
+sleep 5
 sudo -H -u mcserver bash -c "cd ~ && sed -i 's/eula=false/eula=true/g' /home/mcserver/eula.txt"
 sudo -H -u mcserver bash -c "cd ~ && sed -i 's/MAX_RAM=\"4096M\"/MAX_RAM=\"6656M\"/g' /home/mcserver/settings.sh"
 sudo -H -u mcserver bash -c "cd ~ && sed -i 's/MIN_RAM=\"1024M\"/MIN_RAM=\"4096M\"/g' /home/mcserver/settings.sh"

@@ -27,9 +27,10 @@ module "server"{
 
 module "application"{
     source = "../../modules/MinecraftAppConfig"
-    security_group_id = module.server.security_group_id
+    security_group_id = module.server.ec2_security_group_id
     cidr_block = module.server.cidr_block
     depends_on = [module.server]
+    efs_security_group_id = module.server.efs_security_group_id
 }
 
 module "application_registration" {
