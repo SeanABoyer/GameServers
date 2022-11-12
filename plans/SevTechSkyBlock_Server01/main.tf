@@ -13,7 +13,7 @@ data "template_file" "application_file" {
 module "server"{
     source = "../../modules/Server"
     application_install_script = data.template_file.application_file.rendered
-    game_name = "SevTechAges"
+    game_name = "SevTechSkyBlock"
     instance_type = "t3.large"
     public_ssh_key = var.public_ssh_key
     ssh_username = var.ssh_username
