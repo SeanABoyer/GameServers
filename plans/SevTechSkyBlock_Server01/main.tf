@@ -3,17 +3,23 @@ resource "random_password" "password" {
   special = false
 }
 
+locals {
+    gamename = "SevTechSkyBlock"
+}
+
 data "template_file" "application_file" {
     template = "${file("../../modules/GameInstallScripts/minecraft_sevtechskyblock.sh")}"
     vars = {
-        password = "${random_password.password.result}"
+        password = "${random_password.password.result}",
+        filesystem_id = module.server.efs_file_system_id,
+        gamename = local.gamename
     }
 }
 
 module "server"{
     source = "../../modules/Server"
     application_install_script = data.template_file.application_file.rendered
-    game_name = "SevTechSkyBlock"
+    game_name = local.gamename
     instance_type = "t3.large"
     public_ssh_key = var.public_ssh_key
     ssh_username = var.ssh_username

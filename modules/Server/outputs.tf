@@ -10,3 +10,6 @@ output "security_group_id" {
 output "ec2_instance_id" {
     value = aws_instance.server.id
 }
+output "efs_file_system_id" {
+    value = aws_efs_file_system.efs.id
+}

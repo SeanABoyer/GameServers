@@ -1,5 +1,7 @@
 #!/bin/bash
 password="${password}"
+filesystem_id="${filesystem_id}"
+gamename="${gamename}"
 startLog () {
     log_message=$1
     date=$(date '+%d/%m/%Y %H:%M:%S')
@@ -10,6 +12,11 @@ finishLog () {
     date=$(date '+%d/%m/%Y %H:%M:%S')
     echo "[$date][Completed] $log_message"
 }
+
+startLog "Mounting EFS"
+mkdir -p "/mnt/$gamename"
+mount -t efs -o tls,iam "$filesystem_id" "/mnt/$gamename"
+finishLog "Mounting EFS"
 
 startLog "Updating System"
 sudo dpkg --add-architecture i386

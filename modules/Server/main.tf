@@ -64,6 +64,11 @@ data "template_cloudinit_config" "user_data" {
   gzip = true
   base64_encode = true
   part {
+    filename = "SSMAgentDebian.sh"
+    content_type = "text/x-shellscript"
+    content = "${file("${path.module}/deploySSMAgent.sh")}"
+  }
+  part {
     filename = "applicationInstallScript.sh"
     content_type = "text/x-shellscript"
     content = var.application_install_script
@@ -91,12 +96,35 @@ resource "aws_security_group" "ec2_sg" {
 #END# Instance
 
 #START# EFS
-#TODO: SETUP EFS
 resource "aws_efs_file_system" "efs" {}
 resource "aws_efs_mount_target" "efs_mount_target" {
   file_system_id = aws_efs_file_system.efs.id
   subnet_id      = aws_subnet.subnet.id
   security_groups = [aws_security_group.efs_sg.id]
+}
+
+resource "aws_efs_file_system_policy" "policy" {
+  file_system_id = aws_efs_file_system.efs.id
+  policy = data.aws_iam_policy_document.efs_mounting_policy.json
+}
+
+data "aws_iam_policy_document" "efs_mounting_policy" {
+  #https://docs.aws.amazon.com/efs/latest/ug/iam-access-control-nfs-efs.html
+  statement{ 
+    effect = "Allow"
+    actions = [
+      "elasticfilesystem:ClientMount",
+      "elasticfilesystem:ClientWrite",
+      "elasticfilesystem:ClientRootAccess"
+    ]
+    principals {
+      identifiers = [aws_iam_role.serverRole.arn]
+      type = "AWS"
+    }
+    resources = [
+      aws_efs_file_system.efs.arn
+    ]
+  }
 }
 
 resource "aws_security_group" "efs_sg" {
