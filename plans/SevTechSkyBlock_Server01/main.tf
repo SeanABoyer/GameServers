@@ -11,7 +11,7 @@ data "template_file" "application_file" {
 }
 
 module "server"{
-    source = "../../modules/server"
+    source = "../../modules/Server"
     application_install_script = data.template_file.application_file.rendered
     game_name = "SevTechAges"
     instance_type = "t3.large"
