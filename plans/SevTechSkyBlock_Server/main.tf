@@ -6,7 +6,9 @@ resource "random_password" "password" {
 data "template_file" "application_file" {
     template = "${file("../../modules/GameInstallScripts/minecraft_sevtechskyblock.sh")}"
     vars = {
-        password = "${random_password.password.result}"
+        password = "${random_password.password.result}",
+        filesystem_id = "",
+        gamename = local.gamename
     }
 }
 
