@@ -3,11 +3,15 @@ resource "random_password" "password" {
   special = false
 }
 
+locals {
+    gamename = "SevTechAges"
+}
+
 data "template_file" "application_file" {
     template = "${file("../../modules/GameInstallScripts/minecraft_sevtechskyblock.sh")}"
     vars = {
         password = "${random_password.password.result}",
-        filesystem_id = "",
+        filesystem_id = "", 
         gamename = local.gamename
     }
 }
@@ -15,7 +19,7 @@ data "template_file" "application_file" {
 module "server"{
     source = "../../modules/DebianServerBullseye"
     application_install_script = data.template_file.application_file.rendered
-    game_name = "SevTechAges"
+    game_name = local.gamename
     availability_zone = var.availability_zone
     instance_type = "t3.large"
     public_ssh_key = var.public_ssh_key
