@@ -83,7 +83,7 @@ then
     sudo -H -u mcserver bash -c "source /etc/profile && cd $root_dir && sh Install.sh"
     finishLog "Installing SevTech"
 else
-    generalLog "Found [$root_dir/ServerStart.sh]."
+    generalLog "Found [$root_dir/ServerStart.sh]. "
 fi
 
 #If the services does not exist, then create it
