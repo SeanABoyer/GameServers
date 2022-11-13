@@ -60,7 +60,7 @@ sudo chown -R mcserver:mcserver $root_dir
 finishLog "Creating User and Changing User"
 
 #If the ServerStart.sh does not exist, then download modpack and java to EFS share
-if [ ! -f "$root_dir/ServerStart.sh"]
+if [ ! -f "$root_dir/ServerStart.sh" ]
 then
     generalLog "Unable to find [$root_dir/ServerStart.sh]."
     startLog "Downloading SevTech"
@@ -87,7 +87,7 @@ else
 fi
 
 #If the services does not exist, then create it
-if [! -f "/etc/systemd/system/mcserver.service"]
+if [ ! -f "/etc/systemd/system/mcserver.service" ]
 then
     generalLog "Unable to find [/etc/systemd/system/mcserver.service]."
     startLog "Create Service"
