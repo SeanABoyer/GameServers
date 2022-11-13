@@ -13,6 +13,11 @@ finishLog () {
     date=$(date '+%d/%m/%Y %H:%M:%S')
     echo "[$date][Completed] $log_message"
 }
+generalLog () {
+    log_message=$1
+    date=$(date '+%d/%m/%Y %H:%M:%S')
+    echo "[$date][Info] $log_message"
+}
 
 function startService(){
     #TODO change RAM based on variables
@@ -29,7 +34,8 @@ function startService(){
     startLog "Accept EULA"
     while [! -f "$root_dir/eula.txt"]
     do
-        sleep 2
+        generalLog "Unable to find [$root_dir/eula.txt]. Will check again in 10 seconds. "
+        sleep 10
     done
     sudo -H -u mcserver bash -c "cd $root_dir && sed -i 's/eula=false/eula=true/g' $root_dir/eula.txt"
     finishLog "Accept EULA"
@@ -44,6 +50,7 @@ finishLog "Updating System"
 
 startLog "Mounting EFS"
 mkdir -p $root_dir
+generalLog "Attempting to mount $filesystem_id to $root_dir"
 mount -t efs -o tls,iam "$filesystem_id" $root_dir
 finishLog "Mounting EFS"
 
@@ -53,7 +60,9 @@ sudo chown -R mcserver:mcserver $root_dir
 finishLog "Creating User and Changing User"
 
 #If the ServerStart.sh does not exist, then download modpack and java to EFS share
-if [ ! -f "$root_dir/ServerStart.sh"]; then
+if [ ! -f "$root_dir/ServerStart.sh"]
+then
+    generalLog "Unable to find [$root_dir/ServerStart.sh]."
     startLog "Downloading SevTech"
     sudo -H -u mcserver bash -c "cd $root_dir && wget https://mediafilez.forgecdn.net/files/3583/116/SevTech_Sky_Server_3.2.3.zip -O sevtech-server.zip"
     finishLog "Downloading SevTech"
@@ -73,10 +82,14 @@ if [ ! -f "$root_dir/ServerStart.sh"]; then
     sudo -H -u mcserver bash -c "cd $root_dir && chmod +x Install.sh"
     sudo -H -u mcserver bash -c "source /etc/profile && cd $root_dir && sh Install.sh"
     finishLog "Installing SevTech"
+else
+    generalLog "Found [$root_dir/ServerStart.sh]."
 fi
 
 #If the services does not exist, then create it
-if [! -f "/etc/systemd/system/mcserver.service"]; then
+if [! -f "/etc/systemd/system/mcserver.service"]
+then
+    generalLog "Unable to find [/etc/systemd/system/mcserver.service]."
     startLog "Create Service"
     touch /etc/systemd/system/mcserver.service
     echo "[Unit]" >>/etc/systemd/system/mcserver.service
@@ -93,6 +106,8 @@ if [! -f "/etc/systemd/system/mcserver.service"]; then
     systemctl daemon-reload
     systemctl enable mcserver
     finishLog "Create Service"
+else
+    generalLog "Found [/etc/systemd/system/mcserver.service]."
 fi
 
 startService
