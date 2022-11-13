@@ -21,10 +21,10 @@ generalLog () {
 
 function startService(){
     #TODO change RAM based on variables
-    startLog "Config SevTech"
+    startLog "Config Allowed Min & Max Memory"
     sudo -H -u mcserver bash -c "cd $root_dir && sed -i 's/MAX_RAM=\"4096M\"/MAX_RAM=\"6656M\"/g' $root_dir/settings.sh"
     sudo -H -u mcserver bash -c "cd $root_dir && sed -i 's/MIN_RAM=\"1024M\"/MIN_RAM=\"4096M\"/g' $root_dir/settings.sh"
-    finishLog "Config SevTech"
+    finishLog "Config Allowed Min & Max Memory"
 
     startLog "Start Service"
     systemctl start mcserver
@@ -32,7 +32,7 @@ function startService(){
 
     #EULA file is created after service is started
     startLog "Accept EULA"
-    while [! -f "$root_dir/eula.txt"]
+    while [ ! -f "$root_dir/eula.txt" ]
     do
         generalLog "Unable to find [$root_dir/eula.txt]. Will check again in 10 seconds. "
         sleep 10
@@ -63,10 +63,6 @@ finishLog "Creating User and Changing User"
 if [ ! -f "$root_dir/ServerStart.sh" ]
 then
     generalLog "Unable to find [$root_dir/ServerStart.sh]."
-    startLog "Downloading SevTech"
-    sudo -H -u mcserver bash -c "cd $root_dir && wget https://mediafilez.forgecdn.net/files/3583/116/SevTech_Sky_Server_3.2.3.zip -O sevtech-server.zip"
-    finishLog "Downloading SevTech"
-
     startLog "Installing Java 8"
     sudo -H -u mcserver bash -c "cd $root_dir && mkdir java"
     sudo -H -u mcserver bash -c "cd $root_dir/java && wget https://github.com/adoptium/temurin8-binaries/releases/download/jdk8u345-b01/OpenJDK8U-jre_x64_linux_hotspot_8u345b01.tar.gz -O OpenJDK8.tar.gz"
@@ -75,6 +71,10 @@ then
     echo "export PATH=\$PATH:$root_dir/java/jdk8u345-b01-jre/bin" >> /etc/profile
     source /etc/profile
     finishLog "Installing Java 8"
+
+    startLog "Downloading SevTech"
+    sudo -H -u mcserver bash -c "cd $root_dir && wget https://mediafilez.forgecdn.net/files/3583/116/SevTech_Sky_Server_3.2.3.zip -O sevtech-server.zip"
+    finishLog "Downloading SevTech"
 
     startLog "Installing SevTech"
     sudo -H -u mcserver bash -c "cd $root_dir && unzip sevtech-server.zip"
@@ -90,7 +90,7 @@ fi
 if [ ! -f "/etc/systemd/system/mcserver.service" ]
 then
     generalLog "Unable to find [/etc/systemd/system/mcserver.service]."
-    startLog "Create Service"
+    startLog "Service Creation"
     touch /etc/systemd/system/mcserver.service
     echo "[Unit]" >>/etc/systemd/system/mcserver.service
     echo "Description=MCServer" >>/etc/systemd/system/mcserver.service
@@ -105,7 +105,7 @@ then
 
     systemctl daemon-reload
     systemctl enable mcserver
-    finishLog "Create Service"
+    finishLog "Service Creation"
 else
     generalLog "Found [/etc/systemd/system/mcserver.service]."
 fi
