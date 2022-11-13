@@ -26,7 +26,7 @@ module "application"{
     ec2_security_group_id = module.server.ec2_security_group_id
     cidr_block = module.server.cidr_block
     depends_on = [module.server]
-    efs_security_group_id = module.server.efs_security_group_id
+    efs_security_group_id = ""
 }
 
 module "application_registration" {
