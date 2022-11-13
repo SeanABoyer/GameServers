@@ -169,6 +169,7 @@ resource "aws_security_group_rule" "efs_inbound_2049_udp"{
 #START# Networking
 resource "aws_vpc" "vpc" {
   cidr_block = var.vpc_cidr_block
+  enable_dns_hostnames = true
 }
 resource "aws_internet_gateway" "gw" {
   vpc_id = aws_vpc.vpc.id
