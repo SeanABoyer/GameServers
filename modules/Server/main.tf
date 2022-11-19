@@ -16,6 +16,8 @@ provider "aws" {
     }
 }
 
+data "aws_region" "current" {}
+
 locals  {
     gameInstanceName = "${var.game_name}-${random_uuid.server_name.result}"
 }
@@ -75,8 +77,17 @@ data "template_cloudinit_config" "user_data" {
   }
 }
 
+data "aws_ami" "amazon_linux_latest" {
+  owners = "amazon"
+  most_recent = true
+  filter = {
+    name = "name"
+    values = ["amzn2-ami-kernel-5.10*"]
+  }
+}
+
 resource "aws_instance" "server" {
-  ami           = "ami-0d593311db5abb72b"
+  ami           = data.aws_ami.amazon_linux_latest.id
   instance_type = var.instance_type
   iam_instance_profile = aws_iam_instance_profile.serverInstanceProfile.name
   private_ip = var.private_ip
@@ -86,7 +97,6 @@ resource "aws_instance" "server" {
   vpc_security_group_ids = [aws_security_group.ec2_sg.id]
 
   user_data= "${data.template_cloudinit_config.user_data.rendered}"
-  tags = {name = "Schedule", value = "sevtech-server"}
 }
 
 resource "aws_security_group" "ec2_sg" {
@@ -94,6 +104,27 @@ resource "aws_security_group" "ec2_sg" {
   vpc_id = aws_vpc.vpc.id
 }
 #END# Instance
+
+#START# CloudWatch
+resource "aws_cloudwatch_metric_alarm" "cw_connections" {
+  alarm_name                = "StopInstance"
+  comparison_operator       = "LessThanThreshold"
+  evaluation_periods        = "4"
+  metric_name               = "NetworkOut"
+  namespace                 = "AWS/EC2"
+  period                    = "900"
+  statistic                 = "Average"
+  threshold                 = "2000000"
+  alarm_description         = "This metric Monitors Network Traffic (in Bytes) Outbound."
+  actions_enabled           = true
+  alarm_actions             = [
+    "arn:aws:automate:${data.aws_region.current.name}:ec2:stop"
+  ]
+  dimensions = {
+    InstanceId = "${aws_instance.server.id}"
+  }
+}
+#END# CloudWatch
 
 #START# EFS
 resource "aws_efs_file_system" "efs" {}
