@@ -78,9 +78,9 @@ data "template_cloudinit_config" "user_data" {
 }
 
 data "aws_ami" "amazon_linux_latest" {
-  owners = "amazon"
+  owners = ["amazon"]
   most_recent = true
-  filter = {
+  filter {
     name = "name"
     values = ["amzn2-ami-kernel-5.10*"]
   }
