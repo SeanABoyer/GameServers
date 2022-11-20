@@ -20,7 +20,7 @@ module "server"{
     source = "../../modules/Server"
     application_install_script = data.template_file.application_file.rendered
     game_name = local.gamename
-    instance_type = "r6g.large"
+    instance_type = "r6a.large"
     public_ssh_key = var.public_ssh_key
     ssh_username = var.ssh_username
 }
