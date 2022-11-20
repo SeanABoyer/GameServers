@@ -105,7 +105,7 @@ resource "aws_instance" "server" {
     "configuration_hash" : sha256(data.template_cloudinit_config.user_data.rendered)
   }
   lifecycle {
-    replace_triggered_by = data.template_cloudinit_config.user_data.rendered
+    replace_triggered_by = [sha256(data.template_cloudinit_config.user_data.rendered)]
   }
 }
 
