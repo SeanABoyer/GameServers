@@ -102,7 +102,10 @@ resource "aws_instance" "server" {
 
   user_data= "${data.template_cloudinit_config.user_data.rendered}"
   tags = {
-    "configuration_hash":sha256(data.template_cloudinit_config.user_data.rendered)
+    "configuration_hash" : sha256(data.template_cloudinit_config.user_data.rendered)
+  }
+  lifecycle {
+    replace_triggered_by = sha256(data.template_cloudinit_config.user_data.rendered)
   }
 }
 
