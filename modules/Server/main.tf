@@ -101,6 +101,9 @@ resource "aws_instance" "server" {
   vpc_security_group_ids = [aws_security_group.ec2_sg.id]
 
   user_data= "${data.template_cloudinit_config.user_data.rendered}"
+  tags = {
+    "configuration_hash":sha256(data.template_cloudinit_config.user_data.rendered)
+  }
 }
 
 resource "aws_security_group" "ec2_sg" {
