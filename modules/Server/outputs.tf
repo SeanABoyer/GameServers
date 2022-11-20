@@ -16,3 +16,6 @@ output "efs_file_system_id" {
 output "efs_security_group_id" {
     value = aws_security_group.efs_sg.id
 }
+output "memory_in_bytes" {
+    value = data.aws_ec2_instance_type.this.memory_size
+}

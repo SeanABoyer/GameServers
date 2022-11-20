@@ -86,9 +86,13 @@ data "aws_ami" "amazon_linux_latest" {
   }
 }
 
+data "aws_ec2_instance_type" "this" {
+  instance_type = var.instance_type
+}
+
 resource "aws_instance" "server" {
   ami           = data.aws_ami.amazon_linux_latest.id
-  instance_type = var.instance_type
+  instance_type = data.aws_ec2_instance_type.this.instance_type
   iam_instance_profile = aws_iam_instance_profile.serverInstanceProfile.name
   private_ip = var.private_ip
 

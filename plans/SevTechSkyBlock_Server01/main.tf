@@ -12,7 +12,9 @@ data "template_file" "application_file" {
     vars = {
         password = "${random_password.password.result}",
         filesystem_id = module.server.efs_file_system_id,
-        gamename = local.gamename
+        gamename = local.gamename,
+        minimum_ram = "${module.server.memory_in_bytes * 0.6}",
+        maximum_ram = "${module.server.memory_in_bytes * 0.8}"
     }
 }
 

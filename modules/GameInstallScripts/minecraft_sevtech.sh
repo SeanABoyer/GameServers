@@ -1,5 +1,7 @@
 #!/bin/bash
 password="${password}"
+min_ram="${minimum_ram}"
+max_ram="${maximum_ram}"
 startLog () {
     log_message=$1
     date=$(date '+%d/%m/%Y %H:%M:%S')
@@ -46,8 +48,8 @@ finishLog "Installing SevTech"
 
 startLog "Config SevTech"
 sudo -H -u mcserver bash -c "cd ~ && sed -i 's/eula=false/eula=true/g' /home/mcserver/eula.txt"
-sudo -H -u mcserver bash -c "cd ~ && sed -i 's/MAX_RAM=\"4096M\"/MAX_RAM=\"6656M\"/g' /home/mcserver/settings.sh"
-sudo -H -u mcserver bash -c "cd ~ && sed -i 's/MIN_RAM=\"1024M\"/MIN_RAM=\"4096M\"/g' /home/mcserver/settings.sh"
+sudo -H -u mcserver bash -c "cd ~ && sed -i 's/MAX_RAM=\"4096M\"/MAX_RAM=\"$max_ram\"/g' /home/mcserver/settings.sh"
+sudo -H -u mcserver bash -c "cd ~ && sed -i 's/MIN_RAM=\"1024M\"/MIN_RAM=\"$min_ram\"/g' /home/mcserver/settings.sh"
 finishLog "Config SevTech"
 
 startLog "Starting SevTech"
