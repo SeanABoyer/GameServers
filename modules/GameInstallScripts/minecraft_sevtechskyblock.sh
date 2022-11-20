@@ -3,6 +3,8 @@ password="${password}"
 filesystem_id="${filesystem_id}"
 gamename="${gamename}"
 root_dir="/mnt/$gamename"
+min_ram="${minimum_ram}"
+max_ram="${maximum_ram}"
 startLog () {
     log_message=$1
     date=$(date '+%d/%m/%Y %H:%M:%S')
@@ -22,8 +24,8 @@ generalLog () {
 function startService(){
     #TODO change RAM based on variables
     startLog "Config Allowed Min & Max Memory"
-    sudo -H -u mcserver bash -c "cd $root_dir && sed -i 's/MAX_RAM=\"4096M\"/MAX_RAM=\"6656M\"/g' $root_dir/settings.sh"
-    sudo -H -u mcserver bash -c "cd $root_dir && sed -i 's/MIN_RAM=\"1024M\"/MIN_RAM=\"4096M\"/g' $root_dir/settings.sh"
+    sudo -H -u mcserver bash -c "cd $root_dir && sed -i 's/MAX_RAM=\"4096M\"/MAX_RAM=\"$max_ram\"/g' $root_dir/settings.sh"
+    sudo -H -u mcserver bash -c "cd $root_dir && sed -i 's/MIN_RAM=\"1024M\"/MIN_RAM=\"$min_ram\"/g' $root_dir/settings.sh"
     finishLog "Config Allowed Min & Max Memory"
 
     startLog "Start Service"
