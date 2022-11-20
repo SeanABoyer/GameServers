@@ -3,7 +3,7 @@ terraform {
     required_providers {
       aws = {
         source  = "hashicorp/aws"
-        version = "~> 3.0"
+        version = "4.40.0"
       }
     }
 }
@@ -100,7 +100,7 @@ resource "aws_instance" "server" {
   key_name = aws_key_pair.ssh_key.key_name
   vpc_security_group_ids = [aws_security_group.ec2_sg.id]
 
-  user_data= "${data.template_cloudinit_config.user_data.rendered}"
+  user_data = "${data.template_cloudinit_config.user_data.rendered}"
   user_data_replace_on_change = true
 
 }
