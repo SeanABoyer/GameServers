@@ -116,11 +116,11 @@ resource "aws_cloudwatch_metric_alarm" "cw_connections" {
   alarm_name                = "StopInstance"
   comparison_operator       = "LessThanThreshold"
   evaluation_periods        = "4"
-  metric_name               = "NetworkOut"
+  metric_name               = "CPUUtilization"
   namespace                 = "AWS/EC2"
   period                    = "900"
   statistic                 = "Average"
-  threshold                 = "2000000"
+  threshold                 = "10"
   alarm_description         = "This metric Monitors Network Traffic (in Bytes) Outbound."
   actions_enabled           = true
   alarm_actions             = [
