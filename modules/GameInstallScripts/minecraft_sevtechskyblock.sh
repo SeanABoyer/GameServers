@@ -22,7 +22,8 @@ generalLog () {
 }
 
 function startService(){
-    #TODO change RAM based on variables
+    chown -R mcserver:mcserver $root_dir
+
     startLog "Config Allowed Min & Max Memory"
     sudo -H -u mcserver bash -c "cd $root_dir && sed -i 's/MAX_RAM=\"4096M\"/MAX_RAM=\"$max_ram\"/g' $root_dir/settings.sh"
     sudo -H -u mcserver bash -c "cd $root_dir && sed -i 's/MIN_RAM=\"1024M\"/MIN_RAM=\"$min_ram\"/g' $root_dir/settings.sh"
