@@ -116,12 +116,12 @@ resource "aws_cloudwatch_metric_alarm" "cw_connections" {
   alarm_name                = "StopInstance"
   comparison_operator       = "LessThanThreshold"
   evaluation_periods        = "4"
-  metric_name               = "CPUUtilization"
-  namespace                 = "AWS/EC2"
+  metric_name               = "ConnectionsOn25565"
+  namespace                 = "CustomEC2"
   period                    = "900"
   statistic                 = "Average"
-  threshold                 = "10"
-  alarm_description         = "This metric Monitors Network Traffic (in Bytes) Outbound."
+  threshold                 = "1"
+  alarm_description         = "This alarm will trigger anytime the custom metric is below 1 for more than 1 hour straight."
   actions_enabled           = true
   alarm_actions             = [
     "arn:aws:automate:${data.aws_region.current.name}:ec2:stop"

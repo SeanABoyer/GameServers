@@ -62,6 +62,16 @@ sudo useradd mcserver -p $password -m
 sudo chown -R mcserver:mcserver $root_dir
 finishLog "Creating User and Changing User"
 
+startLog "Setting up CronJob for Custom CloudWatch Metric"
+cat > /home/mcserver/CloudWatchMetricGeneration.sh << EOF
+aws cloudwatch put-metric-data --region us-west-2 --metric-name ConnectionsOn25565 --namespace CustomEC2 --unit Count --value $(netstat -anp | grep -w 25565 | grep ESTABLISHED | wc -l) --dimensions InstanceID=$(cat /sys/devices/virtual/dmi/id/board_asset_tag)
+EOF
+
+chmod +x /home/mcserver/CloudWatchMetricGeneration.sh
+
+(crontab -l; echo "*/15 * * * * /home/mcserver/CloudWatchMetricGeneration.sh") | sort -u | crontab -
+finishLog "Setting up CronJob for Custom CloudWatch Metric"
+
 #If the ServerStart.sh does not exist, then download modpack and java to EFS share
 if [ ! -f "$root_dir/ServerStart.sh" ]
 then
@@ -114,3 +124,4 @@ else
 fi
 
 startService
+
