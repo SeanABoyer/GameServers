@@ -64,7 +64,7 @@ finishLog "Creating User and Changing User"
 
 startLog "Setting up CronJob for Custom CloudWatch Metric"
 cat > /home/mcserver/CloudWatchMetricGeneration.sh << EOF
-aws cloudwatch put-metric-data --region us-west-2 --metric-name ConnectionsOn25565 --namespace CustomEC2 --unit Count --value $(netstat -anp | grep -w 25565 | grep ESTABLISHED | wc -l) --dimensions InstanceID=$(cat /sys/devices/virtual/dmi/id/board_asset_tag)
+aws cloudwatch put-metric-data --region us-west-2 --metric-name ConnectionsOn25565 --namespace CustomEC2 --unit Count --value \$(netstat -anp | grep -w 25565 | grep ESTABLISHED | wc -l) --dimensions InstanceID=\$(cat /sys/devices/virtual/dmi/id/board_asset_tag)
 EOF
 
 chmod +x /home/mcserver/CloudWatchMetricGeneration.sh
