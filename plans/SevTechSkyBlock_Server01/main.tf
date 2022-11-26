@@ -22,7 +22,7 @@ module "server"{
     source = "../../modules/Server"
     application_install_script = data.template_file.application_file.rendered
     game_name = local.gamename
-    instance_type = "t4g.xlarge"
+    instance_type = "t3.xlarge"
     public_ssh_key = var.public_ssh_key
     ssh_username = var.ssh_username
 }
