@@ -163,7 +163,7 @@ data "aws_iam_policy_document" "efs_mounting_policy" {
     ]
   }
   depends_on = [
-    aws_iam_role.serverRole.arn
+    aws_iam_role.serverRole
   ]
 }
 
