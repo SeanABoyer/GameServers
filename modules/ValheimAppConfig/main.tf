@@ -6,7 +6,7 @@ resource "aws_security_group_rule" "Valheim_Ingress_UDP"{
   to_port           = each.value
   protocol          = "udp"
   cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = var.security_group_id
+  security_group_id = var.ec2_security_group_id
 }
 
 
@@ -17,7 +17,7 @@ resource "aws_security_group_rule" "Valheim_Egress_UDP"{
   to_port           = each.value
   protocol          = "udp"
   cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = var.security_group_id
+  security_group_id = var.ec2_security_group_id
 }
 
 resource "aws_security_group_rule" "Valheim_Ingress_TCP"{
@@ -27,7 +27,7 @@ resource "aws_security_group_rule" "Valheim_Ingress_TCP"{
   to_port           = each.value
   protocol          = "tcp"
   cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = var.security_group_id
+  security_group_id = var.ec2_security_group_id
 }
 
 resource "aws_security_group_rule" "Valheim_Egress_TCP"{
@@ -37,6 +37,6 @@ resource "aws_security_group_rule" "Valheim_Egress_TCP"{
   to_port           = each.value
   protocol          = "tcp"
   cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = var.security_group_id
+  security_group_id = var.ec2_security_group_id
 }
 
