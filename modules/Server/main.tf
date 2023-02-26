@@ -162,6 +162,9 @@ data "aws_iam_policy_document" "efs_mounting_policy" {
       aws_efs_file_system.efs.arn
     ]
   }
+  depends_on = [
+    aws_iam_role.serverRole.arn
+  ]
 }
 
 resource "aws_security_group" "efs_sg" {

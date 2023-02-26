@@ -33,3 +33,10 @@ module "application"{
     cidr_block = module.server.cidr_block
     depends_on = [module.server]
 }
+module "application_registration" {
+    source = "../../modules/RegisterServer"
+    dnsPrefix = var.dnsPrefix
+    dnsZone = var.dnsZone
+    public_ip = module.server.public_ip
+    depends_on = [module.server]
+}
