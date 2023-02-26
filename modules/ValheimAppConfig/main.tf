@@ -1,6 +1,6 @@
 
 resource "aws_security_group_rule" "Valheim_Ingress_UDP"{
-  for_each = tosetr(var.udp_ports)
+  for_each = toset(var.udp_ports)
   type              = "ingress"
   from_port         = each.value
   to_port           = each.value
@@ -11,7 +11,7 @@ resource "aws_security_group_rule" "Valheim_Ingress_UDP"{
 
 
 resource "aws_security_group_rule" "Valheim_Egress_UDP"{
-  for_each = tosetr(var.udp_ports)
+  for_each = toset(var.udp_ports)
   type              = "egress"
   from_port         = each.value
   to_port           = each.value
@@ -21,7 +21,7 @@ resource "aws_security_group_rule" "Valheim_Egress_UDP"{
 }
 
 resource "aws_security_group_rule" "Valheim_Ingress_TCP"{
-  for_each = tosetr(var.tcp_ports)
+  for_each = toset(var.tcp_ports)
   type              = "ingress"
   from_port         = each.value
   to_port           = each.value
@@ -31,8 +31,8 @@ resource "aws_security_group_rule" "Valheim_Ingress_TCP"{
 }
 
 resource "aws_security_group_rule" "Valheim_Egress_TCP"{
-  for_each = tosetr(var.tcp_ports)
-  type              = "ingress"
+  for_each = toset(var.tcp_ports)
+  type              = "egress"
   from_port         = each.value
   to_port           = each.value
   protocol          = "tcp"
