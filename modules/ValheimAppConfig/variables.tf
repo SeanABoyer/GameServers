@@ -6,7 +6,7 @@ variable "cidr_block" {
 }
 
 variable "udp_ports" {
-    type = list(integer)
+    type = list(number)
     default = [2456,2457,2458]
 }
 
