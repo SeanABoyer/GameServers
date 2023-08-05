@@ -37,7 +37,7 @@ function startService(){
     systemctl start mcserver
     finishLog "Start Service"
 
-    EULA file is created after service is started
+    #EULA file is created after service is started
     startLog "Accept EULA"
     while [ ! -f "$root_dir/eula.txt" ]
     do
@@ -77,7 +77,7 @@ chmod +x /home/mcserver/CloudWatchMetricGeneration.sh
 (crontab -l; echo "*/15 * * * * /home/mcserver/CloudWatchMetricGeneration.sh") | sort -u | crontab -
 finishLog "Setting up CronJob for Custom CloudWatch Metric"
 
-$start_file="$root_dir/MCServerStart.sh"
+start_file="$root_dir/MCServerStart.sh"
 #If the ServerStart.sh does not exist, then download modpack and java to EFS share and setup for future use
 if [ ! -f "$root_dir/ServerStart.sh" ]
 then
