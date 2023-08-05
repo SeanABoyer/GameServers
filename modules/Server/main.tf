@@ -88,8 +88,7 @@ data "aws_ami" "amazon_linux_latest" {
   most_recent = true
   filter {
     name = "name"
-    #values = ["amzn2-ami-kernel-5.10*"]
-    values = ["al2023-ami*"]
+    values = [var.ami_name]
   }
 }
 

@@ -25,13 +25,13 @@ function startService(){
     chown -R mcserver:mcserver $root_dir
 
     startLog "Config Allowed Min & Max Memory"
-    sudo -H -u mcserver bash -c "cd $root_dir && sed -i 's/MAX_RAM=\"4096M\"/MAX_RAM=\"$max_ram\"/g' $root_dir/settings.sh"
-    sudo -H -u mcserver bash -c "cd $root_dir && sed -i 's/MIN_RAM=\"1024M\"/MIN_RAM=\"$min_ram\"/g' $root_dir/settings.sh"
+    sudo -H -u mcserver bash -c "cd $root_dir && sed -i 's/Xmx4096m/Xmx\"$max_ram\"/g' $root_dir/ServerStart.sh"
+    sudo -H -u mcserver bash -c "cd $root_dir && sed -i 's/Xms2048m/Xmx\"$min_ram\"/g' $root_dir/ServerStart.sh"
     finishLog "Config Allowed Min & Max Memory"
 
-    startLog "Accept EULA"
-    echo "eula=true" >> $root_dir/eula.txt
-    finishLog "Accept EULA"
+    # startLog "Accept EULA"
+    # echo "eula=true" >> $root_dir/eula.txt
+    # finishLog "Accept EULA"
 
     startLog "Start Service"
     systemctl start mcserver
@@ -51,6 +51,7 @@ function startService(){
 
 startLog "Updating System"
 yum install amazon-efs-utils -y
+yum install wget -y
 yum update -y
 yum upgrade -y
 finishLog "Updating System"
@@ -90,6 +91,7 @@ then
 
     startLog "Create Wrapper Start Script For Using Java 8"
     touch $start_file
+    echo "#!/bin/bash" >> $start_file
     echo "PATH=$root_dir/java/jdk8u345-b01-jre/bin" >> $start_file
     echo "$root_dir/ServerStart.sh" >> $start_file
     sudo -H -u mcserver bash -c "cd $root_dir && chmod +x $start_file"
@@ -102,14 +104,12 @@ then
     startLog "Installing ModPack"
     sudo -H -u mcserver bash -c "cd $root_dir && unzip mc-server.zip"
     sudo -H -u mcserver bash -c "cd $root_dir && chmod +x ServerStart.sh"
-    sudo -H -u mcserver bash -c "cd $root_dir && chmod +x Install.sh"
-    sudo -H -u mcserver bash -c "PATH=$root_dir/java/jdk8u345-b01-jre/bin && cd $root_dir && sh Install.sh"
     finishLog "Installing ModPack"
 else
     generalLog "Found [$root_dir/ServerStart.sh]. "
 fi
 
-#If the services does not exist, then create it
+#If the service does not exist, then create it
 if [ ! -f "/etc/systemd/system/mcserver.service" ]
 then
     generalLog "Unable to find [/etc/systemd/system/mcserver.service]."
@@ -118,7 +118,6 @@ then
     echo "[Unit]" >>/etc/systemd/system/mcserver.service
     echo "Description=MCServer" >>/etc/systemd/system/mcserver.service
     echo "[Service]" >>/etc/systemd/system/mcserver.service
-    # echo "Environment=PATH=$root_dir/java/jdk8u345-b01-jre/bin" >>/etc/systemd/system/mcserver.service
     echo "User=mcserver" >>/etc/systemd/system/mcserver.service
     echo "WorkingDirectory=$root_dir" >> /etc/systemd/system/mcserver.service
     echo "ExecStart=\"$start_file\"" >>/etc/systemd/system/mcserver.service

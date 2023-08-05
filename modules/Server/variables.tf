@@ -30,3 +30,8 @@ variable "vpc_cidr_block"{
 variable "application_install_script" {
     type = string
 }
+
+variable "ami_name" {
+    type = string
+    default = "amzn2-ami-kernel-5.10*"
+}
