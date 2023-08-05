@@ -49,6 +49,12 @@ resource "aws_iam_role" "serverRole" {
       }
     )
 }
+
+resource "time_sleep" "wait_15_seconds" {
+  depends_on = [aws_iam_role.serverRole]
+  create_duration = "15s"
+}
+
 resource "aws_iam_instance_profile" "serverInstanceProfile" {
   name = local.gameInstanceName
   role = aws_iam_role.serverRole.name
@@ -163,7 +169,7 @@ data "aws_iam_policy_document" "efs_mounting_policy" {
     ]
   }
   depends_on = [
-    aws_iam_role.serverRole
+    time_sleep.wait_15_seconds
   ]
 }
 
