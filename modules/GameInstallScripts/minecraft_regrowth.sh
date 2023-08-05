@@ -25,8 +25,8 @@ function startService(){
     chown -R mcserver:mcserver $root_dir
 
     startLog "Config Allowed Min & Max Memory"
-    sudo -H -u mcserver bash -c "cd $root_dir && sed -i 's/Xmx4096m/Xmx\"$max_ram\"/g' $root_dir/ServerStart.sh"
-    sudo -H -u mcserver bash -c "cd $root_dir && sed -i 's/Xms2048m/Xmx\"$min_ram\"/g' $root_dir/ServerStart.sh"
+    sudo -H -u mcserver bash -c "cd $root_dir && sed -i 's/Xmx4096/Xmx$max_ram/g' $root_dir/ServerStart.sh"
+    sudo -H -u mcserver bash -c "cd $root_dir && sed -i 's/Xms2048/Xms$min_ram/g'/g' $root_dir/ServerStart.sh"
     finishLog "Config Allowed Min & Max Memory"
 
     # startLog "Accept EULA"
@@ -94,7 +94,6 @@ then
     echo "#!/bin/bash" >> $start_file
     echo "PATH=$root_dir/java/jdk8u345-b01-jre/bin" >> $start_file
     echo "$root_dir/ServerStart.sh" >> $start_file
-    sudo -H -u mcserver bash -c "cd $root_dir && chmod +x $start_file"
     finishLog "Create Wrapper Start Script For Using Java 8"
 
     startLog "Downloading ModPack"
@@ -105,6 +104,10 @@ then
     sudo -H -u mcserver bash -c "cd $root_dir && unzip mc-server.zip"
     sudo -H -u mcserver bash -c "cd $root_dir && chmod +x ServerStart.sh"
     finishLog "Installing ModPack"
+
+    startLog "Make Start Script Executable"
+    sudo -H -u mcserver bash -c "cd $root_dir && chmod +x $start_file"
+    finishLog "Make Start Script Executable"
 else
     generalLog "Found [$root_dir/ServerStart.sh]. "
 fi
