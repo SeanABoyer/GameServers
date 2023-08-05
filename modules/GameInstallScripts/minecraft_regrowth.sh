@@ -29,19 +29,23 @@ function startService(){
     sudo -H -u mcserver bash -c "cd $root_dir && sed -i 's/MIN_RAM=\"1024M\"/MIN_RAM=\"$min_ram\"/g' $root_dir/settings.sh"
     finishLog "Config Allowed Min & Max Memory"
 
+    startLog "Accept EULA"
+    echo "eula=true" >> $root_dir/eula.txt
+    finishLog "Accept EULA"
+
     startLog "Start Service"
     systemctl start mcserver
     finishLog "Start Service"
 
     #EULA file is created after service is started
-    startLog "Accept EULA"
-    while [ ! -f "$root_dir/eula.txt" ]
-    do
-        generalLog "Unable to find [$root_dir/eula.txt]. Will check again in 10 seconds. "
-        sleep 10
-    done
-    sudo -H -u mcserver bash -c "cd $root_dir && sed -i 's/eula=false/eula=true/g' $root_dir/eula.txt"
-    finishLog "Accept EULA"
+    # startLog "Accept EULA"
+    # while [ ! -f "$root_dir/eula.txt" ]
+    # do
+    #     generalLog "Unable to find [$root_dir/eula.txt]. Will check again in 10 seconds. "
+    #     sleep 10
+    # done
+    # sudo -H -u mcserver bash -c "cd $root_dir && sed -i 's/eula=false/eula=true/g' $root_dir/eula.txt"
+    # finishLog "Accept EULA"
 }
 
 
