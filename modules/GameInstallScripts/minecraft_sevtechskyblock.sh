@@ -71,6 +71,8 @@ EOF
 chmod +x /home/mcserver/CloudWatchMetricGeneration.sh
 
 (crontab -l; echo "*/15 * * * * /home/mcserver/CloudWatchMetricGeneration.sh") | sort -u | crontab -
+systemctl enable crond
+systemctl start crond
 finishLog "Setting up CronJob for Custom CloudWatch Metric"
 
 #If the ServerStart.sh does not exist, then download modpack and java to EFS share
