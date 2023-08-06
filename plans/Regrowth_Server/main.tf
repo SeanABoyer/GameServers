@@ -13,8 +13,8 @@ data "template_file" "application_file" {
         password = "${random_password.password.result}",
         filesystem_id = module.server.efs_file_system_id,
         gamename = local.gamename,
-        minimum_ram = "${(floor(module.server.memory_in_bytes/1024)* 0.6) * 1024}",
-        maximum_ram = "${(floor(module.server.memory_in_bytes/1024)* 0.8) * 1024}"
+        minimum_ram = "${(floor((module.server.memory_in_bytes/1024)* 0.6) * 1024)}",
+        maximum_ram = "${(floor((module.server.memory_in_bytes/1024)* 0.8) * 1024)}"
     }
 }
 
