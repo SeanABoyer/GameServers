@@ -52,6 +52,7 @@ function startService(){
 startLog "Updating System"
 yum install amazon-efs-utils -y
 yum install wget -y
+yum install cronie cronie-anacron -y
 yum update -y
 yum upgrade -y
 finishLog "Updating System"
