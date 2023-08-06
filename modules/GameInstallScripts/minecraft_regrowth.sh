@@ -26,7 +26,7 @@ function startService(){
 
     startLog "Config Allowed Min & Max Memory"
     sudo -H -u mcserver bash -c "cd $root_dir && sed -i 's/Xmx4096/Xmx$max_ram/g' $root_dir/ServerStart.sh"
-    sudo -H -u mcserver bash -c "cd $root_dir && sed -i 's/Xms2048/Xms$min_ram/g'/g' $root_dir/ServerStart.sh"
+    sudo -H -u mcserver bash -c "cd $root_dir && sed -i 's/Xms2048/Xms$min_ram/g' $root_dir/ServerStart.sh"
     finishLog "Config Allowed Min & Max Memory"
 
     # startLog "Accept EULA"
@@ -90,10 +90,10 @@ then
     finishLog "Installing Java 8"
 
     startLog "Create Wrapper Start Script For Using Java 8"
-    touch $start_file
-    echo "#!/bin/bash" >> $start_file
-    echo "PATH=$root_dir/java/jdk8u345-b01-jre/bin" >> $start_file
-    echo "$root_dir/ServerStart.sh" >> $start_file
+    sudo -H -u mcserver bash -c "cd $root_dir && touch $start_file"
+    sudo -H -u mcserver bash -c "cd $root_dir && echo '#!/bin/bash' >> $start_file"
+    sudo -H -u mcserver bash -c "cd $root_dir && echo 'PATH=$root_dir/java/jdk8u345-b01-jre/bin' >> $start_file"
+    sudo -H -u mcserver bash -c "cd $root_dir && echo '$root_dir/ServerStart.sh' >> $start_file"    
     finishLog "Create Wrapper Start Script For Using Java 8"
 
     startLog "Downloading ModPack"
