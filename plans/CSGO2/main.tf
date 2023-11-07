@@ -22,7 +22,7 @@ module "server"{
     game_name = local.gamename
     instance_type = "t3.xlarge"
     public_ssh_key = var.public_ssh_key
-    ami_name = "al2023-ami-2023.0.20230503.0-kernel-6.1-x86_64*"
+    ami_name = "al2023-ami-2023*"
 }
 
 module "application"{

@@ -90,6 +90,11 @@ data "aws_ami" "amazon_linux_latest" {
     name = "name"
     values = [var.ami_name]
   }
+
+  filter {
+    name = "architecture"
+    values = ["x86_64"]
+  }
 }
 
 data "aws_ec2_instance_type" "this" {
