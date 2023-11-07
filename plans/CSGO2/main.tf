@@ -20,9 +20,9 @@ module "server"{
     source = "../../modules/Server"
     application_install_script = data.template_file.application_file.rendered
     game_name = local.gamename
-    instance_type = "t3.xlarge"
+    instance_type = "t3.large"
     public_ssh_key = var.public_ssh_key
-    ami_name = "al2023-ami-2023*"
+    ami_name = "debian-12-amd64*"
 }
 
 module "application"{

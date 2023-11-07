@@ -14,12 +14,12 @@ finishLog () {
 }
 
 startLog "Updating System"
-sudo dpkg --add-architecture i386
-sudo apt update -y
+yum update -y
+yum upgrade -y
 finishLog "Updating System"
 
 startLog "Installing Packages"
-sudo apt install curl wget file tar bzip2 gzip unzip bsdmainutils python3 util-linux ca-certificates binutils bc jq tmux netcat lib32gcc-s1 lib32stdc++6 -y
+yum install curl wget tar bzip2 gzip unzip python3 binutils bc jq tmux glibc.i686 libstdc++ libstdc++.i686 -y
 finishLog "Installing Packages"
 
 startLog "Creating User"
