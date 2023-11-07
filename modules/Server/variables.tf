@@ -33,5 +33,5 @@ variable "application_install_script" {
 
 variable "ami_name" {
     type = string
-    default = "amzn2-ami-kernel-5.10*"
+    default = "al2023-ami-2023*"
 }

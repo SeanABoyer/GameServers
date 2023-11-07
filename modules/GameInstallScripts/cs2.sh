@@ -1,5 +1,7 @@
 #!/bin/bash
 password="${password}"
+steamUsername="${steamUsername}"
+steamPassword="${steamPassword}"
 startLog () {
     log_message=$1
     date=$(date '+%d/%m/%Y %H:%M:%S')
@@ -12,19 +14,14 @@ finishLog () {
 }
 
 startLog "Updating System"
-#yum install amazon-efs-utils -y
 yum update -y
 yum upgrade -y
 finishLog "Updating System"
 
 startLog "Installing Packages"
+yum install epel-release -y
 yum install curl wget tar bzip2 gzip unzip python3 binutils bc jq tmux glibc.i686 libstdc++ libstdc++.i686 -y
 finishLog "Installing Packages"
-
-# startLog "Agreeing to Steam Questions"
-# echo steam steam/question select "I AGREE" | sudo debconf-set-selections
-# echo steam steam/license note "" | sudo debconf-set-selections
-# finishLog "Agreeing to Steam Questions"
 
 startLog "Creating User"
 sudo useradd cs2server -p $password -m
@@ -33,7 +30,10 @@ finishLog "Creating User"
 
 startLog "Download linuxgsm.sh and install server"
 sudo -H -u cs2server bash -c "cd ~ && wget -O linuxgsm.sh https://linuxgsm.sh && chmod +x linuxgsm.sh && bash linuxgsm.sh cs2server"
-#sudo -H -u cs2server bash -c "cd ~ && yes | ./cs2server install"
+sudo -H -u cs2server bash -c "mkdir ~/lgsm/config-lgsm/cs2server"
+sudo -H -u cs2server bash -c "echo 'steamuser=\"$steamUsername\"' >> ~/lgsm/config-lgsm/cs2server/common.cfg"
+sudo -H -u cs2server bash -c "echo 'steampass=\"$steamPassword\"' >> ~/lgsm/config-lgsm/cs2server/common.cfg"
+sudo -H -u cs2server bash -c "cd ~ && yes | ./cs2server install"
 finishLog "Download linuxgsm.sh and install server"
 
 
