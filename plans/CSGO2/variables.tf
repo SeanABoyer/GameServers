@@ -15,3 +15,6 @@ variable "steamUsername"{
 variable "steamPassword"{
     type = string
 }
+variable "gslt"{
+    type = string
+}

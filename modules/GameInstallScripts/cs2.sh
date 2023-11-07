@@ -2,6 +2,7 @@
 password="${password}"
 steamUsername="${steamUsername}"
 steamPassword="${steamPassword}"
+gslt="${gslt}"
 startLog () {
     log_message=$1
     date=$(date '+%d/%m/%Y %H:%M:%S')
@@ -19,7 +20,7 @@ sudo apt update -y
 finishLog "Updating System"
 
 startLog "Installing Packages"
-sudo apt install curl wget file tar bzip2 gzip unzip bsdmainutils python3 util-linux ca-certificates binutils bc jq tmux netcat lib32gcc-s1 lib32stdc++6 -y
+sudo apt install curl wget file tar bzip2 gzip unzip bsdmainutils python3 util-linux ca-certificates binutils bc jq tmux netcat lib32gcc-s1 lib32stdc++6 distro-info libsdl2-2.0-0:i386 netcat-openbsd-y
 finishLog "Installing Packages"
 
 startLog "Creating User"
@@ -33,10 +34,11 @@ sudo -H -u cs2server bash -c "mkdir ~/lgsm/config-lgsm"
 sudo -H -u cs2server bash -c "mkdir ~/lgsm/config-lgsm/cs2server"
 sudo -H -u cs2server bash -c "echo 'steamuser=\"$steamUsername\"' >> ~/lgsm/config-lgsm/cs2server/common.cfg"
 sudo -H -u cs2server bash -c "echo 'steampass=\"$steamPassword\"' >> ~/lgsm/config-lgsm/cs2server/common.cfg"
+sudo -H -u cs2server bash -c "echo 'gslt=\"$gslt\"' >> ~/lgsm/config-lgsm/cs2server/common.cfg"
 sudo -H -u cs2server bash -c "cd ~ && yes | ./cs2server install"
 finishLog "Download linuxgsm.sh and install server"
 
 
 startLog "Start server"
-#sudo -H -u cs2server bash -c "cd ~ && ./cs2server start"
+sudo -H -u cs2server bash -c "cd ~ && ./cs2server start"
 finishLog "Start server"

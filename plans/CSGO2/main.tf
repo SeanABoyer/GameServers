@@ -13,6 +13,7 @@ data "template_file" "application_file" {
         password = "${random_password.password.result}",
         steamUsername = "${var.steamUsername}"
         steamPassword = "${var.steamPassword}"
+        gslt = "${var.gslt}"
     }
 }
 
@@ -22,7 +23,7 @@ module "server"{
     game_name = local.gamename
     instance_type = "t3.large"
     public_ssh_key = var.public_ssh_key
-    ami_name = "debian-12-amd64*"
+    ami_name = "debian-11-amd64*"
 }
 
 module "application"{
