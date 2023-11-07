@@ -9,7 +9,7 @@ variable "dnsPrefix"{
     type = string
 }
 
-variable "steamUserName"{
+variable "steamUsername"{
     type = string
 }
 variable "steamPassword"{
