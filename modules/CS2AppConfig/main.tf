@@ -9,6 +9,15 @@ resource "aws_security_group_rule" "SSH"{
   security_group_id = var.ec2_security_group_id
 }
 
+resource "aws_security_group_rule" "CSGO_Outbound"{
+  type              = "egress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = var.ec2_security_group_id
+}
+
 resource "aws_security_group_rule" "CSGO_UDP_27015"{
   type              = "ingress"
   from_port         = 27015
