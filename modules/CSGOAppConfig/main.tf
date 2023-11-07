@@ -6,7 +6,7 @@ resource "aws_security_group_rule" "SSH"{
   to_port           = 22
   protocol          = "tcp"
   cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = var.security_group_id
+  security_group_id = var.ec2_security_group_id
 }
 
 resource "aws_security_group_rule" "CSGO_UDP_27015"{
@@ -15,7 +15,7 @@ resource "aws_security_group_rule" "CSGO_UDP_27015"{
   to_port           = 27015
   protocol          = "udp"
   cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = var.security_group_id
+  security_group_id = var.ec2_security_group_id
 }
 
 resource "aws_security_group_rule" "CSGO_UDP_27031_27036"{
@@ -24,7 +24,7 @@ resource "aws_security_group_rule" "CSGO_UDP_27031_27036"{
   to_port           = 27036
   protocol          = "udp"
   cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = var.security_group_id
+  security_group_id = var.ec2_security_group_id
 }
 
 resource "aws_security_group_rule" "CSGO_TCP_27015"{
@@ -33,7 +33,7 @@ resource "aws_security_group_rule" "CSGO_TCP_27015"{
   to_port           = 27015
   protocol          = "udp"
   cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = var.security_group_id
+  security_group_id = var.ec2_security_group_id
 }
 
 resource "aws_security_group_rule" "CSGO_TCP_27036"{
@@ -42,5 +42,5 @@ resource "aws_security_group_rule" "CSGO_TCP_27036"{
   to_port           = 27036
   protocol          = "udp"
   cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = var.security_group_id
+  security_group_id = var.ec2_security_group_id
 }

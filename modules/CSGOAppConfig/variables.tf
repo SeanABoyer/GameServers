@@ -1,4 +1,4 @@
-variable "security_group_id" {
+variable "ec2_security_group_id" {
     type = string
 }
 variable "cidr_block" {
