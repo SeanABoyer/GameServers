@@ -4,11 +4,11 @@ resource "random_password" "password" {
 }
 
 locals {
-    gamename = "Regrowth"
+    gamename = "CS2"
 }
 
 data "template_file" "application_file" {
-    template = "${file("../../modules/GameInstallScripts/csgo.sh")}"
+    template = "${file("../../modules/GameInstallScripts/cs2.sh")}"
     vars = {
         password = "${random_password.password.result}",
         filesystem_id = module.server.efs_file_system_id,
@@ -27,7 +27,7 @@ module "server"{
 }
 
 module "application"{
-    source = "../../modules/CSGOAppConfig"
+    source = "../../modules/CS2AppConfig"
     ec2_security_group_id = module.server.ec2_security_group_id
     cidr_block = module.server.cidr_block
     depends_on = [module.server]
