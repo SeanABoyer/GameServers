@@ -12,6 +12,6 @@ variable "dnsPrefix"{
 variable "steamUserName"{
     type = string
 }
-variable "streamPassword"{
+variable "steamPassword"{
     type = string
 }
