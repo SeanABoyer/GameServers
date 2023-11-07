@@ -8,3 +8,10 @@ variable "dnsZone"{
 variable "dnsPrefix"{
     type = string
 }
+
+variable "steamUserName"{
+    type = string
+}
+variable "streamPassword"{
+    type = string
+}

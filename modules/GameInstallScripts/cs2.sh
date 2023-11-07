@@ -12,7 +12,7 @@ finishLog () {
 }
 
 startLog "Updating System"
-yum install amazon-efs-utils -y
+#yum install amazon-efs-utils -y
 yum update -y
 yum upgrade -y
 finishLog "Updating System"
