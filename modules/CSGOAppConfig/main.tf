@@ -18,7 +18,7 @@ resource "aws_security_group_rule" "CSGO_UDP_27015"{
   security_group_id = var.security_group_id
 }
 
-resource "aws_security_group_rule" "CSGO_UDP_ 27031_27036"{
+resource "aws_security_group_rule" "CSGO_UDP_27031_27036"{
   type              = "ingress"
   from_port         = 27031
   to_port           = 27036
