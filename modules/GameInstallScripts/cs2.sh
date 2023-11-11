@@ -33,12 +33,12 @@ sudo -H -u cs2server bash -c "cd ~ && wget -O linuxgsm.sh https://linuxgsm.sh &&
 sudo -H -u cs2server bash -c "mkdir ~/lgsm/config-lgsm"
 sudo -H -u cs2server bash -c "mkdir ~/lgsm/config-lgsm/cs2server"
 sudo -H -u cs2server bash -c "echo 'steamuser=\"$steamUsername\"' >> ~/lgsm/config-lgsm/cs2server/common.cfg"
-sudo -H -u cs2server bash -c "echo 'steampass=\'$steamPassword\'' >> ~/lgsm/config-lgsm/cs2server/common.cfg"
+sudo -H -u cs2server bash -c "echo 'steampass=\"$steamPassword\"' >> ~/lgsm/config-lgsm/cs2server/common.cfg"
 sudo -H -u cs2server bash -c "echo 'gslt=\"$gslt\"' >> ~/lgsm/config-lgsm/cs2server/common.cfg"
-sudo -H -u cs2server bash -c "cd ~ && yes | ./cs2server install"
+#sudo -H -u cs2server bash -c "cd ~ && yes | ./cs2server install"
 finishLog "Download linuxgsm.sh and install server"
 
 
 startLog "Start server"
-sudo -H -u cs2server bash -c "cd ~ && ./cs2server start"
+#sudo -H -u cs2server bash -c "cd ~ && ./cs2server start"
 finishLog "Start server"

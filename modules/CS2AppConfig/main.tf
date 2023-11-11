@@ -25,15 +25,6 @@ resource "aws_security_group_rule" "CSGO_UDP_27015"{
   security_group_id = var.ec2_security_group_id
 }
 
-resource "aws_security_group_rule" "CSGO_UDP_27031_27036"{
-  type              = "ingress"
-  from_port         = 27031
-  to_port           = 27036
-  protocol          = "udp"
-  cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = var.ec2_security_group_id
-}
-
 resource "aws_security_group_rule" "CSGO_TCP_27015"{
   type              = "ingress"
   from_port         = 27015
@@ -43,11 +34,12 @@ resource "aws_security_group_rule" "CSGO_TCP_27015"{
   security_group_id = var.ec2_security_group_id
 }
 
-resource "aws_security_group_rule" "CSGO_TCP_27036"{
+resource "aws_security_group_rule" "CSGO_UDP_27005"{
   type              = "ingress"
-  from_port         = 27036
-  to_port           = 27036
-  protocol          = "tcp"
+  from_port         = 27005
+  to_port           = 27005
+  protocol          = "udp"
   cidr_blocks       = ["0.0.0.0/0"]
   security_group_id = var.ec2_security_group_id
 }
+
