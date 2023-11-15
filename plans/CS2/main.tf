@@ -6,6 +6,7 @@ resource "random_password" "password" {
 locals {
     gamename = "CS2"
     lgsmfilename = "cs2server"
+    username = "GameAdmin"
 }
 
 data "template_file" "downloadAndInstall" {
@@ -28,7 +29,7 @@ data "template_file" "createService" {
 data "template_file" "createUser" {
     template = "${file("../../modules/shellScripts/createUser.sh")}"
     vars = {
-        username = "GameAdmin"
+        username = "${local.username}"
         password = "${random_password.password.result}"
     }
 }
@@ -36,6 +37,7 @@ data "template_file" "createUser" {
 data "template_file" "mountEFS" {
     template = "${file("../../modules/shellScripts/mountEFS.sh")}"
     vars = {
+        username = "${local.username}"
         root_dir = "/mnt/${local.gamename}"
         filesystem_id = module.server.efs_file_system_id
     }
