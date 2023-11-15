@@ -1,3 +1,6 @@
+servicename="${serviecname}"
+gamename="${gamename}"
+
 startLog "Creating Service: $servicename"
 
 touch /etc/systemd/system/$gamename.service

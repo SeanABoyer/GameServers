@@ -1,3 +1,6 @@
+root_dir="${root_dir}"
+filesystem_id="${filesystem_id}"
+
 startLog "Mounting EFS"
 mkdir -p $root_dir
 generalLog "Attempting to mount $filesystem_id to $root_dir"

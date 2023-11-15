@@ -5,51 +5,82 @@ resource "random_password" "password" {
 
 locals {
     gamename = "CS2"
+    lgsmfilename = "cs2server"
 }
 
-data "template_file" "application_file" {
-    template = "${file("../../modules/GameInstallScripts/cs2.sh")}"
+data "template_file" "downloadAndInstall" {
+    template = "${file("./downloadAndInstall.sh")}"
     vars = {
-        password = "${random_password.password.result}",
         steamUsername = "${var.steamUsername}"
         steamPassword = "${var.steamPassword}"
         gslt = "${var.gslt}"
+        lgsmfilename = "${local.lgsmfilename}"
     }
 }
+
+data "template_file" "createService" {
+    template = "${file("../../modules/shellScripts/createService.sh")}"
+    vars = {
+        serviecname = "${local.gamename}-service"
+        gamename = "${local.gamename}"
+    }
+}
+
+data "template_file" "createUser" {
+    template = "${file("../../modules/shellScripts/createUser.sh")}"
+    vars = {
+        username = "GameAdmin"
+        password = "${random_password.password.result}"
+    }
+}
+
+data "template_file" "mountEFS" {
+    template = "${file("../../modules/shellScripts/mountEFS.sh")}"
+    vars = {
+        root_dir = "/mnt/${local.gamename}"
+        filesystem_id = module.server.efs_file_system_id
+    }
+}
+
+data "template_file" "debianUpdate" {
+    template = "${file("../../modules/shellScripts/debianUpdate.sh")}"
+    vars = {}
+}
+
+data "template_file" "utility" {
+    template = "${file("../../modules/shellScripts/utility.sh")}"
+    vars = {}
+}
+
 
 module "server"{
     source = "../../modules/Server"
     scripts = [
         {
-            "filename":"variablesInit.sh",
-            "content":"${file("./variablesInit.sh")}"
-        },
-        {
             "filename":"utility.sh",
-            "content":"${file("../../modules/shellScripts/utility.sh")}"
+            "content":data.template_file.utility.rendered
         },
         {
             "filename":"debianUpdate.sh",
-            "content":"${file("../../modules/shellScripts/debianUpdate.sh")}"
+            "content":data.template_file.debianUpdate.rendered
         },
         {
             "filename":"mountEFS.sh",
-            "content":"${file("../../modules/shellScripts/mountEFS.sh")}"
+            "content":data.template_file.mountEFS.rendered
         },
         {
             "filename":"createUser.sh",
-            "content":"${file("../../modules/shellScripts/createUser.sh")}"
+            "content":data.template_file.createUser.rendered
         },
         {
             "filename":"createService.sh",
-            "content":"${file("../../modules/shellScripts/createService.sh")}"
+            "content":data.template_file.createService.rendered
         },
         {
             "filename":"downloadAndInstall.sh",
-            "content":"${file("../../modules/shellScripts/downloadAndInstall.sh")}"
+            "content":data.template_file.downloadAndInstall.rendered
         }
     ]
-    application_install_script = data.template_file.application_file.rendered
     game_name = local.gamename
     instance_type = "t3.medium"
     public_ssh_key = var.public_ssh_key

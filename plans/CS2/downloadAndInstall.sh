@@ -1,4 +1,8 @@
 #!/bin/bash
+steamUsername="${steamUsername}"
+steamPassword="${steamPassword}"
+gslt="${gslt}"
+lgsmfilename="${lgsmfilename}"
 startLog "Download linuxgsm.sh and install server"
 sudo -H -u GameAdmin bash -c "cd ~ && wget -O linuxgsm.sh https://linuxgsm.sh && chmod +x linuxgsm.sh && bash linuxgsm.sh $lgsmfilename"
 sudo -H -u GameAdmin bash -c "mkdir ~/lgsm/config-lgsm"
