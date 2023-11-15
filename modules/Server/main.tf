@@ -76,10 +76,13 @@ data "template_cloudinit_config" "user_data" {
     content_type = "text/x-shellscript"
     content = "${file("${path.module}/deploySSMAgent.sh")}"
   }
-  part {
-    filename = "applicationInstallScript.sh"
-    content_type = "text/x-shellscript"
-    content = var.application_install_script
+  dynamic "script"{
+    for_each = var.scripts
+    part {
+      filename = script.value["filename"]
+      content_type = "text/x-shellscript"
+      content = script.value["content"]
+    }
   }
 }
 

@@ -43,3 +43,20 @@ resource "aws_security_group_rule" "CSGO_UDP_27005"{
   security_group_id = var.ec2_security_group_id
 }
 
+resource "aws_security_group_rule" "efs_TCP"{
+  type              = "ingress"
+  from_port         = 2049
+  to_port           = 2049
+  protocol          = "tcp"
+  source_security_group_id = var.efs_security_group_id
+  security_group_id = var.ec2_security_group_id
+}
+
+resource "aws_security_group_rule" "efs_UDP"{
+  type              = "ingress"
+  from_port         = 2049
+  to_port           = 2049
+  protocol          = "udp"
+  source_security_group_id = var.efs_security_group_id
+  security_group_id = var.ec2_security_group_id
+}

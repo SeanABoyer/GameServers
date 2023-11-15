@@ -1,0 +1,10 @@
+#!/bin/bash
+startLog "Download linuxgsm.sh and install server"
+sudo -H -u GameAdmin bash -c "cd ~ && wget -O linuxgsm.sh https://linuxgsm.sh && chmod +x linuxgsm.sh && bash linuxgsm.sh $lgsmfilename"
+sudo -H -u GameAdmin bash -c "mkdir ~/lgsm/config-lgsm"
+sudo -H -u GameAdmin bash -c "mkdir ~/lgsm/config-lgsm/cs2server"
+sudo -H -u GameAdmin bash -c "echo 'steamuser=\"$steamUsername\"' >> ~/lgsm/config-lgsm/cs2server/common.cfg"
+sudo -H -u GameAdmin bash -c "echo 'steampass=\"$steamPassword\"' >> ~/lgsm/config-lgsm/cs2server/common.cfg"
+sudo -H -u GameAdmin bash -c "echo 'gslt=\"$gslt\"' >> ~/lgsm/config-lgsm/cs2server/common.cfg"
+sudo -H -u GameAdmin bash -c "cd ~ && yes | ./$lgsmfilename install"
+finishLog "Download linuxgsm.sh and install server"

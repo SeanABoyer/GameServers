@@ -35,3 +35,7 @@ variable "ami_name" {
     type = string
     default = "al2023-ami-2023*"
 }
+
+variable "scripts" {
+    type = list(map(string))
+}
