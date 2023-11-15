@@ -1,7 +1,6 @@
-servicename="${serviecname}"
 gamename="${gamename}"
 
-startLog "Creating Service: $servicename"
+startLog "Creating Service: $gamename"
 
 touch /etc/systemd/system/$gamename.service
 echo "[Unit]" >>/etc/systemd/system/$gamename.service
@@ -15,5 +14,5 @@ echo "[Install]" >>/etc/systemd/system/$gamename.service
 echo "WantedBy=multi-user.target" >>/etc/systemd/system/$gamename.service
 
 systemctl daemon-reload
-systemctl enable $servicename
-finishLog "Creating Service: $servicename"
+systemctl enable $gamename
+finishLog "Creating Service: $gamename"

@@ -21,7 +21,6 @@ data "template_file" "downloadAndInstall" {
 data "template_file" "createService" {
     template = "${file("../../modules/shellScripts/createService.sh")}"
     vars = {
-        serviecname = "${local.gamename}-service"
         gamename = "${local.gamename}"
     }
 }
