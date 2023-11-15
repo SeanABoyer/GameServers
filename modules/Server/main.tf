@@ -79,9 +79,9 @@ data "template_cloudinit_config" "user_data" {
   dynamic "part"{
     for_each = var.scripts
     content {
-      filename = script.value["filename"]
+      filename = part.value["filename"]
       content_type = "text/x-shellscript"
-      content = script.value["content"]
+      content = part.value["content"]
     }
   }
 }
