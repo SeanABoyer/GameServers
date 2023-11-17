@@ -68,11 +68,7 @@ module "server"{
         },
         {
             "filename":"debianSSMAgent.sh",
-            "content":data.template_file.utility.rendered
-        },
-        {
-            "filename":"utility.sh",
-            "content":data.template_file.utility.rendered
+            "content":data.template_file.debianSSMAgent.rendered
         },
         {
             "filename":"update.sh",
