@@ -1,9 +1,8 @@
 dir="/tmp/efsUtils"
 echo "[$(date '+%d/%m/%Y %H:%M:%S')][Starting] Mounting EFS"
-echo "SEAN $root_dir SEAN"
 sudo apt install git binutils -y
-mkdir -p "${dir}"
-cd "${dir}"
+mkdir -p "$dir"
+cd "$dir"
 sudo git clone https://github.com/aws/efs-utils .
 sudo ./build-deb.sh
 sudo apt install ./build/amazon-efs-utils*deb -y
