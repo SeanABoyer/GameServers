@@ -1,7 +1,6 @@
 gamename="${gamename}"
 
-startLog "Creating Service: $gamename"
-
+echo "[$(date '+%d/%m/%Y %H:%M:%S')][Starting] Creating Service:$gamename"
 touch /etc/systemd/system/$gamename.service
 echo "[Unit]" >>/etc/systemd/system/$gamename.service
 echo "Description=$gamename" >>/etc/systemd/system/$gamename.service
@@ -15,4 +14,4 @@ echo "WantedBy=multi-user.target" >>/etc/systemd/system/$gamename.service
 
 systemctl daemon-reload
 systemctl enable $gamename
-finishLog "Creating Service: $gamename"
+echo "[$(date '+%d/%m/%Y %H:%M:%S')][Completed] Creating Service:$gamename"

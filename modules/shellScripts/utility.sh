@@ -10,7 +10,7 @@ finishLog () {
     date=$(date '+%d/%m/%Y %H:%M:%S')
     echo "[$date][Completed] $log_message"
 }
-alias finishLog2=finishLog
+
 generalLog () {
     log_message=$1
     date=$(date '+%d/%m/%Y %H:%M:%S')
