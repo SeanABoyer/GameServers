@@ -83,7 +83,7 @@ module "server"{
         }
     ]
     game_name = local.gamename
-    instance_type = "t4g.small"
+    instance_type = "t4.small"
     public_ssh_key = var.public_ssh_key
     ami_name = "debian-11-amd64*"
 }
