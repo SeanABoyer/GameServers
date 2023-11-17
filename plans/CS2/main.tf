@@ -43,8 +43,13 @@ data "template_file" "mountEFS" {
     }
 }
 
-data "template_file" "debianUpdate" {
-    template = "${file("../../modules/shellScripts/debianUpdate.sh")}"
+data "template_file" "update" {
+    template = "${file("../../modules/shellScripts/debian/update.sh")}"
+    vars = {}
+}
+
+data "template_file" "debianSSMAgent" {
+    template = "${file("../../modules/shellScripts/debian/deploySSMAgent.sh")}"
     vars = {}
 }
 
@@ -62,8 +67,16 @@ module "server"{
             "content":data.template_file.utility.rendered
         },
         {
-            "filename":"debianUpdate.sh",
-            "content":data.template_file.debianUpdate.rendered
+            "filename":"debianSSMAgent.sh",
+            "content":data.template_file.utility.rendered
+        },
+        {
+            "filename":"utility.sh",
+            "content":data.template_file.utility.rendered
+        },
+        {
+            "filename":"update.sh",
+            "content":data.template_file.update.rendered
         },
         {
             "filename":"mountEFS.sh",

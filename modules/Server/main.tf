@@ -71,11 +71,11 @@ resource "aws_key_pair" "ssh_key" {
 data "template_cloudinit_config" "user_data" {
   gzip = true
   base64_encode = true
-  part {
-    filename = "SSMAgentDebian.sh"
-    content_type = "text/x-shellscript"
-    content = "${file("${path.module}/deploySSMAgent.sh")}"
-  }
+  # part {
+  #   filename = "SSMAgentDebian.sh"
+  #   content_type = "text/x-shellscript"
+  #   content = "${file("${path.module}/deploySSMAgent.sh")}"
+  # }
   dynamic "part"{
     for_each = var.scripts
     content {
