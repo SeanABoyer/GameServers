@@ -63,31 +63,31 @@ module "server"{
     source = "../../modules/Server"
     scripts = [
         {
-            "filename":"utility.sh",
+            "filename":"01_utility.sh",
             "content":data.template_file.utility.rendered
         },
         {
-            "filename":"debianSSMAgent.sh",
+            "filename":"02_debianSSMAgent.sh",
             "content":data.template_file.debianSSMAgent.rendered
         },
         {
-            "filename":"update.sh",
+            "filename":"03_update.sh",
             "content":data.template_file.update.rendered
         },
         {
-            "filename":"mountEFS.sh",
+            "filename":"04_mountEFS.sh",
             "content":data.template_file.mountEFS.rendered
         },
         {
-            "filename":"createUser.sh",
+            "filename":"05_createUser.sh",
             "content":data.template_file.createUser.rendered
         },
         {
-            "filename":"createService.sh",
+            "filename":"06_createService.sh",
             "content":data.template_file.createService.rendered
         },
         {
-            "filename":"downloadAndInstall.sh",
+            "filename":"07_downloadAndInstall.sh",
             "content":data.template_file.downloadAndInstall.rendered
         }
     ]
