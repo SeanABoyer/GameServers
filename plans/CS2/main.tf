@@ -16,6 +16,7 @@ data "template_file" "downloadAndInstall" {
         steamPassword = "${var.steamPassword}"
         gslt = "${var.gslt}"
         lgsmfilename = "${local.lgsmfilename}"
+        root_dir = "/mnt/${local.gamename}"
     }
 }
 
