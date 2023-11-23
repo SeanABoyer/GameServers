@@ -111,11 +111,6 @@ resource "aws_instance" "server" {
 
   user_data = "${data.template_cloudinit_config.user_data.rendered}"
   user_data_replace_on_change = true
-
-  root_block_device {
-    volume_size = 60
-  }
-
 }
 
 resource "aws_security_group" "ec2_sg" {
@@ -123,27 +118,6 @@ resource "aws_security_group" "ec2_sg" {
   vpc_id = aws_vpc.vpc.id
 }
 #END# Instance
-
-#START# CloudWatch
-resource "aws_cloudwatch_metric_alarm" "cw_connections" {
-  alarm_name                = "StopInstance"
-  comparison_operator       = "LessThanThreshold"
-  evaluation_periods        = "4"
-  metric_name               = "ConnectionsOn25565"
-  namespace                 = "CustomEC2"
-  period                    = "900"
-  statistic                 = "Average"
-  threshold                 = "1"
-  alarm_description         = "This alarm will trigger anytime the custom metric is below 1 for more than 1 hour straight."
-  actions_enabled           = true
-  alarm_actions             = [
-    "arn:aws:automate:${data.aws_region.current.name}:ec2:stop"
-  ]
-  dimensions = {
-    InstanceId = "${aws_instance.server.id}"
-  }
-}
-#END# CloudWatch
 
 #START# EFS
 resource "aws_efs_file_system" "efs" {}
