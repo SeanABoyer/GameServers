@@ -71,11 +71,6 @@ resource "aws_key_pair" "ssh_key" {
 data "template_cloudinit_config" "user_data" {
   gzip = true
   base64_encode = true
-  # part {
-  #   filename = "SSMAgentDebian.sh"
-  #   content_type = "text/x-shellscript"
-  #   content = "${file("${path.module}/deploySSMAgent.sh")}"
-  # }
   dynamic "part"{
     for_each = var.scripts
     content {
@@ -86,7 +81,7 @@ data "template_cloudinit_config" "user_data" {
   }
 }
 
-data "aws_ami" "amazon_linux_latest" {
+data "aws_ami" "ami_latest" {
   owners = ["amazon"]
   most_recent = true
   filter {
@@ -105,7 +100,7 @@ data "aws_ec2_instance_type" "this" {
 }
 
 resource "aws_instance" "server" {
-  ami           = data.aws_ami.amazon_linux_latest.id
+  ami           = data.aws_ami.ami_latest.id
   instance_type = data.aws_ec2_instance_type.this.instance_type
   iam_instance_profile = aws_iam_instance_profile.serverInstanceProfile.name
   private_ip = var.private_ip
