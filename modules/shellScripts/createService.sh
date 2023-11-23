@@ -6,7 +6,7 @@ echo "Description=${gamename}" >>/etc/systemd/system/${gamename}.service
 echo "[Service]" >>/etc/systemd/system/${gamename}.service
 echo "User=${username}" >>/etc/systemd/system/${gamename}.service
 echo "WorkingDirectory=${username}" >> /etc/systemd/system/${gamename}.service
-echo "ExecStart=\"${username}/${lgsmfilename} ${lgsmstartcommand}\"" >>/etc/systemd/system/${gamename}.service
+echo "ExecStart=\"${root_dir}/${lgsmfilename} ${lgsmstartcommand}\"" >>/etc/systemd/system/${gamename}.service
 echo "Restart=always" >>/etc/systemd/system/${gamename}.service
 echo "[Install]" >>/etc/systemd/system/${gamename}.service
 echo "WantedBy=multi-user.target" >>/etc/systemd/system/${gamename}.service

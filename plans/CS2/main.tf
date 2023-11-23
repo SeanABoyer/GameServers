@@ -27,6 +27,7 @@ data "template_file" "createService" {
         username = "${local.username}"
         lgsmfilename = "${local.lgsmfilename}"
         lgsmstartcommand = "start"
+        root_dir = "/mnt/${local.gamename}"
 
     }
 }
