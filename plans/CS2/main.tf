@@ -80,12 +80,12 @@ module "server"{
             "content":data.template_file.update.rendered
         },
         {
-            "filename":"04_mountEFS.sh",
-            "content":data.template_file.mountEFS.rendered
+            "filename":"04_createUser.sh",
+            "content":data.template_file.createUser.rendered
         },
         {
-            "filename":"05_createUser.sh",
-            "content":data.template_file.createUser.rendered
+            "filename":"05_mountEFS.sh",
+            "content":data.template_file.mountEFS.rendered
         },
         {
             "filename":"06_createService.sh",
