@@ -106,10 +106,10 @@ module "application"{
     efs_security_group_id = module.server.efs_security_group_id
 }
 
-module "dns" {
-    source = "../../modules/DNS"
-    dnsPrefix = var.dnsPrefix
-    dnsZone = var.dnsZone
-    public_ip = module.server.public_ip
-    depends_on = [module.server]
-}
+# module "dns" {
+#     source = "../../modules/DNS"
+#     dnsPrefix = var.dnsPrefix
+#     dnsZone = var.dnsZone
+#     public_ip = module.server.public_ip
+#     depends_on = [module.server]
+# }
