@@ -1,3 +1,4 @@
+#!/bin/bash
 dir="/tmp/efsUtils"
 echo "[$(date '+%d/%m/%Y %H:%M:%S')][Starting] Mounting EFS"
 sudo apt install git binutils -y

@@ -1,3 +1,4 @@
+#!/bin/bash
 echo "[$(date '+%d/%m/%Y %H:%M:%S')][Starting] Creating Service:${gamename}"
 touch /etc/systemd/system/${gamename}.service
 echo "[Unit]" >>/etc/systemd/system/${gamename}.service
