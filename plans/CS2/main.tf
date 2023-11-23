@@ -24,6 +24,10 @@ data "template_file" "createService" {
     template = "${file("../../modules/shellScripts/createService.sh")}"
     vars = {
         gamename = "${local.gamename}"
+        username = "${local.username}"
+        lgsmfilename = "${local.lgsmfilename}"
+        lgsmstartcommand = "start"
+
     }
 }
 
