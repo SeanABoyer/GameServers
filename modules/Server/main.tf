@@ -63,10 +63,10 @@ resource "aws_iam_instance_profile" "serverInstanceProfile" {
 
 #START# Instance
 
-resource "aws_key_pair" "ssh_key" {
-  key_name = "ssh_${local.gameInstanceName}"
-  public_key = var.public_ssh_key
-}
+# resource "aws_key_pair" "ssh_key" {
+#   key_name = "ssh_${local.gameInstanceName}"
+#   public_key = var.public_ssh_key
+# }
 
 data "template_cloudinit_config" "user_data" {
   gzip = true
@@ -106,7 +106,7 @@ resource "aws_instance" "server" {
   private_ip = var.private_ip
 
   subnet_id = aws_subnet.subnet.id
-  key_name = aws_key_pair.ssh_key.key_name
+  #key_name = aws_key_pair.ssh_key.key_name
   vpc_security_group_ids = [aws_security_group.ec2_sg.id]
 
   user_data = "${data.template_cloudinit_config.user_data.rendered}"

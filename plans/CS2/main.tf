@@ -94,12 +94,12 @@ module "server"{
     ]
     game_name = local.gamename
     instance_type = "t3.small"
-    public_ssh_key = var.public_ssh_key
+    #public_ssh_key = var.public_ssh_key
     ami_name = "debian-11-amd64*"
 }
 
 module "application"{
-    source = "../../modules/CS2Ports"
+    source = "../../modules/Ports/CS2"
     ec2_security_group_id = module.server.ec2_security_group_id
     cidr_block = module.server.cidr_block
     depends_on = [module.server]

@@ -1,6 +1,6 @@
-variable "public_ssh_key" {
-    type = string
-}
+# variable "public_ssh_key" {
+#     type = string
+# }
 variable "dnsZone"{
     type = string    
 }
