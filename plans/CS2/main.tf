@@ -14,7 +14,7 @@ data "template_file" "downloadAndInstall" {
     vars = {
         steamUsername = "${var.steamUsername}"
         steamPassword = "${var.steamPassword}"
-        gslt = "${var.gslt}"
+        gslt = "${var.steamGSLT}"
         lgsmfilename = "${local.lgsmfilename}"
         root_dir = "/mnt/${local.gamename}"
     }
@@ -108,7 +108,7 @@ module "application"{
 
 # module "dns" {
 #     source = "../../modules/DNS"
-#     dnsPrefix = var.dnsPrefix
+#     dnsPrefix = var.gamename
 #     dnsZone = var.dnsZone
 #     public_ip = module.server.public_ip
 #     depends_on = [module.server]
