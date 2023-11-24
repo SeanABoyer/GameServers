@@ -17,3 +17,10 @@ then
 else
     echo "[$(date '+%d/%m/%Y %H:%M:%S')][INFO] ${root_dir} already exists."
 fi
+
+echo "[$(date '+%d/%m/%Y %H:%M:%S')][Starting] Configuring Server"
+
+
+
+
+echo "[$(date '+%d/%m/%Y %H:%M:%S')][Completed] Configuring Server"
