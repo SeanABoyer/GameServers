@@ -66,7 +66,10 @@ data "template_file" "utility" {
 
 data "template_file" "createWrapperScripts" {
     template = "${file("../../modules/shellScripts/createWrapperScripts.sh")}"
-    vars = {}
+    vars = {
+        root_dir = "/mnt/${local.gamename}"
+        gamename = "${local.gamename}"
+    }
 }
 
 module "server"{
