@@ -1,7 +1,8 @@
 #!/bin/bash
 startFileFullPath="${root_dir}/startServer.sh"
 stopFileFullPath="${root_dir}/stopServer.sh"
-if [ ! -f $startFileFullPath ]
+
+if [ ! -f "$startFileFullPath" ]
 then
     echo "[$(date '+%d/%m/%Y %H:%M:%S')][Starting] Creating Wrapper Start Script: ${gamename}"
     touch $startFileFullPath
@@ -14,7 +15,8 @@ else
     echo "[$(date '+%d/%m/%Y %H:%M:%S')][INFO] Wrapper Start Script: $startFileFullPath exists."
 fi
 
-if [ ! -f $stopFileFullPath ]
+
+if [ ! -f "$stopFileFullPath" ]
 then
     echo "[$(date '+%d/%m/%Y %H:%M:%S')][Starting] Creating Wrapper Stop Script: ${gamename}"
     touch $stopFileFullPath
