@@ -5,8 +5,8 @@ if [ ! -f "$startFileFullPath"]
 then
     echo "[$(date '+%d/%m/%Y %H:%M:%S')][Starting] Creating Wrapper Start Script:${gamename}"
     touch "$startFileFullPath"
-    echo "bash ${$root_dir}/cs2server update" >> "$startFileFullPath"
-    echo "bash ${$root_dir}/cs2server start" >> "$startFileFullPath"
+    echo "bash ${$root_dir}/cs2server update >> $startFileFullPath"
+    echo "bash ${$root_dir}/cs2server start >> $startFileFullPath"
     sudo chown GameAdmin:GameAdmin "$startFileFullPath"
     sudo chmod +x "$startFileFullPath"
     echo "[$(date '+%d/%m/%Y %H:%M:%S')][Completed] Creating Wrapper Start Script:${gamename}"
@@ -18,7 +18,7 @@ if [ ! -f "$stopFileFullPath"]
 then
     echo "[$(date '+%d/%m/%Y %H:%M:%S')][Starting] Creating Wrapper Stop Script:${gamename}"
     touch "$stopFileFullPathh"
-    echo "bash ${$root_dir}/cs2server stop" >> "$stopFileFullPath"
+    echo "bash ${$root_dir}/cs2server stop >> $stopFileFullPath"
     sudo chown GameAdmin:GameAdmin "$stopFileFullPath"
     sudo chmod +x "$stopFileFullPath"
     echo "[$(date '+%d/%m/%Y %H:%M:%S')][Completed] Creating Wrapper Stop Script:${gamename}"
