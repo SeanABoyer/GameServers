@@ -64,6 +64,10 @@ data "template_file" "utility" {
     vars = {}
 }
 
+data "template_file" "createWrapperScripts" {
+    template = "${file("../../modules/shellScripts/createWrapperScripts.sh")}"
+    vars = {}
+}
 
 module "server"{
     source = "../../modules/Server"
@@ -89,11 +93,15 @@ module "server"{
             "content":data.template_file.mountEFS.rendered
         },
         {
-            "filename":"06_createService.sh",
+            "filename":"06_createWrapperScripts.sh",
+            "content":data.template_file.createWrapperScripts.rendered
+        },
+        {
+            "filename":"07_createService.sh",
             "content":data.template_file.createService.rendered
         },
         {
-            "filename":"07_downloadAndInstall.sh",
+            "filename":"08_downloadAndInstall.sh",
             "content":data.template_file.downloadAndInstall.rendered
         }
     ]

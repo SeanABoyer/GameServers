@@ -1,16 +1,22 @@
 #!/bin/bash
-echo "[$(date '+%d/%m/%Y %H:%M:%S')][Starting] Creating Service:${gamename}"
-touch /etc/systemd/system/${gamename}.service
-echo "[Unit]" >>/etc/systemd/system/${gamename}.service
-echo "Description=${gamename}" >>/etc/systemd/system/${gamename}.service
-echo "[Service]" >>/etc/systemd/system/${gamename}.service
-echo "User=${username}" >>/etc/systemd/system/${gamename}.service
-echo "WorkingDirectory=${username}" >> /etc/systemd/system/${gamename}.service
-echo "ExecStart=\"${root_dir}/${lgsmfilename} ${lgsmstartcommand}\"" >>/etc/systemd/system/${gamename}.service
-echo "Restart=always" >>/etc/systemd/system/${gamename}.service
-echo "[Install]" >>/etc/systemd/system/${gamename}.service
-echo "WantedBy=multi-user.target" >>/etc/systemd/system/${gamename}.service
+serviceFileFullPath="/etc/systemd/system/${gamename}.service"
+if [ ! -f "$startFileFullPath"]
+then
+    echo "[$(date '+%d/%m/%Y %H:%M:%S')][Starting] Creating Service:${gamename}"
+    touch "$serviceFileFullPath"
+    echo "[Unit]" >> "$serviceFileFullPath"
+    echo "Description=${gamename}" >> "$serviceFileFullPath"
+    echo "[Service]" >> "$serviceFileFullPath"
+    echo "User=${username}" >> "$serviceFileFullPath"
+    echo "WorkingDirectory=${root_dir}/startServer.sh" >> "$serviceFileFullPath"
+    echo "ExecStart=\"${root_dir}/${lgsmfilename} ${lgsmstartcommand}\"" >> "$serviceFileFullPath"
+    echo "Restart=always" >> "$serviceFileFullPath"
+    echo "[Install]" >> "$serviceFileFullPath"
+    echo "WantedBy=multi-user.target" >> "$serviceFileFullPath"
 
-systemctl daemon-reload
-systemctl enable ${gamename}
-echo "[$(date '+%d/%m/%Y %H:%M:%S')][Completed] Creating Service:${gamename}"
+    systemctl daemon-reload
+    systemctl enable ${gamename}
+    echo "[$(date '+%d/%m/%Y %H:%M:%S')][Completed] Creating Service:${gamename}"
+else
+    echo "[$(date '+%d/%m/%Y %H:%M:%S')][INFO] ServiceFile: $serviceFileFullPath exists."
+fi
