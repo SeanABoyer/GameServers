@@ -17,6 +17,7 @@ data "template_file" "downloadAndInstall" {
         gslt = "${var.steamGSLT}"
         lgsmfilename = "${local.lgsmfilename}"
         root_dir = "/mnt/${local.gamename}"
+        gamename = "${local.gamename}"
     }
 }
 
@@ -64,14 +65,6 @@ data "template_file" "utility" {
     vars = {}
 }
 
-data "template_file" "createWrapperScripts" {
-    template = "${file("../../modules/shellScripts/createWrapperScripts.sh")}"
-    vars = {
-        root_dir = "/mnt/${local.gamename}"
-        gamename = "${local.gamename}"
-    }
-}
-
 module "server"{
     source = "../../modules/Server"
     scripts = [
@@ -96,21 +89,16 @@ module "server"{
             "content":data.template_file.mountEFS.rendered
         },
         {
-            "filename":"06_createWrapperScripts.sh",
-            "content":data.template_file.createWrapperScripts.rendered
-        },
-        {
-            "filename":"07_createService.sh",
+            "filename":"06_createService.sh",
             "content":data.template_file.createService.rendered
         },
         {
-            "filename":"08_downloadAndInstall.sh",
+            "filename":"07_downloadAndInstall.sh",
             "content":data.template_file.downloadAndInstall.rendered
         }
     ]
     game_name = local.gamename
     instance_type = "t3.small"
-    #public_ssh_key = var.public_ssh_key
     ami_name = "debian-11-amd64*"
 }
 
