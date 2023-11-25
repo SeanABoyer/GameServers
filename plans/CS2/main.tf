@@ -7,9 +7,10 @@ locals {
     gamename = "CS2"
     lgsmfilename = "cs2server"
     username = "GameAdmin"
+    rootdir = "/mnt/${local.gamename}"
 }
 
-data "template_file" "downloadAndInstall" {
+data "template_file" "CS2Install" {
     template = "${file("./downloadAndInstall.sh")}"
     vars = {
         steamUsername = "${var.steamUsername}"
@@ -26,9 +27,7 @@ data "template_file" "createService" {
     vars = {
         gamename = "${local.gamename}"
         username = "${local.username}"
-        lgsmfilename = "${local.lgsmfilename}"
-        lgsmstartcommand = "start"
-        root_dir = "/mnt/${local.gamename}"
+        root_dir = "${local.rootdir}"
 
     }
 }
@@ -45,7 +44,7 @@ data "template_file" "mountEFS" {
     template = "${file("../../modules/shellScripts/mountEFS.sh")}"
     vars = {
         username = "${local.username}"
-        root_dir = "/mnt/${local.gamename}"
+        root_dir = "${local.rootdir}"
         filesystem_id = module.server.efs_file_system_id
     }
 }
@@ -60,18 +59,17 @@ data "template_file" "debianSSMAgent" {
     vars = {}
 }
 
-data "template_file" "utility" {
-    template = "${file("../../modules/shellScripts/utility.sh")}"
-    vars = {}
+data "template_file" "rconInstall" {
+    template = "${file("../../modules/shellScripts/rcon.sh")}"
+    vars = {
+        username = "${local.username}"
+        root_dir = "${local.rootdir}"
+    }
 }
 
 module "server"{
     source = "../../modules/Server"
     scripts = [
-        {
-            "filename":"01_utility.sh",
-            "content":data.template_file.utility.rendered
-        },
         {
             "filename":"02_debianSSMAgent.sh",
             "content":data.template_file.debianSSMAgent.rendered
@@ -93,8 +91,12 @@ module "server"{
             "content":data.template_file.createService.rendered
         },
         {
-            "filename":"07_downloadAndInstall.sh",
-            "content":data.template_file.downloadAndInstall.rendered
+            "filename":"07_CS2Install.sh",
+            "content":data.template_file.CS2Install.rendered
+        },
+        {
+            "filename":"08_rconInstall.sh",
+            "content":data.template_file.rconInstall.rendered
         }
     ]
     game_name = local.gamename

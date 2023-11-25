@@ -6,4 +6,4 @@ ec2 = boto3.client('ec2',region_name=region)
 
 def lambda_hanlder(event,context):
     print(instances)
-    ec2.start_instances(InstanceIds=instances)
+    ec2.stop_instances(InstanceIds=instances)
