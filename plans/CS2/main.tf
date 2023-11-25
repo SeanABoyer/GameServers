@@ -80,6 +80,25 @@ data "template_file" "installRcon" {
     }
 }
 
+data "template_file" "createRconService" {
+    template = "${file("../../modules/shellScripts/createService.sh")}"
+    vars = {
+        gamename = "${local.gamename}_RCON"
+        username = "${local.username}"
+        root_dir = "${local.rootdir}/cs2-rcon-panel-master"
+        startScriptFullPath = "nodemon app.js start"
+        stopScriptFullPath = "nodemon app.js stop"
+
+    }
+}
+
+data "template_file" "startRCONService" {
+    template = "${file("../../modules/shellScripts/startService.sh")}"
+    vars = {
+        gamename = "${local.gamename}_RCON"
+    }
+}
+
 
 module "server"{
     source = "../../modules/Server"
@@ -115,6 +134,14 @@ module "server"{
         {
             "filename":"08_installRcon.sh",
             "content":data.template_file.installRcon.rendered
+        },
+        {
+            "filename":"08_createRCONService.sh",
+            "content":data.template_file.createRconService.rendered
+        },
+        {
+            "filename":"08_startRCONService.sh",
+            "content":data.template_file.startRCONService.rendered
         }
     ]
     game_name = local.gamename
