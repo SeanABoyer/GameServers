@@ -19,6 +19,7 @@ if [ ! -f "${startScriptFullPath}" ]
 then
     echo "[$(date '+%d/%m/%Y %H:%M:%S')][Starting] Creating Wrapper Start Script: ${gamename}"
     touch ${startScriptFullPath}
+    echo "#!/bin/bash" >> "${startScriptFullPath}"
     echo "bash ${root_dir}/cs2server update >> ${startScriptFullPath}"
     echo "bash ${root_dir}/cs2server start >> ${startScriptFullPath}"
     sudo chown GameAdmin:GameAdmin "${startScriptFullPath}"
@@ -33,6 +34,7 @@ if [ ! -f "${stopScriptFullPath}" ]
 then
     echo "[$(date '+%d/%m/%Y %H:%M:%S')][Starting] Creating Wrapper Stop Script: ${gamename}"
     touch "${stopScriptFullPath}"
+    echo "#!/bin/bash" >> "${stopScriptFullPath}"
     echo "bash ${root_dir}/cs2server stop >> ${stopScriptFullPath}"
     sudo chown GameAdmin:GameAdmin "${stopScriptFullPath}"
     sudo chmod +x "${stopScriptFullPath}"

@@ -16,6 +16,7 @@ echo "Restart=always" >> "$serviceFileFullPath"
 echo "[Install]" >> "$serviceFileFullPath"
 echo "WantedBy=multi-user.target" >> "$serviceFileFullPath"
 
-systemctl daemon-reload
 systemctl enable ${gamename}
+systemctl daemon-reload
+
 echo "[$(date '+%d/%m/%Y %H:%M:%S')][Completed] Creating Service:${gamename}"
