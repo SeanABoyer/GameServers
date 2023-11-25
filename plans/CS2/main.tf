@@ -8,7 +8,7 @@ locals {
     lgsmfilename = "cs2server"
     username = "GameAdmin"
     rootdir = "/mnt/${local.gamename}"
-    rcondir = "${rootdir}/cs2-rcon-panel-master"
+    rcondir = "${local.rootdir}/cs2-rcon-panel-master"
     CS2startScriptFullPath = "${local.rootdir}/startServer.sh"
     CS2stopScriptFullPath = "${local.rootdir}/stopServer.sh"
     RCONstartScriptFullPath = "${local.rcondir}/startServer.sh"
