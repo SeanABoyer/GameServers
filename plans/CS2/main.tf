@@ -8,8 +8,11 @@ locals {
     lgsmfilename = "cs2server"
     username = "GameAdmin"
     rootdir = "/mnt/${local.gamename}"
-    startScriptFullPath = "${local.rootdir}/startServer.sh"
-    stopScriptFullPath = "${local.rootdir}/stopServer.sh"
+    rcondir = "${rootdir}/cs2-rcon-panel-master"
+    CS2startScriptFullPath = "${local.rootdir}/startServer.sh"
+    CS2stopScriptFullPath = "${local.rootdir}/stopServer.sh"
+    RCONstartScriptFullPath = "${local.rcondir}/startServer.sh"
+    RCONstopScriptFullPath = "${local.rcondir}/stopServer.sh"
 }
 
 data "template_file" "CS2Install" {
@@ -21,8 +24,8 @@ data "template_file" "CS2Install" {
         lgsmfilename = "${local.lgsmfilename}"
         root_dir = "${local.rootdir}"
         gamename = "${local.gamename}"
-        startScriptFullPath = "${local.startScriptFullPath}"
-        stopScriptFullPath = "${local.stopScriptFullPath}"
+        startScriptFullPath = "${local.CS2startScriptFullPath}"
+        stopScriptFullPath = "${local.CS2stopScriptFullPath}"
     }
 }
 
@@ -32,8 +35,30 @@ data "template_file" "createCS2Service" {
         gamename = "${local.gamename}"
         username = "${local.username}"
         root_dir = "${local.rootdir}"
-        startScriptFullPath = "${local.startScriptFullPath}"
-        stopScriptFullPath = "${local.stopScriptFullPath}"
+        startScriptFullPath = "${local.CS2startScriptFullPath}"
+        stopScriptFullPath = "${local.CS2stopScriptFullPath}"
+
+    }
+}
+
+data "template_file" "installRcon" {
+    template = "${file("../../modules/shellScripts/installRcon.sh")}"
+    vars = {
+        username = "${local.username}"
+        rcon_dir = "${local.rcondir}"
+        startScriptFullPath = "${local.RCONstartScriptFullPath}"
+        stopScriptFullPath = "${local.RCONstopScriptFullPath}"
+    }
+}
+
+data "template_file" "createRconService" {
+    template = "${file("../../modules/shellScripts/createService.sh")}"
+    vars = {
+        gamename = "${local.gamename}_RCON"
+        username = "${local.username}"
+        root_dir = "${local.rcondir}"
+        startScriptFullPath = "${local.RCONstartScriptFullPath}"
+        stopScriptFullPath = "${local.RCONstopScriptFullPath}"
 
     }
 }
@@ -44,6 +69,16 @@ data "template_file" "startCS2Service" {
         gamename = "${local.gamename}"
     }
 }
+
+data "template_file" "startRCONService" {
+    template = "${file("../../modules/shellScripts/startService.sh")}"
+    vars = {
+        gamename = "${local.gamename}_RCON"
+    }
+}
+
+
+
 
 data "template_file" "createUser" {
     template = "${file("../../modules/shellScripts/createUser.sh")}"
@@ -72,32 +107,7 @@ data "template_file" "debianSSMAgent" {
     vars = {}
 }
 
-data "template_file" "installRcon" {
-    template = "${file("../../modules/shellScripts/installRcon.sh")}"
-    vars = {
-        username = "${local.username}"
-        root_dir = "${local.rootdir}"
-    }
-}
 
-data "template_file" "createRconService" {
-    template = "${file("../../modules/shellScripts/createService.sh")}"
-    vars = {
-        gamename = "${local.gamename}_RCON"
-        username = "${local.username}"
-        root_dir = "${local.rootdir}/cs2-rcon-panel-master"
-        startScriptFullPath = "nodemon app.js start"
-        stopScriptFullPath = "nodemon app.js stop"
-
-    }
-}
-
-data "template_file" "startRCONService" {
-    template = "${file("../../modules/shellScripts/startService.sh")}"
-    vars = {
-        gamename = "${local.gamename}_RCON"
-    }
-}
 
 
 module "server"{
