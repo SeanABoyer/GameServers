@@ -15,31 +15,28 @@ else
     echo "[$(date '+%d/%m/%Y %H:%M:%S')][INFO] $lgsmFileFullPath already exists. "
 fi
 
-startFileFullPath="${root_dir}/startServer.sh"
-stopFileFullPath="${root_dir}/stopServer.sh"
-
-if [ ! -f "$startFileFullPath" ]
+if [ ! -f "${startScriptFullPath}" ]
 then
     echo "[$(date '+%d/%m/%Y %H:%M:%S')][Starting] Creating Wrapper Start Script: ${gamename}"
-    touch $startFileFullPath
-    echo "bash ${root_dir}/cs2server update >> $startFileFullPath"
-    echo "bash ${root_dir}/cs2server start >> $startFileFullPath"
-    sudo chown GameAdmin:GameAdmin $startFileFullPath
-    sudo chmod +x $startFileFullPath
+    touch ${startScriptFullPath}
+    echo "bash ${root_dir}/cs2server update >> ${startScriptFullPath}"
+    echo "bash ${root_dir}/cs2server start >> ${startScriptFullPath}"
+    sudo chown GameAdmin:GameAdmin "${startScriptFullPath}"
+    sudo chmod +x "${startScriptFullPath}"
     echo "[$(date '+%d/%m/%Y %H:%M:%S')][Completed] Creating Wrapper Start Script: ${gamename}"
 else
-    echo "[$(date '+%d/%m/%Y %H:%M:%S')][INFO] Wrapper Start Script: $startFileFullPath exists"
+    echo "[$(date '+%d/%m/%Y %H:%M:%S')][INFO] Wrapper Start Script: ${startScriptFullPath} exists"
 fi
 
 
-if [ ! -f "$stopFileFullPath" ]
+if [ ! -f "${stopScriptFullPath}" ]
 then
     echo "[$(date '+%d/%m/%Y %H:%M:%S')][Starting] Creating Wrapper Stop Script: ${gamename}"
-    touch $stopFileFullPath
-    echo "bash ${root_dir}/cs2server stop >> $stopFileFullPath"
-    sudo chown GameAdmin:GameAdmin $stopFileFullPath
-    sudo chmod +x $stopFileFullPath
+    touch "${stopScriptFullPath}"
+    echo "bash ${root_dir}/cs2server stop >> ${stopScriptFullPath}"
+    sudo chown GameAdmin:GameAdmin "${stopScriptFullPath}"
+    sudo chmod +x "${stopScriptFullPath}"
     echo "[$(date '+%d/%m/%Y %H:%M:%S')][Completed] Creating Wrapper Stop Script: ${gamename}"
 else
-    echo "[$(date '+%d/%m/%Y %H:%M:%S')][INFO] Wrapper Stop Script: $stopFileFullPath exists"
+    echo "[$(date '+%d/%m/%Y %H:%M:%S')][INFO] Wrapper Stop Script: ${stopScriptFullPath} exists"
 fi

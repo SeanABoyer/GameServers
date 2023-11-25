@@ -8,27 +8,40 @@ locals {
     lgsmfilename = "cs2server"
     username = "GameAdmin"
     rootdir = "/mnt/${local.gamename}"
+    startScriptFullPath = "${local.rootdir}/startServer.sh"
+    stopScriptFullPath = "${local.rootdir}/stopServer.sh"
 }
 
 data "template_file" "CS2Install" {
-    template = "${file("./downloadAndInstall.sh")}"
+    template = "${file("./CS2Install.sh")}"
     vars = {
         steamUsername = "${var.steamUsername}"
         steamPassword = "${var.steamPassword}"
         gslt = "${var.steamGSLT}"
         lgsmfilename = "${local.lgsmfilename}"
-        root_dir = "/mnt/${local.gamename}"
+        root_dir = "${local.rootdir}"
         gamename = "${local.gamename}"
+        startScriptFullPath = "${local.startScriptFullPath}"
+        stopScriptFullPath = "${local.stopScriptFullPath}"
     }
 }
 
-data "template_file" "createService" {
+data "template_file" "createCS2Service" {
     template = "${file("../../modules/shellScripts/createService.sh")}"
     vars = {
         gamename = "${local.gamename}"
         username = "${local.username}"
         root_dir = "${local.rootdir}"
+        startScriptFullPath = "${local.startScriptFullPath}"
+        stopScriptFullPath = "${local.stopScriptFullPath}"
 
+    }
+}
+
+data "template_file" "startCS2Service" {
+    template = "${file("../../modules/shellScripts/startService.sh")}"
+    vars = {
+        gamename = "${local.gamename}"
     }
 }
 
@@ -59,44 +72,49 @@ data "template_file" "debianSSMAgent" {
     vars = {}
 }
 
-data "template_file" "rconInstall" {
-    template = "${file("../../modules/shellScripts/rcon.sh")}"
+data "template_file" "installRcon" {
+    template = "${file("../../modules/shellScripts/installRcon.sh")}"
     vars = {
         username = "${local.username}"
         root_dir = "${local.rootdir}"
     }
 }
 
+
 module "server"{
     source = "../../modules/Server"
     scripts = [
         {
-            "filename":"02_debianSSMAgent.sh",
+            "filename":"01_debianSSMAgent.sh",
             "content":data.template_file.debianSSMAgent.rendered
         },
         {
-            "filename":"03_update.sh",
+            "filename":"02_update.sh",
             "content":data.template_file.update.rendered
         },
         {
-            "filename":"04_createUser.sh",
+            "filename":"03_createUser.sh",
             "content":data.template_file.createUser.rendered
         },
         {
-            "filename":"05_mountEFS.sh",
+            "filename":"04_mountEFS.sh",
             "content":data.template_file.mountEFS.rendered
         },
         {
-            "filename":"06_createService.sh",
-            "content":data.template_file.createService.rendered
-        },
-        {
-            "filename":"07_CS2Install.sh",
+            "filename":"05_CS2Install.sh",
             "content":data.template_file.CS2Install.rendered
         },
         {
-            "filename":"08_rconInstall.sh",
-            "content":data.template_file.rconInstall.rendered
+            "filename":"06_createCS2Service.sh",
+            "content":data.template_file.createCS2Service.rendered
+        },
+        {
+            "filename":"07_startCS2Service.sh",
+            "content":data.template_file.startCS2Service.rendered
+        },
+        {
+            "filename":"08_installRcon.sh",
+            "content":data.template_file.installRcon.rendered
         }
     ]
     game_name = local.gamename

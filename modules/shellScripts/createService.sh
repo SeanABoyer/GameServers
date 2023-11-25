@@ -9,8 +9,8 @@ echo "[Service]" >> "$serviceFileFullPath"
 echo "Type=forking" >> "$serviceFileFullPath"
 echo "User=${username}" >> "$serviceFileFullPath"
 echo "WorkingDirectory=${root_dir}" >> "$serviceFileFullPath"
-echo "ExecStart=\"${root_dir}/startServer.sh\"" >> "$serviceFileFullPath"
-echo "ExecStop=\"${root_dir}/stopServer.sh\"" >> "$serviceFileFullPath"
+echo "ExecStart=\"${startScriptFullPath}\"" >> "$serviceFileFullPath"
+echo "ExecStop=\"${stopScriptFullPath}\"" >> "$serviceFileFullPath"
 echo "RemainAfterExit=yes" >> "$serviceFileFullPath"
 echo "Restart=always" >> "$serviceFileFullPath"
 echo "[Install]" >> "$serviceFileFullPath"
@@ -18,5 +18,4 @@ echo "WantedBy=multi-user.target" >> "$serviceFileFullPath"
 
 systemctl daemon-reload
 systemctl enable ${gamename}
-systemctl start ${gamename}
 echo "[$(date '+%d/%m/%Y %H:%M:%S')][Completed] Creating Service:${gamename}"
