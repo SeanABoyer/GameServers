@@ -1,7 +1,7 @@
 #!/bin/bash
 dir="/tmp/rcon"
 rcon_dir="${root_dir}/rcon-web-admin"
-if [! -f $rcon_dir ]
+if [ ! -f $rcon_dir ]
 then
     echo "[$(date '+%d/%m/%Y %H:%M:%S')][Starting] Installing RCON"
     sudo apt-get install nodejs npm
