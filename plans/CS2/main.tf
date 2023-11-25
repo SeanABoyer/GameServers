@@ -45,6 +45,7 @@ data "template_file" "installRcon" {
     template = "${file("../../modules/shellScripts/installRcon.sh")}"
     vars = {
         username = "${local.username}"
+        gamename = "${local.gamename}_RCON"
         rcon_dir = "${local.rcondir}"
         startScriptFullPath = "${local.RCONstartScriptFullPath}"
         stopScriptFullPath = "${local.RCONstopScriptFullPath}"
