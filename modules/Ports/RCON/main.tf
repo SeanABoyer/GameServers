@@ -1,4 +1,5 @@
 resource "aws_security_group_rule" "RCON_Web"{
+  description       = "Allow Inbound Traffic over TCP on Port 3000"
   type              = "ingress"
   from_port         = 3000
   to_port           = 3000
