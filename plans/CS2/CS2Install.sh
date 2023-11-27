@@ -11,7 +11,7 @@ then
     sudo -H -u GameAdmin bash -c "echo 'steampass=\"${steamPassword}\"' >> ${game_dir}/lgsm/config-lgsm/cs2server/common.cfg"
     sudo -H -u GameAdmin bash -c "echo 'gslt=\"$gslt\"' >> ${game_dir}/lgsm/config-lgsm/cs2server/cs2server.cfg"
     sudo -H -u GameAdmin bash -c "cd ${game_dir} && yes | ./${lgsmfilename} install"
-    echo "[$(date '+%d/%m/%Y %H:%M:%S')][Completed]  Download linuxgsm.sh and installing CS2 server"
+    echo "[$(date '+%d/%m/%Y %H:%M:%S')][Completed]  Download linuxgsm.sh and installing CS2 server" 
 else
     echo "[$(date '+%d/%m/%Y %H:%M:%S')][INFO] $lgsmFileFullPath already exists. "
 fi
