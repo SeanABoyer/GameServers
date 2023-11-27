@@ -4,6 +4,7 @@ if [ ! -f "$lgsmFileFullPath" ]
 then
     echo "[$(date '+%d/%m/%Y %H:%M:%S')][Starting] Download linuxgsm.sh and installing CS2 server"
     sudo mkdir -p "${game_dir}"
+    sudo chown GameAdmin:GameAdmin "${game_dir}"
     sudo -H -u GameAdmin bash -c "cd ${game_dir} && wget -O linuxgsm.sh https://linuxgsm.sh && chmod +x linuxgsm.sh && bash linuxgsm.sh ${lgsmfilename}"
     sudo -H -u GameAdmin bash -c "mkdir ${game_dir}/lgsm/config-lgsm"
     sudo -H -u GameAdmin bash -c "mkdir ${game_dir}/lgsm/config-lgsm/cs2server"

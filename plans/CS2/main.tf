@@ -10,8 +10,8 @@ locals {
     rootdir = "/mnt/${module.server.efs_file_system_id}"
     gamebasedir = "${local.rootdir}/CS2"
     rconbasedir = "${local.rootdir}/cs2-rcon-panel-master"
-    CS2startScriptFullPath = "${local.rootdir}/startServer.sh"
-    CS2stopScriptFullPath = "${local.rootdir}/stopServer.sh"
+    CS2startScriptFullPath = "${local.gamebasedir}/startServer.sh"
+    CS2stopScriptFullPath = "${local.gamebasedir}/stopServer.sh"
     RCONstartScriptFullPath = "${local.rconbasedir}/startServer.sh"
     RCONstopScriptFullPath = "${local.rconbasedir}/stopServer.sh"
     scripts = [
