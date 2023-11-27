@@ -42,5 +42,5 @@ then
     sudo chmod +x "${stopScriptFullPath}"
     echo "[$(date '+%d/%m/%Y %H:%M:%S')][Completed] Creating Wrapper Stop Script: ${gamename}"
 else
-    echo "[$(date '+%d/%m/%Y %H:%M:%S')][INFO] Wrapper Stop Script: ${stopScriptFullPath} exists"
+    echo "[$(date '+%d/%m/%Y %H:%M:%S')][INFO] Wrapper Stop Script: ${stopScriptFullPath} exists" 
 fi
