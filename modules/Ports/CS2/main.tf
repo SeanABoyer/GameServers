@@ -1,11 +1,11 @@
-resource "aws_security_group_rule" "SSH"{
-  type              = "ingress"
-  from_port         = 22
-  to_port           = 22
-  protocol          = "tcp"
-  cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = var.ec2_security_group_id
-}
+# resource "aws_security_group_rule" "SSH"{
+#   type              = "ingress"
+#   from_port         = 22
+#   to_port           = 22
+#   protocol          = "tcp"
+#   cidr_blocks       = ["0.0.0.0/0"]
+#   security_group_id = var.ec2_security_group_id
+# }
 
 resource "aws_security_group_rule" "CSGO_Outbound"{
   type              = "egress"

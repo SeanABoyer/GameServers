@@ -135,14 +135,19 @@ module "server"{
     ami_name = "debian-11-amd64*"
 }
 
-module "application"{
+module "cs2-ports"{
     source = "../../modules/Ports/CS2"
     ec2_security_group_id = module.server.ec2_security_group_id
     cidr_block = module.server.cidr_block
-    depends_on = [module.server]
     efs_security_group_id = module.server.efs_security_group_id
 }
 
+module "rcon-ports"{
+    source = "../../modules/Ports/RCON"
+    ec2_security_group_id = module.server.ec2_security_group_id
+    cidr_block = module.server.cidr_block
+    efs_security_group_id = module.server.efs_security_group_id
+}
 # module "dns" {
 #     source = "../../modules/DNS"
 #     dnsPrefix = var.gamename

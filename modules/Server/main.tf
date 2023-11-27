@@ -217,7 +217,6 @@ resource "aws_subnet" "subnet" {
 }
 resource "aws_eip" "eip" {
   instance = aws_instance.server.id
-  vpc = true
   associate_with_private_ip = aws_instance.server.private_ip
   depends_on                = [aws_internet_gateway.gw]
 }
