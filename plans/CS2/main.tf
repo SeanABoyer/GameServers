@@ -18,21 +18,21 @@ locals {
         {
             filename:"00_install_ssm_agent",
             content:templatefile(
-                "${path.root}/modules/shellScripts/debian/ssmAgent.sh",
+                "${path.root}/../../modules/shellScripts/debian/ssmAgent.sh",
                 {}
             )
         },
         {
             filename:"01_update_system",
             content:templatefile(
-                "${path.root}/modules/shellScripts/debian/update.sh",
+                "${path.root}/../../modules/shellScripts/debian/update.sh",
                 {}
             )
         },
         {
             filename:"02_create_user",
             content:templatefile(
-                "${path.root}/modules/shellScripts/utility/createUser.sh",
+                "${path.root}/../../modules/shellScripts/utility/createUser.sh",
                 {
                     username = "${local.username}"
                     password = "${random_password.password.result}"
@@ -42,7 +42,7 @@ locals {
         {
             filename:"03_mount_efs",
             content:templatefile(
-                "${path.root}/modules/shellScripts/utility/mountEFS.sh",
+                "${path.root}/../../modules/shellScripts/utility/mountEFS.sh",
                 {
                     username = "${local.username}"
                     root_dir = "${local.rootdir}"
@@ -53,7 +53,7 @@ locals {
         {
             filename:"04_install_cs2",
             content:templatefile(
-                "CS2Install.sh",
+                "${path.root}/CS2Install.sh",
                 {
                     steamUsername = "${var.steamUsername}"
                     steamPassword = "${var.steamPassword}"
@@ -69,7 +69,7 @@ locals {
         {
             filename:"05_create_cs2_service",
             content:templatefile(
-                "${path.root}/modules/shellScripts/utility/createService.sh",
+                "${path.root}/../../modules/shellScripts/utility/createService.sh",
                 {
                     gamename = "${local.gamename}"
                     username = "${local.username}"
@@ -82,7 +82,7 @@ locals {
         {
             filename:"06_start_cs2_service",
             content:templatefile(
-                "${path.root}/modules/shellScripts/utility/startService.sh",
+                "${path.root}/../../modules/shellScripts/utility/startService.sh",
                 {
                     gamename = "${local.gamename}"
                 }
@@ -91,7 +91,7 @@ locals {
         {
             filename:"07_install_rcon_web_app",
             content:templatefile(
-                "${path.root}/modules/shellScripts/rcon/installRcon.sh",
+                "${path.root}/../../modules/shellScripts/rcon/installRcon.sh",
                 {
                     username = "${local.username}"
                     gamename = "${local.gamename}_RCON"
@@ -104,7 +104,7 @@ locals {
         {
             filename:"08_create_rcon_service",
             content:templatefile(
-                "${path.root}/modules/shellScripts/utility/createService.sh",
+                "${path.root}/../../modules/shellScripts/utility/createService.sh",
                 {
                     gamename = "${local.gamename}_RCON"
                     username = "${local.username}"
@@ -117,7 +117,7 @@ locals {
         {
             filename:"09_start_rcon_service",
             content:templatefile(
-                "${path.root}/modules/shellScripts/utility/startService.sh",
+                "${path.root}/../../modules/shellScripts/utility/startService.sh",
                 {
                     gamename = "${local.gamename}_RCON"
                 }
