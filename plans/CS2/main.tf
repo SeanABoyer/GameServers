@@ -108,7 +108,7 @@ locals {
                 {
                     gamename = "${local.gamename}_RCON"
                     username = "${local.username}"
-                    root_dir = "${local.rconbasedir}"
+                    dir = "${local.rconbasedir}"
                     startScriptFullPath = "${local.RCONstartScriptFullPath}"
                     stopScriptFullPath = "${local.RCONstopScriptFullPath}"
                 }
