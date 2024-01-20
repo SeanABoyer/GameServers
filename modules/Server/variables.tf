@@ -7,9 +7,6 @@ variable "instance_type" {
     default = "t2.medium"
 }
 
-# variable "public_ssh_key" {
-#     type = string
-# }
 variable "ssh_username" {
     type = string
     default = "admin"

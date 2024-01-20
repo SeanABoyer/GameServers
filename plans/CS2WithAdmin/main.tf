@@ -9,9 +9,10 @@ locals {
     username = "GameAdmin"
     rootdir = "/mnt/${module.server.efs_file_system_id}"
     gamebasedir = "${local.rootdir}/CS2"
+    gameAddonDir = "${gamebasedir}/serverfiles/game/csgo"
     metaModLink = "https://mms.alliedmods.net/mmsdrop/1.11/mmsource-1.11.0-git1153-linux.tar.gz"
     metaModDirectory = "/home"
-    counterStrikeSharpLink = "https://github.com/roflmuffin/CounterStrikeSharp/releases/latest"
+    counterStrikeSharpLink = "https://github.com/roflmuffin/CounterStrikeSharp/releases/download/v148/counterstrikesharp-with-runtime-build-148-linux-765c56a.zip"
     counterStrikeSharpDirectory = "/home"
     CS2startScriptFullPath = "${local.gamebasedir}/startServer.sh"
     CS2stopScriptFullPath = "${local.gamebasedir}/stopServer.sh"
@@ -95,7 +96,7 @@ locals {
                 "${path.root}/../../modules/shellScripts/apps/installMetaMod.sh",
                 {
                     link = "${local.metaModLink}"
-                    directory = "${local.metaModDirectory}"
+                    directory = "${local.gameAddonDir}"
                 }
             )
         },
