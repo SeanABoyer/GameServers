@@ -102,7 +102,7 @@ locals {
         {
             filename:"08_install_counter_strike_sharp",
             content:templatefile(
-                "${path.root}/../../modules/shellScripts/apps/zipFileToAddons.sh",
+                "${path.root}/../../modules/shellScripts/utility/zipFileToAddons.sh",
                 {
                     addon = "counterStrikeSharp"
                     link = "${local.counterStrikeSharpLink}"
