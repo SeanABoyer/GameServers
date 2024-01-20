@@ -8,7 +8,7 @@ then
     cd "$tempDir"
     sudo wget "${link}" -O counterstrikesharp.zip
     sudo unzip counterstrikesharp.zip
-    #Copy Files to ${metaModDirectory}
+    #Copy Files to Directory
     echo "[$(date '+%d/%m/%Y %H:%M:%S')][Completed] Downloading CounterStrikeSharp"
 else
     echo "[$(date '+%d/%m/%Y %H:%M:%S')][INFO] ${directory} already exists, not downloading."
