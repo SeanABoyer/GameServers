@@ -104,7 +104,7 @@ locals {
             content:templatefile(
                 "${path.root}/../../modules/shellScripts/utility/zipFileToAddons.sh",
                 {
-                    addon = "counterStrikeSharp"
+                    addonName = "counterStrikeSharp"
                     link = "${local.counterStrikeSharpLink}"
                     directory = "${local.gameAddonDir}"
                 }
