@@ -11,9 +11,8 @@ locals {
     gamebasedir = "${local.rootdir}/CS2"
     gameAddonDir = "${gamebasedir}/serverfiles/game/csgo"
     metaModLink = "https://mms.alliedmods.net/mmsdrop/1.11/mmsource-1.11.0-git1153-linux.tar.gz"
-    metaModDirectory = "/home"
     counterStrikeSharpLink = "https://github.com/roflmuffin/CounterStrikeSharp/releases/download/v148/counterstrikesharp-with-runtime-build-148-linux-765c56a.zip"
-    counterStrikeSharpDirectory = "/home"
+    matchzyLink = "https://github.com/shobhit-pathak/MatchZy/releases/download/0.6.1-alpha/matchzy-0.6.1.zip"
     CS2startScriptFullPath = "${local.gamebasedir}/startServer.sh"
     CS2stopScriptFullPath = "${local.gamebasedir}/stopServer.sh"
     scripts = [
@@ -101,12 +100,24 @@ locals {
             )
         },
         {
-            filename:"07_install_counter_strike_sharp",
+            filename:"08_install_counter_strike_sharp",
             content:templatefile(
-                "${path.root}/../../modules/shellScripts/apps/instalCounterStrikeSharp.sh",
+                "${path.root}/../../modules/shellScripts/apps/zipFileToAddons.sh",
                 {
+                    addon = "counterStrikeSharp"
                     link = "${local.counterStrikeSharpLink}"
-                    directory = "${local.counterStrikeSharpDirectory}"
+                    directory = "${local.gameAddonDir}"
+                }
+            )
+        },
+        {
+            filename:"09_install_matchZy",
+            content:templatefile(
+                "${path.root}/../../modules/shellScripts/utility/zipFileToAddons.sh",
+                {
+                    addonName = "matchZy"
+                    link = "${local.matchzyLink}"
+                    directory = "${local.gameAddonDir}"
                 }
             )
         }
