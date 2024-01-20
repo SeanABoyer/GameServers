@@ -8,7 +8,7 @@ then
     cd "$tempDir"
     sudo wget "${link}" -O metamod.tar.gz
     sudo tar -xvzf metamod.tar.gz
-    #Copy Files to ${metaModDirectory}
+    #Copy Files to \directory\
     echo "[$(date '+%d/%m/%Y %H:%M:%S')][Completed] Downloading MetaMod"
 else
     echo "[$(date '+%d/%m/%Y %H:%M:%S')][INFO] ${directory} already exists, not downloading."

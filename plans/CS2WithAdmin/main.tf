@@ -54,7 +54,7 @@ locals {
         {
             filename:"04_install_cs2",
             content:templatefile(
-                "${path.root}/CS2Install.sh",
+                "${path.root}/../../modules/shellScripts/apps/CS2Install.sh",
                 {
                     steamUsername = "${var.steamUsername}"
                     steamPassword = "${var.steamPassword}"
