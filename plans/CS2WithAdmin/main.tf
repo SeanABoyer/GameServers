@@ -9,7 +9,7 @@ locals {
     username = "GameAdmin"
     rootdir = "/mnt/${module.server.efs_file_system_id}"
     gamebasedir = "${local.rootdir}/CS2"
-    gameAddonDir = "${gamebasedir}/serverfiles/game/csgo"
+    gameAddonDir = "${local.gamebasedir}/serverfiles/game/csgo"
     metaModLink = "https://mms.alliedmods.net/mmsdrop/1.11/mmsource-1.11.0-git1153-linux.tar.gz"
     counterStrikeSharpLink = "https://github.com/roflmuffin/CounterStrikeSharp/releases/download/v148/counterstrikesharp-with-runtime-build-148-linux-765c56a.zip"
     matchzyLink = "https://github.com/shobhit-pathak/MatchZy/releases/download/0.6.1-alpha/matchzy-0.6.1.zip"
