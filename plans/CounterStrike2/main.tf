@@ -72,7 +72,7 @@ resource "aws_ecs_task_definition" "task" {
             {
                 "name":"${var.game_name}-game-container",
                 "image":"joedwards32/cs2",
-                "cpu":2,
+                "cpu":2048,
                 "memory":2048,
                 "portMappings": [
                     {
@@ -86,8 +86,6 @@ resource "aws_ecs_task_definition" "task" {
                         "protocol":"udp"
                     }
                 ]
-
-
             }
         ]
     )
