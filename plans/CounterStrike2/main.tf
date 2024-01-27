@@ -77,6 +77,7 @@ resource "aws_ecs_cluster" "cluster" {
 }
 
 resource "aws_ecs_task_definition" "task" {
+    depends_on = [ aws_ecs_cluster.cluster ]
     family = "${var.game_name}-task"
     requires_compatibilities = ["FARGATE"]
     network_mode = "awsvpc"
@@ -119,7 +120,7 @@ resource "aws_ecs_task_definition" "task" {
 resource "aws_efs_file_system" "efs" {}
 
 resource "aws_ecs_service" "ecs_service" {
-  name = "${var.game_name}-service"
+  name = "${var.game_name}-game-container"
   cluster = aws_ecs_cluster.cluster.id
   task_definition = aws_ecs_task_definition.task.arn
   launch_type = "FARGATE"
