@@ -96,6 +96,7 @@ locals {
                 {
                     link = "${local.metaModLink}"
                     directory = "${local.gameAddonDir}"
+                    username = "${local.username}"
                 }
             )
         },
@@ -107,6 +108,7 @@ locals {
                     addonName = "counterStrikeSharp"
                     link = "${local.counterStrikeSharpLink}"
                     directory = "${local.gameAddonDir}"
+                    username = "${local.username}"
                 }
             )
         },
@@ -118,6 +120,7 @@ locals {
                     addonName = "matchZy"
                     link = "${local.matchzyLink}"
                     directory = "${local.gameAddonDir}"
+                    username = "${local.username}"
                 }
             )
         }
