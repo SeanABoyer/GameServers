@@ -6,6 +6,17 @@ data "aws_availability_zones" "availability_zones" {
 }
 
 #START NETWORKING
+resource "aws_internet_gateway" "gw" {
+  vpc_id = aws_vpc.vpc.id
+}
+
+
+resource "aws_route" "route_ign_to_vpc" {
+  route_table_id = aws_vpc.vpc.main_route_table_id
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id = aws_internet_gateway.gw.id  
+}
+
 resource "aws_vpc" "vpc" {
   cidr_block = var.cidr_block
 }
@@ -92,12 +103,17 @@ resource "aws_ecs_task_definition" "task" {
                 "memory":2048,
                 "portMappings": [
                     {
+                        "containerPort":27020,
+                        "hostPort":27020
+                        "protocol":"tcp"
+                    },
+                    {
                         "containerPort":27015,
                         "hostPort":27015
                         "protocol":"tcp"
                     },
                     {
-                        "containerPort":27015,
+                        "containerPort":27014,
                         "hostPort":27015
                         "protocol":"udp"
                     }
