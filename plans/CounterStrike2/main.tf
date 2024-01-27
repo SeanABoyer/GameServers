@@ -86,7 +86,7 @@ resource "aws_ecs_task_definition" "task" {
     container_definitions = jsonencode(
         [
             {
-                "name":"${var.game_name}-game-container",
+                "name":"${var.game_name}-task",
                 "image":"joedwards32/cs2",
                 "cpu":2,
                 "memory":2048,
@@ -120,7 +120,7 @@ resource "aws_ecs_task_definition" "task" {
 resource "aws_efs_file_system" "efs" {}
 
 resource "aws_ecs_service" "ecs_service" {
-  name = "${var.game_name}-game-container"
+  name = "${var.game_name}-task"
   cluster = aws_ecs_cluster.cluster.id
   task_definition = aws_ecs_task_definition.task.arn
   launch_type = "FARGATE"
