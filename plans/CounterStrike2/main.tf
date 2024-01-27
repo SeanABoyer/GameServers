@@ -49,7 +49,7 @@ resource "aws_security_group" "alb_sg"{
 resource "aws_lb" "alb" {
   name = "${var.game_name}-alb"
   load_balancer_type = "application"
-  subnets = [aws_subnet.subnet_az_one.id,aws_subnet.subnet_az_two]
+  subnets = [aws_subnet.subnet_az_one.id,aws_subnet.subnet_az_two.id]
   security_groups = [aws_security_group.alb_sg.id] 
 }
 
@@ -143,7 +143,7 @@ resource "aws_security_group" "ecs_service_sg" {
         from_port   = 0
         to_port     = 0
         protocol    = "-1"
-        security_groups  = [aws_security_group.alb_sg] #only the LB can talk to the esc_service
+        security_groups  = [aws_security_group.alb_sg.id] #only the LB can talk to the esc_service
     }
 
     egress {
