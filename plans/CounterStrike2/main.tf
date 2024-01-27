@@ -9,6 +9,7 @@ resource "aws_subnet" "subnet" {
 }
 
 resource "aws_security_group" "alb_sg"{
+    vpc_id = aws_vpc.vpc.id
     ingress {
         from_port = 27015
         to_port = 27015
@@ -41,7 +42,7 @@ resource "aws_alb" "alb" {
 resource "aws_lb_target_group" "alb_target_group" {
     name = "${var.game_name}-alb-tg"
     port = 27015
-    protocol = "tcp"
+    protocol = "TCP_UDP"
     target_type = "ip"
     vpc_id = aws_vpc.vpc.id
 }
@@ -49,7 +50,7 @@ resource "aws_lb_target_group" "alb_target_group" {
 resource "aws_lb_listener" "alb_listener" {
   load_balancer_arn = aws_alb.alb.arn
   port = 27015
-  protocol = "tcp"
+  protocol = "TCP_UDP"
   default_action {
     type = "forward"
     target_group_arn = aws_lb_target_group.alb_target_group.arn
@@ -65,7 +66,7 @@ resource "aws_ecs_task_definition" "task" {
     family = "${var.game_name}-task"
     requires_compatibilities = ["FARGATE"]
     network_mode = "awsvpc"
-    cpu = 2
+    cpu = 2048
     memory = 2048
     container_definitions = jsonencode(
         [
