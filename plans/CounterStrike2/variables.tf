@@ -12,3 +12,7 @@ variable "game_name"{
     type = string
     default = "Counter-Strike-2"
 }
+
+variable "steamGSLT" {
+  type = string
+}

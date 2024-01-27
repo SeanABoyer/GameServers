@@ -99,6 +99,16 @@ resource "aws_ecs_task_definition" "task" {
             {
                 "name":"${var.game_name}-task",
                 "image":"joedwards32/cs2",
+                "environment":[
+                    {
+                        "name":"CS2_PORT",
+                        "value":"27014"
+                    },
+                    {
+                        "name":"SRCDS_TOKEN",
+                        "value":"${var.steamGSLT}"
+                    }
+                ]
                 "cpu":2,
                 "memory":2048,
                 "portMappings": [
