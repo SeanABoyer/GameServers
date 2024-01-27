@@ -139,6 +139,7 @@ resource "aws_ecs_service" "ecs_service" {
 }
 
 resource "aws_security_group" "ecs_service_sg" {
+    vpc_id = aws_vpc.vpc.id
     ingress {
         from_port   = 0
         to_port     = 0
