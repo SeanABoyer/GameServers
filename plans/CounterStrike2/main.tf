@@ -1,11 +1,25 @@
+data "aws_availability_zones" "availability_zones" {
+  filter {
+    name = "region-name"
+    values = [var.region]
+  }
+}
+
 #START NETWORKING
 resource "aws_vpc" "vpc" {
   cidr_block = var.cidr_block
 }
 
-resource "aws_subnet" "subnet" {
+resource "aws_subnet" "subnet_az_one" {
   vpc_id     = aws_vpc.vpc.id
   cidr_block = cidrsubnet(var.cidr_block,8,0)
+  availability_zone = data.aws_availability_zones.availability_zones.names[0]
+}
+
+resource "aws_subnet" "subnet_az_two" {
+  vpc_id     = aws_vpc.vpc.id
+  cidr_block = cidrsubnet(var.cidr_block,8,1)
+  availability_zone = data.aws_availability_zones.availability_zones.names[1]
 }
 
 resource "aws_security_group" "alb_sg"{
@@ -32,10 +46,10 @@ resource "aws_security_group" "alb_sg"{
     }
 }
 
-resource "aws_alb" "alb" {
+resource "aws_lb" "alb" {
   name = "${var.game_name}-alb"
   load_balancer_type = "application"
-  subnets = [aws_subnet.subnet.id]
+  subnets = [aws_subnet.subnet_az_one.id,aws_subnet.subnet_az_two]
   security_groups = [aws_security_group.alb_sg.id] 
 }
 
@@ -48,7 +62,7 @@ resource "aws_lb_target_group" "alb_target_group" {
 }
 
 resource "aws_lb_listener" "alb_listener" {
-  load_balancer_arn = aws_alb.alb.arn
+  load_balancer_arn = aws_lb.alb.arn
   port = 27015
   protocol = "TCP_UDP"
   default_action {
@@ -67,7 +81,7 @@ resource "aws_ecs_task_definition" "task" {
     requires_compatibilities = ["FARGATE"]
     network_mode = "awsvpc"
     cpu = 2048
-    memory = 2048
+    memory = 4096
     container_definitions = jsonencode(
         [
             {
@@ -118,7 +132,7 @@ resource "aws_ecs_service" "ecs_service" {
   }
 
   network_configuration {
-    subnets = [aws_subnet.subnet.id]
+    subnets = [aws_subnet.subnet_az_one.id,aws_subnet.subnet_az_two.id]
     assign_public_ip = true
     security_groups = [aws_security_group.ecs_service_sg.id]
   }
@@ -129,7 +143,7 @@ resource "aws_security_group" "ecs_service_sg" {
         from_port   = 0
         to_port     = 0
         protocol    = "-1"
-        cidr_blocks = [aws_security_group.alb_sg.id] #only the LB can talk to the esc_service
+        security_groups  = [aws_security_group.alb_sg] #only the LB can talk to the esc_service
     }
 
     egress {
