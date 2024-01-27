@@ -72,17 +72,17 @@ resource "aws_ecs_task_definition" "task" {
             {
                 "name":"${var.game_name}-game-container",
                 "image":"joedwards32/cs2",
-                "cpu":2048,
+                "cpu":2,
                 "memory":2048,
                 "portMappings": [
                     {
-                        "containerPort":"27015",
-                        "hostPort":"27015"
+                        "containerPort":27015,
+                        "hostPort":27015
                         "protocol":"tcp"
                     },
                     {
-                        "containerPort":"27015",
-                        "hostPort":"27015"
+                        "containerPort":27015,
+                        "hostPort":27015
                         "protocol":"udp"
                     }
                 ]
