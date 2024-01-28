@@ -116,12 +116,12 @@ resource "aws_ecs_task_definition" "task" {
 }
 
 resource "aws_efs_file_system" "efs" {}
-resource "aws_efs_mount_target" "efs_mount_target" {
+resource "aws_efs_mount_target" "efs_mount_target_one" {
   file_system_id = aws_efs_file_system.efs.id
   subnet_id      = aws_subnet.subnet_az_one.id
   security_groups = [aws_security_group.efs_sg.id]
 }
-resource "aws_efs_mount_target" "efs_mount_target" {
+resource "aws_efs_mount_target" "efs_mount_target_two" {
   file_system_id = aws_efs_file_system.efs.id
   subnet_id      = aws_subnet.subnet_az_two.id
   security_groups = [aws_security_group.efs_sg.id]
