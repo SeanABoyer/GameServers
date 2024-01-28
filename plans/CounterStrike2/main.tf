@@ -91,7 +91,7 @@ resource "aws_ecs_task_definition" "task" {
     depends_on = [ aws_ecs_cluster.cluster ]
     family = "${var.game_name}-task"
     requires_compatibilities = ["FARGATE"]
-    network_mode = "bridge"
+    network_mode = "awsvpc"
     cpu = 2048
     memory = 4096
     container_definitions = jsonencode(
@@ -124,7 +124,7 @@ resource "aws_ecs_task_definition" "task" {
                     },
                     {
                         "containerPort":27014,
-                        "hostPort":27015
+                        "hostPort":27014
                         "protocol":"udp"
                     }
                 ]
