@@ -171,7 +171,7 @@ resource "aws_security_group" "ecs_service_sg" {
         from_port   = 0
         to_port     = 0
         protocol    = "-1"
-        security_groups  = [aws_security_group.alb_sg.id] #only the LB can talk to the esc_service
+         cidr_blocks = ["0.0.0.0/0"]
     }
 
     egress {
