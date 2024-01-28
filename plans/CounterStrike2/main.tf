@@ -167,6 +167,48 @@ resource "aws_ecs_task_definition" "task" {
 }
 
 resource "aws_efs_file_system" "efs" {}
+resource "aws_efs_mount_target" "efs_mount_target" {
+  file_system_id = aws_efs_file_system.efs.id
+  subnet_id      = aws_subnet.subnet_az_one
+  security_groups = [aws_security_group.efs_sg.id]
+}
+resource "aws_security_group" "efs_sg" {
+  name = "${var.game_name}-efs-sg"
+  vpc_id = aws_vpc.vpc.id
+}
+
+resource "aws_security_group_rule" "efs_inbound_111_tcp"{
+  type              = "ingress"
+  from_port         = 111
+  to_port           = 111
+  protocol          = "TCP"
+  source_security_group_id = aws_security_group.ecs_service_sg.id
+  security_group_id = aws_security_group.efs_sg.id
+}
+resource "aws_security_group_rule" "efs_inbound_111_udp"{
+  type              = "ingress"
+  from_port         = 111
+  to_port           = 111
+  protocol          = "UDP"
+  source_security_group_id = aws_security_group.ecs_service_sg.id
+  security_group_id = aws_security_group.efs_sg.id
+}
+resource "aws_security_group_rule" "efs_inbound_2049_tcp"{
+  type              = "ingress"
+  from_port         = 2049
+  to_port           = 2049
+  protocol          = "TCP"
+  source_security_group_id = aws_security_group.ecs_service_sg.id
+  security_group_id = aws_security_group.efs_sg.id
+}
+resource "aws_security_group_rule" "efs_inbound_2049_udp"{
+  type              = "ingress"
+  from_port         = 2049
+  to_port           = 2049
+  protocol          = "UDP"
+  source_security_group_id = aws_security_group.ecs_service_sg.id
+  security_group_id = aws_security_group.efs_sg.id
+}
 
 resource "aws_ecs_service" "ecs_service" {
   name = "${var.game_name}-task"
