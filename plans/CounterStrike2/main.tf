@@ -74,7 +74,7 @@ resource "aws_ecs_task_definition" "task" {
                 "environment":[
                     {
                         "name":"CS2_PORT",
-                        "value":"27014"
+                        "value":"27013"
                     },
                     {
                         "name":"SRCDS_TOKEN",
@@ -95,8 +95,8 @@ resource "aws_ecs_task_definition" "task" {
                         "protocol":"tcp"
                     },
                     {
-                        "containerPort":27014,
-                        "hostPort":27014
+                        "containerPort":27013,
+                        "hostPort":27013
                         "protocol":"udp"
                     }
                 ]
@@ -119,6 +119,11 @@ resource "aws_efs_file_system" "efs" {}
 resource "aws_efs_mount_target" "efs_mount_target" {
   file_system_id = aws_efs_file_system.efs.id
   subnet_id      = aws_subnet.subnet_az_one.id
+  security_groups = [aws_security_group.efs_sg.id]
+}
+resource "aws_efs_mount_target" "efs_mount_target" {
+  file_system_id = aws_efs_file_system.efs.id
+  subnet_id      = aws_subnet.subnet_az_two.id
   security_groups = [aws_security_group.efs_sg.id]
 }
 resource "aws_security_group" "efs_sg" {
