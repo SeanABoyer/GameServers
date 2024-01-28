@@ -1,3 +1,21 @@
+terraform {
+    required_version = ">=1.1.3"
+    required_providers {
+      aws = {
+        source  = "hashicorp/aws"
+        version = "4.40.0"
+      }
+    }
+}
+provider "aws" {
+    default_tags {
+        tags = {
+            Name = var.game_name
+            Game = var.game_name
+        }
+    }
+}
+
 data "aws_availability_zones" "availability_zones" {
   filter {
     name = "region-name"
@@ -37,30 +55,30 @@ resource "aws_subnet" "subnet_az_two" {
   availability_zone = data.aws_availability_zones.availability_zones.names[1]
 }
 
-resource "aws_security_group" "alb_sg"{
-    name =  "${var.game_name}-alb-sg"
-    vpc_id = aws_vpc.vpc.id
-    ingress {
-        from_port = 27015
-        to_port = 27015
-        protocol = "tcp"
-        cidr_blocks = ["0.0.0.0/0"]
-    }
+# resource "aws_security_group" "alb_sg"{
+#     name =  "${var.game_name}-alb-sg"
+#     vpc_id = aws_vpc.vpc.id
+#     ingress {
+#         from_port = 27015
+#         to_port = 27015
+#         protocol = "tcp"
+#         cidr_blocks = ["0.0.0.0/0"]
+#     }
 
-    ingress {
-        from_port = 27015
-        to_port = 27015
-        protocol = "udp"
-        cidr_blocks = ["0.0.0.0/0"]
-    }
+#     ingress {
+#         from_port = 27015
+#         to_port = 27015
+#         protocol = "udp"
+#         cidr_blocks = ["0.0.0.0/0"]
+#     }
 
-    egress {
-        from_port   = 0
-        to_port     = 0
-        protocol    = "-1"
-        cidr_blocks = ["0.0.0.0/0"]
-    }
-}
+#     egress {
+#         from_port   = 0
+#         to_port     = 0
+#         protocol    = "-1"
+#         cidr_blocks = ["0.0.0.0/0"]
+#     }
+# }
 
 # resource "aws_lb" "alb" {
 #   name = "${var.game_name}-alb"
