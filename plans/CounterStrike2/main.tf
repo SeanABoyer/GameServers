@@ -103,16 +103,14 @@ resource "aws_ecs_task_definition" "task" {
             }
         ]
     )
-    volume {
-        name = "${var.game_name}-efs"
-        efs_volume_configuration {
-            file_system_id = aws_efs_file_system.efs.id
-            root_directory = "/${var.game_name}-task/"
-            transit_encryption = "ENABLED"
-
-
-        }
-    }
+    # volume {
+    #     name = "${var.game_name}-efs"
+    #     efs_volume_configuration {
+    #         file_system_id = aws_efs_file_system.efs.id
+    #         root_directory = "/home/steam/cs2-dedicated/"
+    #         transit_encryption = "ENABLED"
+    #     }
+    # }
 }
 
 resource "aws_efs_file_system" "efs" {}
