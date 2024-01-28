@@ -33,54 +33,54 @@ resource "aws_subnet" "subnet_az_two" {
   availability_zone = data.aws_availability_zones.availability_zones.names[1]
 }
 
-resource "aws_security_group" "alb_sg"{
-    vpc_id = aws_vpc.vpc.id
-    ingress {
-        from_port = 27015
-        to_port = 27015
-        protocol = "tcp"
-        cidr_blocks = ["0.0.0.0/0"]
-    }
+# resource "aws_security_group" "alb_sg"{
+#     vpc_id = aws_vpc.vpc.id
+#     ingress {
+#         from_port = 27015
+#         to_port = 27015
+#         protocol = "tcp"
+#         cidr_blocks = ["0.0.0.0/0"]
+#     }
 
-    ingress {
-        from_port = 27015
-        to_port = 27015
-        protocol = "udp"
-        cidr_blocks = ["0.0.0.0/0"]
-    }
+#     ingress {
+#         from_port = 27015
+#         to_port = 27015
+#         protocol = "udp"
+#         cidr_blocks = ["0.0.0.0/0"]
+#     }
 
-    egress {
-        from_port   = 0
-        to_port     = 0
-        protocol    = "-1"
-        cidr_blocks = ["0.0.0.0/0"]
-    }
-}
+#     egress {
+#         from_port   = 0
+#         to_port     = 0
+#         protocol    = "-1"
+#         cidr_blocks = ["0.0.0.0/0"]
+#     }
+# }
 
-resource "aws_lb" "alb" {
-  name = "${var.game_name}-alb"
-  load_balancer_type = "application"
-  subnets = [aws_subnet.subnet_az_one.id,aws_subnet.subnet_az_two.id]
-  security_groups = [aws_security_group.alb_sg.id] 
-}
+# resource "aws_lb" "alb" {
+#   name = "${var.game_name}-alb"
+#   load_balancer_type = "application"
+#   subnets = [aws_subnet.subnet_az_one.id,aws_subnet.subnet_az_two.id]
+#   security_groups = [aws_security_group.alb_sg.id] 
+# }
 
-resource "aws_lb_target_group" "alb_target_group" {
-    name = "${var.game_name}-alb-tg"
-    port = 27015
-    protocol = "TCP_UDP"
-    target_type = "ip"
-    vpc_id = aws_vpc.vpc.id
-}
+# resource "aws_lb_target_group" "alb_target_group" {
+#     name = "${var.game_name}-alb-tg"
+#     port = 27015
+#     protocol = "TCP_UDP"
+#     target_type = "ip"
+#     vpc_id = aws_vpc.vpc.id
+# }
 
-resource "aws_lb_listener" "alb_listener" {
-  load_balancer_arn = aws_lb.alb.arn
-  port = 27015
-  protocol = "TCP_UDP"
-  default_action {
-    type = "forward"
-    target_group_arn = aws_lb_target_group.alb_target_group.arn
-  }
-}
+# resource "aws_lb_listener" "alb_listener" {
+#   load_balancer_arn = aws_lb.alb.arn
+#   port = 27015
+#   protocol = "TCP_UDP"
+#   default_action {
+#     type = "forward"
+#     target_group_arn = aws_lb_target_group.alb_target_group.arn
+#   }
+# }
 #END NETWORKING
 
 resource "aws_ecs_cluster" "cluster" {
@@ -152,11 +152,11 @@ resource "aws_ecs_service" "ecs_service" {
   launch_type = "FARGATE"
   desired_count = 1
 
-  load_balancer {
-    target_group_arn = aws_lb_target_group.alb_target_group.arn
-    container_name = aws_ecs_task_definition.task.family
-    container_port = 27015
-  }
+#   load_balancer {
+#     target_group_arn = aws_lb_target_group.alb_target_group.arn
+#     container_name = aws_ecs_task_definition.task.family
+#     container_port = 27015
+#   }
 
   network_configuration {
     subnets = [aws_subnet.subnet_az_one.id,aws_subnet.subnet_az_two.id]
