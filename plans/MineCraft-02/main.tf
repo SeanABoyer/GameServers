@@ -1,0 +1,79 @@
+resource "random_password" "password" {
+  length = 16
+  special = false
+}
+
+locals {
+    gamename = "${var.game_name}"
+    username = "GameAdmin"
+    rootdir = "/mnt/${module.server.efs_file_system_id}"
+    minRam = (module.server.memory_in_bytes * 0.7) /1000000
+    maxRam = (module.server.memory_in_bytes * 0.8) /1000000
+    scripts = [
+        {
+            filename:"00_install_ssm_agent",
+            content:templatefile(
+                "${path.root}/../../modules/shellScripts/debian/ssmAgent.sh",
+                {}
+            )
+        },
+        {
+            filename:"01_update_system",
+            content:templatefile(
+                "${path.root}/../../modules/shellScripts/debian/update.sh",
+                {}
+            )
+        },
+        {
+            filename:"02_create_user",
+            content:templatefile(
+                "${path.root}/../../modules/shellScripts/utility/createUser.sh",
+                {
+                    username = "${local.username}"
+                    password = "${random_password.password.result}"
+                }
+            )
+        },
+        {
+            filename:"03_mount_efs",
+            content:templatefile(
+                "${path.root}/../../modules/shellScripts/utility/mountEFS.sh",
+                {
+                    username = "${local.username}"
+                    root_dir = "${local.rootdir}"
+                    filesystem_id = module.server.efs_file_system_id
+                }
+            )
+        },
+        {
+            filename:"04_install_game",
+            content:templatefile(
+                "${path.root}/../../modules/shellScripts/apps/minecraft_gtnh.sh",
+                {
+                    serviceAccountName = "${local.username}"
+                    password = "${random_password.password.result}"
+                    root_dir = "${local.rootdir}"
+                    min_ram = "${minRam}M"
+                    max_ram = "${maxRam}M"
+                    zipURL = "https://solder.endermedia.com/repository/downloads/the-1122-pack/the-1122-pack_1.6.3.zip"
+                }
+            )
+        }
+    ]
+}
+
+
+module "server"{
+    source = "../../modules/Server"
+    scripts = local.scripts
+    game_name = local.gamename
+    instance_type = "t3.small"
+    ami_name = "debian-11-amd64*"
+}
+
+module "game-ports"{
+    source = "../../modules/Ports/MineCraft"
+    ec2_security_group_id = module.server.ec2_security_group_id
+    cidr_block = module.server.cidr_block
+    efs_security_group_id = module.server.efs_security_group_id
+}
