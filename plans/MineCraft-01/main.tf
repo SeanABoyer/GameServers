@@ -7,7 +7,7 @@ locals {
     gamename = "${var.game_name}"
     username = "GameAdmin"
     rootdir = "/mnt/${module.server.efs_file_system_id}"
-    minRam = (module.server.memory_in_bytes * 0.7)
+    minRam = (module.server.memory_in_bytes * 0.75)
     maxRam = (module.server.memory_in_bytes * 0.8)
     scripts = [
         {
