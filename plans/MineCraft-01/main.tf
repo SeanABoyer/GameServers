@@ -10,17 +10,17 @@ locals {
     minRam = (module.server.memory_in_bytes * 0.7) /1000000
     maxRam = (module.server.memory_in_bytes * 0.8) /1000000
     scripts = [
-/*        {
-            filename:"00_install_ssm_agent",
-            content:templatefile(
-                "${path.root}/../../modules/shellScripts/debian/ssmAgent.sh",
-                {}
-            )
-        },*/
         {
-            filename:"01_update_system",
+            filename:"00_update_system",
             content:templatefile(
                 "${path.root}/../../modules/shellScripts/al2023/update.sh",
+                {}
+            )
+        },
+        {
+            filename:"01_install_wget",
+            content:templatefile(
+                "${path.root}/../../modules/shellScripts/al2023/installwget.sh",
                 {}
             )
         },
