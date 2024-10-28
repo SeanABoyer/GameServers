@@ -48,13 +48,13 @@ locals {
         {
             filename:"04_install_game",
             content:templatefile(
-                "${path.root}/../../modules/shellScripts/apps/minecraft_gtnh.sh",
+                "${path.root}/../../modules/GameInstallScripts/minecraft_modded_server.sh",
                 {
                     serviceAccountName = "${local.username}"
                     password = "${random_password.password.result}"
                     root_dir = "${local.rootdir}"
-                    min_ram = "${minRam}M"
-                    max_ram = "${maxRam}M"
+                    minimum_ram = "${local.minRam}M"
+                    maximum_ram = "${local.maxRam}M"
                     zipURL = "https://solder.endermedia.com/repository/downloads/the-1122-pack/the-1122-pack_1.6.3.zip"
                 }
             )

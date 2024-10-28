@@ -1,6 +1,6 @@
 #!/bin/bash
 username="${serviceAccountName}"
-root_dir="/mnt/$gamename"
+root_dir="${root_dir}"
 min_ram="${minimum_ram}"
 max_ram="${maximum_ram}"
 zip_url="${zip_url}"
