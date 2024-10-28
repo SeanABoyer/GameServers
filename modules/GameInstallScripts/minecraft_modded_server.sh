@@ -41,9 +41,16 @@ cat > /home/$username/CloudWatchMetricGeneration.sh << EOF
 aws cloudwatch put-metric-data --region us-west-2 --metric-name ConnectionsOn25565 --namespace CustomEC2 --unit Count --value \$(netstat -anp | grep -w 25565 | grep ESTABLISHED | wc -l) --dimensions InstanceId=\$(cat /sys/devices/virtual/dmi/id/board_asset_tag)
 EOF
 
-chmod +x /home/$username/CloudWatchMetricGeneration.sh
+cat > /etc/systemd/system/gameService.timer << EOF
+[Unit]
+Description = Run script for CloudWatch Metric every 15 mins.
+[Timer]
+onBootSec=15min
+onUnitActiveSec=15min
 
-(crontab -l; echo "*/15 * * * * /home/$username/CloudWatchMetricGeneration.sh") | sort -u | crontab -
+[Install]
+WantedBy=timers.target
+EOF
 finishLog "Setting up CronJob for Custom CloudWatch Metric"
 
 #If the ServerStart.sh does not exist, then download modpack and java to EFS share
