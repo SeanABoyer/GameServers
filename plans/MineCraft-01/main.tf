@@ -7,8 +7,8 @@ locals {
     gamename = "${var.game_name}"
     username = "GameAdmin"
     rootdir = "/mnt/${module.server.efs_file_system_id}"
-    minRam = (module.server.memory_in_bytes * 0.7) /1000000
-    maxRam = (module.server.memory_in_bytes * 0.8) /1000000
+    minRam = (module.server.memory_in_bytes * 0.7)
+    maxRam = (module.server.memory_in_bytes * 0.8)
     scripts = [
         {
             filename:"00_update_system",
@@ -74,7 +74,7 @@ module "server"{
     source = "../../modules/Server"
     scripts = local.scripts
     game_name = local.gamename
-    instance_type = "t3.small"
+    instance_type = "t3.xlarge"
     ami_name = "al2023-ami*"
 }
 
