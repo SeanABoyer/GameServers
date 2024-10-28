@@ -10,17 +10,17 @@ locals {
     minRam = (module.server.memory_in_bytes * 0.7) /1000000
     maxRam = (module.server.memory_in_bytes * 0.8) /1000000
     scripts = [
-        {
+/*        {
             filename:"00_install_ssm_agent",
             content:templatefile(
                 "${path.root}/../../modules/shellScripts/debian/ssmAgent.sh",
                 {}
             )
-        },
+        },*/
         {
             filename:"01_update_system",
             content:templatefile(
-                "${path.root}/../../modules/shellScripts/debian/update.sh",
+                "${path.root}/../../modules/shellScripts/al2023/update.sh",
                 {}
             )
         },
@@ -37,7 +37,7 @@ locals {
         {
             filename:"03_mount_efs",
             content:templatefile(
-                "${path.root}/../../modules/shellScripts/utility/mountEFS.sh",
+                "${path.root}/../../modules/shellScripts/al2023/mountEFS.sh",
                 {
                     username = "${local.username}"
                     root_dir = "${local.rootdir}"
@@ -68,7 +68,7 @@ module "server"{
     scripts = local.scripts
     game_name = local.gamename
     instance_type = "t3.small"
-    ami_name = "debian-11-amd64*"
+    ami_name = "al2023-ami*"
 }
 
 module "game-ports"{

@@ -21,13 +21,6 @@ generalLog () {
 }
 
 function startService(){
-    chown -R $username:$username $root_dir
-
-    startLog "Config Allowed Min & Max Memory"
-    sudo -H -u $username bash -c "cd $root_dir && sed -i 's/MAX_RAM=\"4096M\"/MAX_RAM=\"$max_ram\"/g' $root_dir/settings.sh"
-    sudo -H -u $username bash -c "cd $root_dir && sed -i 's/MIN_RAM=\"1024M\"/MIN_RAM=\"$min_ram\"/g' $root_dir/settings.sh"
-    finishLog "Config Allowed Min & Max Memory"
-
     startLog "Start Service"
     systemctl start gameService
     finishLog "Start Service"
@@ -73,8 +66,8 @@ then
     startLog "Installing Modded Server"
     sudo -H -u $username bash -c "cd $root_dir && unzip Server.zip"
     sudo -H -u $username bash -c "cd $root_dir && chmod +x startserver.sh"
-    sudo -H -u $username bash -c "cd $root_dir && chmod +x Install.sh"
-    sudo -H -u $username bash -c "source /etc/profile && cd $root_dir && sh Install.sh"
+#    sudo -H -u $username bash -c "cd $root_dir && chmod +x Install.sh"
+#    sudo -H -u $username bash -c "source /etc/profile && cd $root_dir && sh Install.sh"
     finishLog "Installing Modded Server"
 else
     generalLog "Found [$root_dir/startserver.sh]. "
@@ -103,6 +96,14 @@ then
 else
     generalLog "Found [/etc/systemd/system/gameService.service]."
 fi
+
+
+chown -R $username:$username $root_dir
+
+startLog "Config Allowed Min & Max Memory"
+sudo -H -u $username bash -c "cd $root_dir && sed -i 's/Xms6G/Xms$max_ram/g' $root_dir/startserver.sh"
+sudo -H -u $username bash -c "cd $root_dir && sed -i 's/Xmx6G/Xmx$max_ram/g' $root_dir/startserver.sh"
+finishLog "Config Allowed Min & Max Memory"
 
 startService
 
