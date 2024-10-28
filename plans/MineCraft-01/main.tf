@@ -55,7 +55,7 @@ locals {
                     root_dir = "${local.rootdir}"
                     minimum_ram = "${local.minRam}M"
                     maximum_ram = "${local.maxRam}M"
-                    zipURL = "https://downloads.gtnewhorizons.com/ServerPacks/GT_New_Horizons_2.6.1_Server_Java_8.zip"
+                    zip_url = "https://downloads.gtnewhorizons.com/ServerPacks/GT_New_Horizons_2.6.1_Server_Java_8.zip"
                 }
             )
         }
