@@ -48,7 +48,7 @@ locals {
         {
             filename:"04_install_game",
             content:templatefile(
-                "${path.root}/../../modules/shellScripts/apps/minecraft_modded_server.sh",
+                "${path.root}/../../modules/GameInstallScripts/minecraft_modded_server.sh",
                 {
                     serviceAccountName = "${local.username}"
                     password = "${random_password.password.result}"
