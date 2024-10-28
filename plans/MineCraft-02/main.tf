@@ -7,25 +7,32 @@ locals {
     gamename = "${var.game_name}"
     username = "GameAdmin"
     rootdir = "/mnt/${module.server.efs_file_system_id}"
-    minRam = (module.server.memory_in_bytes * 0.7) /1000000
-    maxRam = (module.server.memory_in_bytes * 0.8) /1000000
+    minRam = floor(module.server.memory_in_bytes * 0.75)
+    maxRam = floor(module.server.memory_in_bytes * 0.8)
     scripts = [
         {
-            filename:"00_install_ssm_agent",
+            filename:"00_update_system",
             content:templatefile(
-                "${path.root}/../../modules/shellScripts/debian/ssmAgent.sh",
+                "${path.root}/../../modules/shellScripts/al2023/update.sh",
                 {}
             )
         },
         {
-            filename:"01_update_system",
+            filename:"01_install_wget",
             content:templatefile(
-                "${path.root}/../../modules/shellScripts/debian/update.sh",
+                "${path.root}/../../modules/shellScripts/al2023/installwget.sh",
                 {}
             )
         },
         {
-            filename:"02_create_user",
+            filename:"02_install_unzip",
+            content:templatefile(
+                "${path.root}/../../modules/shellScripts/al2023/installunzip.sh",
+                {}
+            )
+        },
+        {
+            filename:"03_create_user",
             content:templatefile(
                 "${path.root}/../../modules/shellScripts/utility/createUser.sh",
                 {
@@ -35,9 +42,9 @@ locals {
             )
         },
         {
-            filename:"03_mount_efs",
+            filename:"04_mount_efs",
             content:templatefile(
-                "${path.root}/../../modules/shellScripts/utility/mountEFS.sh",
+                "${path.root}/../../modules/shellScripts/al2023/mountEFS.sh",
                 {
                     username = "${local.username}"
                     root_dir = "${local.rootdir}"
@@ -46,7 +53,7 @@ locals {
             )
         },
         {
-            filename:"04_install_game",
+            filename:"05_install_game",
             content:templatefile(
                 "${path.root}/../../modules/GameInstallScripts/minecraft_modded_server.sh",
                 {
@@ -67,8 +74,8 @@ module "server"{
     source = "../../modules/Server"
     scripts = local.scripts
     game_name = local.gamename
-    instance_type = "t3.small"
-    ami_name = "debian-11-amd64*"
+    instance_type = "t3.xlarge"
+    ami_name = "al2023-ami*"
 }
 
 module "game-ports"{
