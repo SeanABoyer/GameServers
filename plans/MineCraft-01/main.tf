@@ -53,8 +53,8 @@ locals {
                     serviceAccountName = "${local.username}"
                     password = "${random_password.password.result}"
                     root_dir = "${local.rootdir}"
-                    min_ram = "${minRam}M"
-                    max_ram = "${maxRam}M"
+                    min_ram = "${local.minRam}M"
+                    max_ram = "${local.maxRam}M"
                     zipURL = "https://downloads.gtnewhorizons.com/ServerPacks/GT_New_Horizons_2.6.1_Server_Java_8.zip"
                 }
             )
