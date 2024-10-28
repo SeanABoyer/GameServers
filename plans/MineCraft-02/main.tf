@@ -55,7 +55,7 @@ locals {
                     root_dir = "${local.rootdir}"
                     minimum_ram = "${local.minRam}M"
                     maximum_ram = "${local.maxRam}M"
-                    zipURL = "https://solder.endermedia.com/repository/downloads/the-1122-pack/the-1122-pack_1.6.3.zip"
+                    zip_url = "https://solder.endermedia.com/repository/downloads/the-1122-pack/the-1122-pack_1.6.3.zip"
                 }
             )
         }
