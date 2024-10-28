@@ -25,7 +25,14 @@ locals {
             )
         },
         {
-            filename:"02_create_user",
+            filename:"02_install_unzip",
+            content:templatefile(
+                "${path.root}/../../modules/shellScripts/al2023/installunzip.sh",
+                {}
+            )
+        },
+        {
+            filename:"03_create_user",
             content:templatefile(
                 "${path.root}/../../modules/shellScripts/utility/createUser.sh",
                 {
@@ -35,7 +42,7 @@ locals {
             )
         },
         {
-            filename:"03_mount_efs",
+            filename:"04_mount_efs",
             content:templatefile(
                 "${path.root}/../../modules/shellScripts/al2023/mountEFS.sh",
                 {
@@ -46,7 +53,7 @@ locals {
             )
         },
         {
-            filename:"04_install_game",
+            filename:"05_install_game",
             content:templatefile(
                 "${path.root}/../../modules/GameInstallScripts/minecraft_modded_server.sh",
                 {
