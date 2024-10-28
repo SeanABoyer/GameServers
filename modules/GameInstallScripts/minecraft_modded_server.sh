@@ -54,9 +54,9 @@ chmod +x /home/$username/CloudWatchMetricGeneration.sh
 finishLog "Setting up CronJob for Custom CloudWatch Metric"
 
 #If the ServerStart.sh does not exist, then download modpack and java to EFS share
-if [ ! -f "$root_dir/ServerStart.sh" ]
+if [ ! -f "$root_dir/startserver.sh" ]
 then
-    generalLog "Unable to find [$root_dir/ServerStart.sh]."
+    generalLog "Unable to find [$root_dir/startserver.sh]."
     startLog "Installing Java 8"
     sudo -H -u $username bash -c "cd $root_dir && mkdir java"
     sudo -H -u $username bash -c "cd $root_dir/java && wget https://github.com/adoptium/temurin8-binaries/releases/download/jdk8u345-b01/OpenJDK8U-jre_x64_linux_hotspot_8u345b01.tar.gz -O OpenJDK8.tar.gz"
@@ -72,12 +72,12 @@ then
 
     startLog "Installing Modded Server"
     sudo -H -u $username bash -c "cd $root_dir && unzip Server.zip"
-    sudo -H -u $username bash -c "cd $root_dir && chmod +x ServerStart.sh"
+    sudo -H -u $username bash -c "cd $root_dir && chmod +x startserver.sh"
     sudo -H -u $username bash -c "cd $root_dir && chmod +x Install.sh"
     sudo -H -u $username bash -c "source /etc/profile && cd $root_dir && sh Install.sh"
     finishLog "Installing Modded Server"
 else
-    generalLog "Found [$root_dir/ServerStart.sh]. "
+    generalLog "Found [$root_dir/startserver.sh]. "
 fi
 
 #If the services does not exist, then create it
@@ -92,7 +92,7 @@ then
     echo "Environment=PATH=$root_dir/java/jdk8u345-b01-jre/bin" >>/etc/systemd/system/gameService.service
     echo "User=$username" >>/etc/systemd/system/gameService.service
     echo "WorkingDirectory=$root_dir" >> /etc/systemd/system/gameService.service
-    echo "ExecStart=\"$root_dir/ServerStart.sh\"" >>/etc/systemd/system/gameService.service
+    echo "ExecStart=\"$root_dir/startserver.sh\"" >>/etc/systemd/system/gameService.service
     echo "Restart=always" >>/etc/systemd/system/gameService.service
     echo "[Install]" >>/etc/systemd/system/gameService.service
     echo "WantedBy=multi-user.target" >>/etc/systemd/system/gameService.service
